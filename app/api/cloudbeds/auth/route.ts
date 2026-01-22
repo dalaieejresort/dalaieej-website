@@ -1,120 +1,51 @@
-import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-
-const CLOUDBEDS_TOKEN_URL = "https://hotels.cloudbeds.com/api/v1.1/access_token";
-const REDIRECT_URI = "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth";
+import { NextRequest, NextResponse } from 'next/server';
+import axios from 'axios';
 
 export async function GET(request: NextRequest) {
-  const clientId = process.env.CLOUDBEDS_CLIENT_ID;
-  const clientSecret = process.env.CLOUDBEDS_CLIENT_SECRET;
+  const { searchParams } = request.nextUrl;
+  const code = searchParams.get('code');
+  const error = searchParams.get('error');
+  const errorDescription = searchParams.get('error_description');
 
-  if (!clientId || !clientSecret) {
-    return NextResponse.json(
-      { error: "CLOUDBEDS_CLIENT_ID and CLOUDBEDS_CLIENT_SECRET must be set in Secrets." },
-      { status: 500 }
-    );
+  if (error) {
+    return NextResponse.json({
+      status: 'Cloudbeds Returned an Error',
+      error_code: error,
+      details: errorDescription,
+      full_params: Object.fromEntries(searchParams.entries())
+    }, { status: 400 });
   }
 
-  const code = request.nextUrl.searchParams.get("code");
-
-  if (!code) {
-    return NextResponse.json(
-      { error: "No code provided. Please start the OAuth flow from /setup." },
-      { status: 400 }
-    );
-  }
-
-  try {
-    const response = await axios.post(
-      CLOUDBEDS_TOKEN_URL,
-      new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: REDIRECT_URI,
+  if (code) {
+    try {
+      const tokenResponse = await axios.post('https://hotels.cloudbeds.com/api/v1.1/access_token', {
+        grant_type: 'authorization_code',
+        client_id: process.env.CLOUDBEDS_CLIENT_ID,
+        client_secret: process.env.CLOUDBEDS_CLIENT_SECRET,
+        redirect_uri: "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth",
         code: code,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+      });
 
-    const { access_token, refresh_token, expires_in } = response.data;
+      return NextResponse.json({
+        success: true,
+        message: "SUCCESS! Copy the refresh_token below into your Secrets.",
+        refresh_token: tokenResponse.data.refresh_token,
+        access_token: tokenResponse.data.access_token
+      });
 
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Cloudbeds OAuth Success</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      max-width: 600px;
-      margin: 100px auto;
-      padding: 20px;
-      background: #F5F5DC;
-      color: #1A3C34;
+    } catch (err: any) {
+      return NextResponse.json({
+        status: 'Exchange Failed',
+        error: err.response?.data || err.message,
+        sent_redirect_uri: "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth"
+      }, { status: 500 });
     }
-    .success {
-      background: #1A3C34;
-      color: #F5F5DC;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    .token-box {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      word-break: break-all;
-      font-family: monospace;
-      font-size: 12px;
-      margin: 10px 0;
-      border: 2px solid #1A3C34;
-    }
-    h1 { margin: 0 0 10px 0; }
-    .label { font-weight: bold; margin-top: 15px; }
-    .note { color: #666; font-size: 14px; margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <div class="success">
-    <h1>SUCCESS!</h1>
-    <p>Cloudbeds OAuth completed successfully.</p>
-  </div>
-  
-  <p class="label">Access Token (expires in ${expires_in}s):</p>
-  <div class="token-box">${access_token}</div>
-  
-  <p class="label">Refresh Token (save this to Secrets as CLOUDBEDS_REFRESH_TOKEN):</p>
-  <div class="token-box">${refresh_token || "No refresh token returned"}</div>
-  
-  <p class="note">
-    <strong>Important:</strong> Copy the Refresh Token above and save it as 
-    <code>CLOUDBEDS_REFRESH_TOKEN</code> in your Secrets tab.
-  </p>
-  
-  <p><a href="/booking">Go to Booking Page</a></p>
-</body>
-</html>
-    `;
-
-    return new NextResponse(html, {
-      headers: { "Content-Type": "text/html" },
-    });
-  } catch (error) {
-    console.error("OAuth token exchange error:", error);
-
-    let errorMessage = "Failed to exchange code for token";
-    if (axios.isAxiosError(error)) {
-      errorMessage = error.response?.data?.message || error.message;
-    }
-
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
   }
+
+  return NextResponse.json({
+    status: 'Missing Parameters',
+    message: 'No code or error received from Cloudbeds.',
+    received_url: request.url,
+    received_params: Object.fromEntries(searchParams.entries())
+  }, { status: 400 });
 }
