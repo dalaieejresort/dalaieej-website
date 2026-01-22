@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Script from "next/script";
 
 interface BookingButtonProps {
   variant?: "primary" | "small";
@@ -11,35 +11,24 @@ export default function BookingButton({
   variant = "primary", 
   label = "Book Your Stay" 
 }: BookingButtonProps) {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const scanForWidget = () => {
-      if (typeof window !== "undefined" && (window as any).BE) {
-        (window as any).BE.init();
-      }
-    };
-
-    scanForWidget();
-
-    const timer = setTimeout(scanForWidget, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const baseClasses = "bg-cream text-forest-green font-heading font-semibold rounded-lg hover:bg-white transition-colors duration-300 uppercase tracking-wider";
+  const baseClasses = "bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer";
   
   const variantClasses = variant === "primary" 
-    ? "px-8 py-4" 
+    ? "px-8 py-3" 
     : "px-6 py-3 text-sm";
 
   return (
-    <button
-      ref={buttonRef}
-      data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
-      className={`${baseClasses} ${variantClasses}`}
-    >
-      {label}
-    </button>
+    <div>
+      <button
+        data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
+        className={`${baseClasses} ${variantClasses}`}
+      >
+        {label}
+      </button>
+      <Script
+        src="https://us2.cloudbeds.com/widget/load/XQKeS3/immersive"
+        strategy="afterInteractive"
+      />
+    </div>
   );
 }
