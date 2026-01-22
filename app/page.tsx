@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin, Users, Star } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import BookingButton from "./components/BookingButton";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -211,12 +212,7 @@ export default function Home() {
               Contact our concierge team to start planning your stay.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
-                className="px-8 py-4 bg-cream text-forest-green font-heading font-semibold rounded-lg hover:bg-white transition-colors duration-300 uppercase tracking-wider"
-              >
-                Reserve Now
-              </button>
+              <BookingButton variant="primary" label="Reserve Now" />
               <button
                 onClick={scrollToRooms}
                 className="px-8 py-4 border-2 border-cream text-cream font-body font-semibold rounded-lg hover:bg-cream/10 transition-colors duration-300"
@@ -275,12 +271,7 @@ export default function Home() {
             >
               Check Availability
             </button>
-            <button
-              data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
-              className="px-6 py-3 bg-cream text-forest-green font-heading text-sm font-semibold rounded-lg hover:bg-white transition-colors duration-300 uppercase tracking-wider"
-            >
-              Book Your Stay
-            </button>
+            <BookingButton variant="small" label="Book Your Stay" />
           </div>
         </div>
       </motion.div>
