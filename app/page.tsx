@@ -6,6 +6,7 @@ import { Calendar, MapPin, Users, Star } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import BookingButton from "./components/BookingButton";
+import AvailabilityBar from "./components/AvailabilityBar";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -253,28 +254,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-forest-green/95 backdrop-blur-sm border-t border-cream/20 py-4 px-4"
-      >
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
-            <p className="font-heading text-cream text-lg">Ready to experience luxury?</p>
-            <p className="font-body text-cream/70 text-sm">Book your stay at Dalai Eej Resort</p>
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={scrollToRooms}
-              className="px-6 py-3 border border-cream/50 text-cream font-body text-sm rounded-lg hover:bg-cream/10 transition-colors duration-300"
-            >
-              Check Availability
-            </button>
-            <BookingButton variant="small" label="View Rooms" />
-          </div>
-        </div>
-      </motion.div>
+      <AvailabilityBar />
     </main>
   );
 }
