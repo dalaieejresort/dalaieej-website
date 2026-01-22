@@ -32,7 +32,7 @@ export default function RootLayout({
         {children}
         <Script
           src="https://us2.cloudbeds.com/widget/load/XQKeS3/immersive"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
       </body>
     </html>
