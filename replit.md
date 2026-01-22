@@ -24,10 +24,13 @@ app/
 │   └── page.tsx                      # Custom booking page with room search
 ├── payment/
 │   └── page.tsx                      # QPay payment terminal
+├── setup/
+│   └── page.tsx                      # Cloudbeds OAuth setup page
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds OAuth2 token manager & API client
 ├── api/
 │   ├── cloudbeds/
+│   │   ├── auth/route.ts             # Cloudbeds OAuth authorization endpoint
 │   │   └── availability/route.ts     # Cloudbeds room availability API
 │   └── qpay/
 │       ├── create-invoice/route.ts   # QPay invoice creation
@@ -43,16 +46,19 @@ app/
 4. **Amenities Section**: 4 key features with icons
 5. **Custom Booking Flow**: 
    - Cloudbeds API integration for real-time room availability
-   - OAuth2 client_credentials authentication
+   - OAuth2 refresh_token authentication
    - Date-based room search with enriched room details
 6. **QPay Integration**: Payment API for Mongolian payments
+7. **OAuth Setup**: /setup page to connect Cloudbeds and generate refresh token
 
 ### API Endpoints
+- `GET /api/cloudbeds/auth` - OAuth authorization flow (redirects to Cloudbeds)
 - `GET /api/cloudbeds/availability?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD` - Get available rooms
 - `POST /api/qpay/create-invoice` - Create QPay payment invoice
 
 ### Routes
 - `/` - Landing page
+- `/setup` - Cloudbeds OAuth connection page
 - `/booking` - Room search and booking (accepts ?checkin=&checkout= params)
 - `/payment` - QPay payment terminal (accepts ?bookingId=&amount= params)
 
@@ -62,6 +68,7 @@ app/
 CLOUDBEDS_CLIENT_ID=your_client_id
 CLOUDBEDS_CLIENT_SECRET=your_client_secret
 CLOUDBEDS_PROPERTY_ID=your_property_id
+CLOUDBEDS_REFRESH_TOKEN=your_refresh_token  # Generated via /setup
 
 # QPay API
 QPAY_USERNAME=your_qpay_username
@@ -76,6 +83,7 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-22**: Added OAuth setup tool (/setup and /api/cloudbeds/auth) for generating refresh tokens
 - **2026-01-22**: Added custom Cloudbeds booking integration with OAuth2 token manager, availability API, and booking page with room cards
 - **2026-01-22**: Initial build - Created landing page, QPay API routes, theme styling
 

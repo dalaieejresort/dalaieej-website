@@ -6,6 +6,7 @@ interface TokenResponse {
   access_token: string;
   token_type: string;
   expires_in: number;
+  refresh_token?: string;
 }
 
 interface TokenCache {
@@ -22,18 +23,24 @@ export async function getAccessToken(): Promise<string> {
 
   const clientId = process.env.CLOUDBEDS_CLIENT_ID;
   const clientSecret = process.env.CLOUDBEDS_CLIENT_SECRET;
+  const refreshToken = process.env.CLOUDBEDS_REFRESH_TOKEN;
 
   if (!clientId || !clientSecret) {
     throw new Error("Cloudbeds credentials not configured. Please set CLOUDBEDS_CLIENT_ID and CLOUDBEDS_CLIENT_SECRET.");
+  }
+
+  if (!refreshToken) {
+    throw new Error("Cloudbeds refresh token not configured. Please go to /setup to connect your Cloudbeds account.");
   }
 
   try {
     const response = await axios.post<TokenResponse>(
       `${CLOUDBEDS_API_BASE}/access_token`,
       new URLSearchParams({
-        grant_type: "client_credentials",
+        grant_type: "refresh_token",
         client_id: clientId,
         client_secret: clientSecret,
+        refresh_token: refreshToken,
       }),
       {
         headers: {
@@ -62,7 +69,7 @@ export async function getAccessToken(): Promise<string> {
       const message = error.response?.data?.message || error.message;
       
       if (status === 401 || status === 403) {
-        throw new Error(`Cloudbeds authentication failed: Invalid credentials. ${message}`);
+        throw new Error(`Cloudbeds authentication failed. Please reconnect at /setup. ${message}`);
       }
       throw new Error(`Cloudbeds API error (${status}): ${message}`);
     }
@@ -103,7 +110,7 @@ export async function cloudbedsGet<T>(endpoint: string, params?: Record<string, 
       
       if (status === 401) {
         tokenCache = null;
-        throw new Error("Cloudbeds session expired. Please retry.");
+        throw new Error("Cloudbeds session expired. Please reconnect at /setup.");
       }
       throw new Error(`Cloudbeds API error (${status}): ${message}`);
     }
