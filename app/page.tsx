@@ -212,7 +212,7 @@ export default function Home() {
               Contact our concierge team to start planning your stay.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <BookingButton variant="primary" label="Reserve Now" />
+              <BookingButton variant="primary" label="View Rooms" />
               <button
                 onClick={scrollToRooms}
                 className="px-8 py-4 border-2 border-cream text-cream font-body font-semibold rounded-lg hover:bg-cream/10 transition-colors duration-300"
@@ -271,7 +271,7 @@ export default function Home() {
             >
               Check Availability
             </button>
-            <BookingButton variant="small" label="Book Your Stay" />
+            <BookingButton variant="small" label="View Rooms" />
           </div>
         </div>
       </motion.div>
