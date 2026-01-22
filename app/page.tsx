@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   const openBooking = () => {
-    window.open("https://hotels.cloudbeds.com/reservation/177930597200001", "_blank");
+    window.open("https://us2.cloudbeds.com/reservation/XQKeS3", "_blank");
   };
 
   return (
