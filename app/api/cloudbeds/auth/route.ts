@@ -3,6 +3,7 @@ import axios from "axios";
 
 const CLOUDBEDS_OAUTH_URL = "https://hotels.cloudbeds.com/api/v1.1/oauth";
 const CLOUDBEDS_TOKEN_URL = "https://hotels.cloudbeds.com/api/v1.1/access_token";
+const REDIRECT_URI = "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth";
 
 export async function GET(request: NextRequest) {
   const clientId = process.env.CLOUDBEDS_CLIENT_ID;
@@ -16,13 +17,12 @@ export async function GET(request: NextRequest) {
   }
 
   const code = request.nextUrl.searchParams.get("code");
-  const currentUrl = `${request.nextUrl.origin}/api/cloudbeds/auth`;
 
   if (!code) {
     const authUrl = new URL(CLOUDBEDS_OAUTH_URL);
     authUrl.searchParams.set("response_type", "code");
     authUrl.searchParams.set("client_id", clientId);
-    authUrl.searchParams.set("redirect_uri", currentUrl);
+    authUrl.searchParams.set("redirect_uri", REDIRECT_URI);
     authUrl.searchParams.set("scope", "read:reservation,read:room");
 
     return NextResponse.redirect(authUrl.toString());
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
         grant_type: "authorization_code",
         client_id: clientId,
         client_secret: clientSecret,
-        redirect_uri: currentUrl,
+        redirect_uri: REDIRECT_URI,
         code: code,
       }),
       {
