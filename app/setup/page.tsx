@@ -1,8 +1,6 @@
-"use client";
-
-const CLIENT_ID = "live1_177930597200001_alX1GtenuJ5UZsTkg7KhqECV";
-const REDIRECT_URI = "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth";
-const CLOUDBEDS_AUTH_URL = `https://hotels.cloudbeds.com/api/v1.1/oauth?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=read:reservation,read:room`;
+const clientId = process.env.CLOUDBEDS_CLIENT_ID;
+const redirectUri = "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth";
+const authUrl = `https://hotels.cloudbeds.com/api/v1.1/oauth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=read:reservation,read:room,offline_access`;
 
 export default function SetupPage() {
   return (
@@ -17,7 +15,7 @@ export default function SetupPage() {
         </p>
 
         <a
-          href={CLOUDBEDS_AUTH_URL}
+          href={authUrl}
           className="inline-block px-8 py-4 bg-[#1A3C34] text-[#F5F5DC] font-serif text-lg uppercase tracking-widest hover:bg-[#1A3C34]/90 transition-all rounded-lg"
         >
           Connect Cloudbeds
@@ -41,7 +39,7 @@ export default function SetupPage() {
               <span>
                 Set your Redirect URI in Cloudbeds to:{" "}
                 <code className="bg-gray-100 px-1 rounded text-xs break-all">
-                  {REDIRECT_URI}
+                  {redirectUri}
                 </code>
               </span>
             </li>
