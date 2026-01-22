@@ -1,39 +1,13 @@
-modules = ["nodejs-20", "web", "postgresql-16"]
-run = "npm run dev"
-hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
+modules = ["nodejs-20"]
+
+[userenv]
+
+[userenv.shared]
+CLOUDBEDS_CLIENT_ID = "live1_177930597200001_alX1GtenuJ5UZsTkg7KhqECV"
+CLOUDBEDS_CLIENT_SECRET = "oiQgBSMmUOzqPfeEGJXjCu98Lcd5bK3A"
+CLOUDBEDS_PROPERTY_ID = "177930597200001"
+QPAY_USERNAME = "TEST_MERCHANT"
+QPAY_PASSWORD = "123456"
 
 [nix]
-channel = "stable-24_05"
-
-[[ports]]
-localPort = 5000
-externalPort = 80
-
-[env]
-PORT = "5000"
-
-[deployment]
-deploymentTarget = "autoscale"
-run = ["node", "./dist/index.cjs"]
-build = ["npm", "run", "build"]
-
-[workflows]
-runButton = "Project"
-
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Start application"
-
-[[workflows.workflow]]
-name = "Start application"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run dev"
-waitForPort = 5000
+channel = "stable-25_05"
