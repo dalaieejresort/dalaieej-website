@@ -212,8 +212,8 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={openBooking}
-                className="px-8 py-4 bg-cream text-forest-green font-body font-semibold rounded-lg hover:bg-white transition-colors duration-300"
+                data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
+                className="px-8 py-4 bg-cream text-forest-green font-heading font-semibold rounded-lg hover:bg-white transition-colors duration-300 uppercase tracking-wider"
               >
                 Reserve Now
               </button>
@@ -276,8 +276,8 @@ export default function Home() {
               Check Availability
             </button>
             <button
-              onClick={openBooking}
-              className="px-6 py-3 bg-cream text-forest-green font-body text-sm font-semibold rounded-lg hover:bg-white transition-colors duration-300"
+              data-be-url="https://us2.cloudbeds.com/reservation/XQKeS3"
+              className="px-6 py-3 bg-cream text-forest-green font-heading text-sm font-semibold rounded-lg hover:bg-white transition-colors duration-300 uppercase tracking-wider"
             >
               Book Your Stay
             </button>

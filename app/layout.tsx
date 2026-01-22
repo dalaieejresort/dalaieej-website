@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -29,6 +30,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${playfair.variable} ${lato.variable} antialiased`}>
         {children}
+        <Script
+          src="https://us2.cloudbeds.com/widget/load/XQKeS3/immersive"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
