@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-const CLOUDBEDS_OAUTH_URL = "https://hotels.cloudbeds.com/api/v1.1/oauth";
 const CLOUDBEDS_TOKEN_URL = "https://hotels.cloudbeds.com/api/v1.1/access_token";
 const REDIRECT_URI = "https://098718ea-addb-41fe-93a7-6bb3eb8e8db0-00-jrmc4jbez5aj.picard.replit.dev/api/cloudbeds/auth";
 
@@ -10,22 +9,19 @@ export async function GET(request: NextRequest) {
   const clientSecret = process.env.CLOUDBEDS_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    return new NextResponse(
-      "Error: CLOUDBEDS_CLIENT_ID and CLOUDBEDS_CLIENT_SECRET must be set in Secrets.",
-      { status: 500, headers: { "Content-Type": "text/plain" } }
+    return NextResponse.json(
+      { error: "CLOUDBEDS_CLIENT_ID and CLOUDBEDS_CLIENT_SECRET must be set in Secrets." },
+      { status: 500 }
     );
   }
 
   const code = request.nextUrl.searchParams.get("code");
 
   if (!code) {
-    const authUrl = new URL(CLOUDBEDS_OAUTH_URL);
-    authUrl.searchParams.set("response_type", "code");
-    authUrl.searchParams.set("client_id", clientId);
-    authUrl.searchParams.set("redirect_uri", REDIRECT_URI);
-    authUrl.searchParams.set("scope", "read:reservation,read:room");
-
-    return NextResponse.redirect(authUrl.toString());
+    return NextResponse.json(
+      { error: "No code provided. Please start the OAuth flow from /setup." },
+      { status: 400 }
+    );
   }
 
   try {
@@ -116,9 +112,9 @@ export async function GET(request: NextRequest) {
       errorMessage = error.response?.data?.message || error.message;
     }
 
-    return new NextResponse(`Error: ${errorMessage}`, {
-      status: 500,
-      headers: { "Content-Type": "text/plain" },
-    });
+    return NextResponse.json(
+      { error: errorMessage },
+      { status: 500 }
+    );
   }
 }
