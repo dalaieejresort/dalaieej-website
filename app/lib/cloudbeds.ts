@@ -1,86 +1,14 @@
 import axios from "axios";
 
-const CLOUDBEDS_API_BASE = "https://hotels.cloudbeds.com/api/v1.1";
-
-interface TokenResponse {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  refresh_token?: string;
-}
-
-interface TokenCache {
-  accessToken: string;
-  expiresAt: number;
-}
-
-let tokenCache: TokenCache | null = null;
-
-export async function getAccessToken(): Promise<string> {
-  if (tokenCache && tokenCache.expiresAt > Date.now() + 60000) {
-    return tokenCache.accessToken;
-  }
-
-  const clientId = process.env.CLOUDBEDS_CLIENT_ID;
-  const clientSecret = process.env.CLOUDBEDS_CLIENT_SECRET;
-  const refreshToken = process.env.CLOUDBEDS_REFRESH_TOKEN;
-
-  if (!clientId || !clientSecret) {
-    throw new Error("Cloudbeds credentials not configured. Please set CLOUDBEDS_CLIENT_ID and CLOUDBEDS_CLIENT_SECRET.");
-  }
-
-  if (!refreshToken) {
-    throw new Error("Cloudbeds refresh token not configured. Please go to /setup to connect your Cloudbeds account.");
-  }
-
-  try {
-    const response = await axios.post<TokenResponse>(
-      `${CLOUDBEDS_API_BASE}/access_token`,
-      new URLSearchParams({
-        grant_type: "refresh_token",
-        client_id: clientId,
-        client_secret: clientSecret,
-        refresh_token: refreshToken,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-
-    if (!response.data.access_token) {
-      throw new Error("Invalid token response from Cloudbeds");
-    }
-
-    const { access_token, expires_in } = response.data;
-
-    tokenCache = {
-      accessToken: access_token,
-      expiresAt: Date.now() + (expires_in || 3600) * 1000,
-    };
-
-    return access_token;
-  } catch (error) {
-    tokenCache = null;
-    
-    if (axios.isAxiosError(error)) {
-      const status = error.response?.status;
-      const message = error.response?.data?.message || error.message;
-      
-      if (status === 401 || status === 403) {
-        throw new Error(`Cloudbeds authentication failed. Please reconnect at /setup. ${message}`);
-      }
-      throw new Error(`Cloudbeds API error (${status}): ${message}`);
-    }
-    
-    throw new Error("Failed to authenticate with Cloudbeds");
-  }
-}
+const CLOUDBEDS_API_BASE = "https://hotels.cloudbeds.com/api/v1.2";
 
 export async function cloudbedsGet<T>(endpoint: string, params?: Record<string, string>): Promise<T> {
-  const accessToken = await getAccessToken();
+  const apiKey = process.env.CLOUDBEDS_API_KEY;
   const propertyId = process.env.CLOUDBEDS_PROPERTY_ID;
+
+  if (!apiKey) {
+    throw new Error("Cloudbeds API key not configured. Please set CLOUDBEDS_API_KEY.");
+  }
 
   if (!propertyId) {
     throw new Error("Cloudbeds property ID not configured. Please set CLOUDBEDS_PROPERTY_ID.");
@@ -98,7 +26,7 @@ export async function cloudbedsGet<T>(endpoint: string, params?: Record<string, 
   try {
     const response = await axios.get<T>(url.toString(), {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        "x-api-key": apiKey,
       },
     });
 
@@ -109,8 +37,7 @@ export async function cloudbedsGet<T>(endpoint: string, params?: Record<string, 
       const message = error.response?.data?.message || error.message;
       
       if (status === 401) {
-        tokenCache = null;
-        throw new Error("Cloudbeds session expired. Please reconnect at /setup.");
+        throw new Error("Cloudbeds API key is invalid. Please check CLOUDBEDS_API_KEY.");
       }
       throw new Error(`Cloudbeds API error (${status}): ${message}`);
     }
@@ -127,6 +54,8 @@ export interface RoomType {
   childrenIncluded: number;
   roomTypePhotos: string[];
   roomTypeFeatures: string[];
+  roomRate?: number;
+  roomRateCurrency?: string;
 }
 
 export interface RoomRate {
@@ -139,6 +68,11 @@ export interface RoomRate {
   currency: string;
 }
 
+export interface RoomTypesResponse {
+  success: boolean;
+  data: RoomType[];
+}
+
 export interface AvailabilityResponse {
   success: boolean;
   data: {
@@ -147,9 +81,4 @@ export interface AvailabilityResponse {
     endDate: string;
     roomTypes: RoomRate[];
   };
-}
-
-export interface RoomTypesResponse {
-  success: boolean;
-  data: RoomType[];
 }
