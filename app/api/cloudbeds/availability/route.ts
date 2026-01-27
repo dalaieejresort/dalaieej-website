@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const availabilityData = await cloudbedsGet<AvailabilityResponse>("/getAvailableRoomTypes", {
+    const availabilityData = await cloudbedsGet<any>("/getAvailableRoomTypes", {
       startDate: checkin,
       endDate: checkout,
     });
