@@ -3,26 +3,77 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { Copy, Check, ChevronDown, ChevronUp, Smartphone, QrCode } from "lucide-react";
+
+interface BankUrl {
+  name: string;
+  description: string;
+  logo: string;
+  link: string;
+}
 
 function PaymentContent() {
   const searchParams = useSearchParams();
   
   const [bookingId, setBookingId] = useState("");
   const [amount, setAmount] = useState("");
+  const [nights, setNights] = useState("1");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [qrCode, setQrCode] = useState("");
   const [invoiceId, setInvoiceId] = useState("");
+  const [bankUrls, setBankUrls] = useState<BankUrl[]>([]);
   const [checkingStatus, setCheckingStatus] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [manualExpanded, setManualExpanded] = useState(false);
 
   useEffect(() => {
     const urlBookingId = searchParams.get("bookingId");
     const urlAmount = searchParams.get("amount");
+    const urlNights = searchParams.get("nights");
     
     if (urlBookingId) setBookingId(urlBookingId);
     if (urlAmount) setAmount(urlAmount);
+    if (urlNights) setNights(urlNights);
+
+    if (urlBookingId && urlAmount) {
+      generateQRAutomatic(urlBookingId, urlAmount);
+    }
   }, [searchParams]);
+
+  const generateQRAutomatic = async (bid: string, amt: string) => {
+    const numAmount = parseFloat(amt);
+    if (isNaN(numAmount) || numAmount <= 0) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/qpay/create-invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: numAmount,
+          description: `Dalai Eej Resort - Booking ${bid}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to generate payment");
+      }
+
+      setQrCode(data.qrCode);
+      setInvoiceId(data.invoiceId);
+      setBankUrls(data.bankUrls || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateQR = async () => {
     if (!bookingId || !amount) {
@@ -39,13 +90,12 @@ function PaymentContent() {
     setLoading(true);
     setError("");
     setQrCode("");
+    setBankUrls([]);
 
     try {
       const response = await fetch("/api/qpay/create-invoice", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: numAmount,
           description: `Dalai Eej Resort - Booking ${bookingId}`,
@@ -60,6 +110,7 @@ function PaymentContent() {
 
       setQrCode(data.qrCode);
       setInvoiceId(data.invoiceId);
+      setBankUrls(data.bankUrls || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -77,21 +128,29 @@ function PaymentContent() {
     }, 2000);
   };
 
+  const copyAccountNumber = () => {
+    navigator.clipboard.writeText("5765050027");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const formattedAmount = amount ? parseInt(amount).toLocaleString() : "0";
+
   return (
-    <main className="min-h-screen bg-[#1A3C34] py-12 px-4">
-      <div className="max-w-xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="font-serif text-4xl md:text-5xl text-[#F5F5DC] mb-4">
+    <main className="min-h-screen bg-[#1A3C34] py-8 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="font-serif text-3xl md:text-4xl text-[#F5F5DC] mb-3">
             Complete Your Reservation
           </h1>
-          <p className="font-sans text-[#F5F5DC]/70">
-            Pay securely using QPay
+          <p className="font-sans text-[#F5F5DC]/70 text-sm">
+            Pay securely using QPay or Bank Transfer
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-[#F5F5DC]/20">
-          {!qrCode ? (
-            <div className="space-y-6">
+        {!qrCode && !loading ? (
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-[#F5F5DC]/20">
+            <div className="space-y-5">
               <div>
                 <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
                   Booking Reference Number
@@ -129,38 +188,157 @@ function PaymentContent() {
                 disabled={loading}
                 className="w-full py-4 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Generating..." : "Generate QPay QR"}
+                {loading ? "Generating..." : "Generate Payment"}
               </button>
             </div>
-          ) : (
-            <div className="space-y-6 text-center">
-              <div>
-                <p className="text-[#F5F5DC]/70 text-sm mb-2">Booking Reference</p>
-                <p className="text-[#F5F5DC] font-serif text-xl">{bookingId}</p>
+          </div>
+        ) : loading ? (
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-[#F5F5DC]/20 text-center">
+            <p className="text-[#F5F5DC]">Generating payment options...</p>
+          </div>
+        ) : (
+          <>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <p className="text-[#F5F5DC]/70 text-xs">Booking</p>
+                  <p className="text-[#F5F5DC] font-serif">{bookingId}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[#F5F5DC]/70 text-xs">{nights} Night{parseInt(nights) !== 1 ? 's' : ''}</p>
+                  <p className="text-[#F5F5DC] font-serif text-xl">{formattedAmount} MNT</p>
+                </div>
               </div>
-              
-              <div>
-                <p className="text-[#F5F5DC]/70 text-sm mb-2">Amount</p>
-                <p className="text-[#F5F5DC] font-serif text-2xl">{parseInt(amount).toLocaleString()} MNT</p>
-              </div>
+            </div>
 
-              <div className="py-6">
-                <p className="text-[#F5F5DC]/70 text-sm mb-4">Scan with your banking app</p>
-                <div className="bg-white p-4 rounded-xl inline-block">
+            {bankUrls.length > 0 && (
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Smartphone className="w-5 h-5 text-[#F5F5DC]" />
+                  <h2 className="font-serif text-lg text-[#F5F5DC]">Pay with Banking App</h2>
+                </div>
+                <p className="text-[#F5F5DC]/60 text-sm mb-4">
+                  Tap your bank to open the app and complete payment
+                </p>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {bankUrls.map((bank, index) => (
+                    <a
+                      key={index}
+                      href={bank.link}
+                      className="flex flex-col items-center p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all border border-[#F5F5DC]/10 hover:border-[#F5F5DC]/30"
+                    >
+                      {bank.logo ? (
+                        <img
+                          src={bank.logo}
+                          alt={bank.name}
+                          className="w-12 h-12 object-contain mb-2 rounded-lg"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 bg-[#F5F5DC]/20 rounded-lg mb-2 flex items-center justify-center">
+                          <span className="text-[#F5F5DC] text-lg font-bold">
+                            {bank.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                      <span className="text-[#F5F5DC] text-xs text-center font-medium line-clamp-2">
+                        {bank.name}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
+              <div className="flex items-center gap-2 mb-4">
+                <QrCode className="w-5 h-5 text-[#F5F5DC]" />
+                <h2 className="font-serif text-lg text-[#F5F5DC]">Scan QR Code</h2>
+              </div>
+              <p className="text-[#F5F5DC]/60 text-sm mb-4 hidden md:block">
+                Scan with your banking app to pay
+              </p>
+              <p className="text-[#F5F5DC]/60 text-sm mb-4 md:hidden">
+                Or scan this QR code with another device
+              </p>
+              
+              <div className="flex justify-center">
+                <div className="bg-white p-3 rounded-xl inline-block">
                   <img
                     src={`data:image/png;base64,${qrCode}`}
                     alt="QPay QR Code"
-                    className="w-64 h-64 mx-auto"
+                    className="w-48 h-48 md:w-56 md:h-56"
                   />
                 </div>
               </div>
 
               {invoiceId && (
-                <p className="text-[#F5F5DC]/50 text-xs">
-                  Invoice ID: {invoiceId}
+                <p className="text-[#F5F5DC]/40 text-xs text-center mt-3">
+                  Invoice: {invoiceId}
                 </p>
               )}
+            </div>
 
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-[#F5F5DC]/20 mb-4 overflow-hidden">
+              <button
+                onClick={() => setManualExpanded(!manualExpanded)}
+                className="w-full p-5 flex items-center justify-between text-left"
+              >
+                <div>
+                  <h2 className="font-serif text-lg text-[#F5F5DC]">Manual Bank Transfer</h2>
+                  <p className="text-[#F5F5DC]/60 text-sm">Alternative payment method</p>
+                </div>
+                {manualExpanded ? (
+                  <ChevronUp className="w-5 h-5 text-[#F5F5DC]/70" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-[#F5F5DC]/70" />
+                )}
+              </button>
+              
+              {manualExpanded && (
+                <div className="px-5 pb-5 space-y-4">
+                  <div className="bg-[#F5F5DC]/10 rounded-xl p-4 space-y-3">
+                    <div>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Bank</p>
+                      <p className="text-[#F5F5DC] font-medium">Khan Bank</p>
+                    </div>
+                    <div>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Account Number</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[#F5F5DC] font-mono text-lg">5765050027</p>
+                        <button
+                          onClick={copyAccountNumber}
+                          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                          title="Copy account number"
+                        >
+                          {copied ? (
+                            <Check className="w-4 h-4 text-green-400" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-[#F5F5DC]/70" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Account Name</p>
+                      <p className="text-[#F5F5DC] font-medium">Dalai Eej Resort</p>
+                    </div>
+                    <div>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Amount</p>
+                      <p className="text-[#F5F5DC] font-serif text-xl">{formattedAmount} MNT</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-4">
+                    <p className="text-amber-200 text-sm">
+                      <strong>Important:</strong> In the transfer description/memo, please include your <strong>name</strong>, <strong>phone number</strong>, or <strong>Booking ID: {bookingId}</strong>
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3">
               <button
                 onClick={checkPaymentStatus}
                 disabled={checkingStatus}
@@ -170,7 +348,7 @@ function PaymentContent() {
               </button>
 
               {paymentStatus && (
-                <div className="text-[#F5F5DC]/70 text-sm py-2">
+                <div className="text-[#F5F5DC]/70 text-sm text-center py-2">
                   {paymentStatus}
                 </div>
               )}
@@ -179,15 +357,16 @@ function PaymentContent() {
                 onClick={() => {
                   setQrCode("");
                   setInvoiceId("");
+                  setBankUrls([]);
                   setPaymentStatus("");
                 }}
-                className="text-[#F5F5DC]/50 text-sm hover:text-[#F5F5DC] transition-colors"
+                className="w-full text-[#F5F5DC]/50 text-sm hover:text-[#F5F5DC] transition-colors py-2"
               >
-                Generate New QR
+                Generate New Payment
               </button>
             </div>
-          )}
-        </div>
+          </>
+        )}
 
         <div className="mt-8 text-center">
           <a
