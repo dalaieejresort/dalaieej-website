@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { Copy, Check, ChevronDown, ChevronUp, Smartphone, QrCode } from "lucide-react";
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface BankUrl {
   name: string;
@@ -13,7 +15,12 @@ interface BankUrl {
 }
 
 function PaymentContent() {
+  const t = useTranslations('payment');
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  
+  const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
+  const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
   const [bookingId, setBookingId] = useState("");
   const [amount, setAmount] = useState("");
@@ -135,16 +142,21 @@ function PaymentContent() {
   };
 
   const formattedAmount = amount ? parseInt(amount).toLocaleString() : "0";
+  const tBooking = useTranslations('booking');
 
   return (
     <main className="min-h-screen bg-[#1A3C34] py-8 px-4">
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSwitcher />
+      </div>
+      
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="font-serif text-3xl md:text-4xl text-[#F5F5DC] mb-3">
-            Complete Your Reservation
+            {t('title')}
           </h1>
           <p className="font-sans text-[#F5F5DC]/70 text-sm">
-            Pay securely using QPay or Bank Transfer
+            {t('subtitle')}
           </p>
         </div>
 
@@ -153,26 +165,26 @@ function PaymentContent() {
             <div className="space-y-5">
               <div>
                 <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
-                  Booking Reference Number
+                  {t('bookingRef')}
                 </label>
                 <input
                   type="text"
                   value={bookingId}
                   onChange={(e) => setBookingId(e.target.value)}
-                  placeholder="Enter your booking ID"
+                  placeholder={t('enterBookingId')}
                   className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
                 />
               </div>
 
               <div>
                 <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
-                  Amount to Pay (MNT)
+                  {t('amount')}
                 </label>
                 <input
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter amount in MNT"
+                  placeholder={t('enterAmount')}
                   className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
                 />
               </div>
@@ -188,24 +200,24 @@ function PaymentContent() {
                 disabled={loading}
                 className="w-full py-4 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Generating..." : "Generate Payment"}
+                {loading ? t('generating') : t('generatePayment')}
               </button>
             </div>
           </div>
         ) : loading ? (
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-[#F5F5DC]/20 text-center">
-            <p className="text-[#F5F5DC]">Generating payment options...</p>
+            <p className="text-[#F5F5DC]">{t('generating')}</p>
           </div>
         ) : (
           <>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
               <div className="flex justify-between items-center mb-4">
                 <div>
-                  <p className="text-[#F5F5DC]/70 text-xs">Booking</p>
+                  <p className="text-[#F5F5DC]/70 text-xs">{t('bookingRef')}</p>
                   <p className="text-[#F5F5DC] font-serif">{bookingId}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#F5F5DC]/70 text-xs">{nights} Night{parseInt(nights) !== 1 ? 's' : ''}</p>
+                  <p className="text-[#F5F5DC]/70 text-xs">{nights} {parseInt(nights) !== 1 ? tBooking('nights') : tBooking('night')}</p>
                   <p className="text-[#F5F5DC] font-serif text-xl">{formattedAmount} MNT</p>
                 </div>
               </div>
@@ -215,10 +227,10 @@ function PaymentContent() {
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
                 <div className="flex items-center gap-2 mb-4">
                   <Smartphone className="w-5 h-5 text-[#F5F5DC]" />
-                  <h2 className="font-serif text-lg text-[#F5F5DC]">Pay with Banking App</h2>
+                  <h2 className="font-serif text-lg text-[#F5F5DC]">{t('payWithApp')}</h2>
                 </div>
                 <p className="text-[#F5F5DC]/60 text-sm mb-4">
-                  Tap your bank to open the app and complete payment
+                  {t('tapBank')}
                 </p>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -253,13 +265,13 @@ function PaymentContent() {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
               <div className="flex items-center gap-2 mb-4">
                 <QrCode className="w-5 h-5 text-[#F5F5DC]" />
-                <h2 className="font-serif text-lg text-[#F5F5DC]">Scan QR Code</h2>
+                <h2 className="font-serif text-lg text-[#F5F5DC]">{t('scanQR')}</h2>
               </div>
               <p className="text-[#F5F5DC]/60 text-sm mb-4 hidden md:block">
-                Scan with your banking app to pay
+                {t('scanWithApp')}
               </p>
               <p className="text-[#F5F5DC]/60 text-sm mb-4 md:hidden">
-                Or scan this QR code with another device
+                {t('scanOtherDevice')}
               </p>
               
               <div className="flex justify-center">
@@ -285,8 +297,8 @@ function PaymentContent() {
                 className="w-full p-5 flex items-center justify-between text-left"
               >
                 <div>
-                  <h2 className="font-serif text-lg text-[#F5F5DC]">Manual Bank Transfer</h2>
-                  <p className="text-[#F5F5DC]/60 text-sm">Alternative payment method</p>
+                  <h2 className="font-serif text-lg text-[#F5F5DC]">{t('manualTransfer')}</h2>
+                  <p className="text-[#F5F5DC]/60 text-sm">{t('alternativePayment')}</p>
                 </div>
                 {manualExpanded ? (
                   <ChevronUp className="w-5 h-5 text-[#F5F5DC]/70" />
@@ -299,11 +311,11 @@ function PaymentContent() {
                 <div className="px-5 pb-5 space-y-4">
                   <div className="bg-[#F5F5DC]/10 rounded-xl p-4 space-y-3">
                     <div>
-                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Bank</p>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">{t('bank')}</p>
                       <p className="text-[#F5F5DC] font-medium">Khan Bank</p>
                     </div>
                     <div>
-                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Account Number</p>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">{t('accountNumber')}</p>
                       <div className="flex items-center gap-2">
                         <p className="text-[#F5F5DC] font-mono text-lg">5765050027</p>
                         <button
@@ -320,18 +332,18 @@ function PaymentContent() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Account Name</p>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">{t('accountName')}</p>
                       <p className="text-[#F5F5DC] font-medium">Dalai Eej Resort</p>
                     </div>
                     <div>
-                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">Amount</p>
+                      <p className="text-[#F5F5DC]/60 text-xs uppercase tracking-wider">{t('amount')}</p>
                       <p className="text-[#F5F5DC] font-serif text-xl">{formattedAmount} MNT</p>
                     </div>
                   </div>
                   
                   <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-4">
                     <p className="text-amber-200 text-sm">
-                      <strong>Important:</strong> In the transfer description/memo, please include your <strong>name</strong>, <strong>phone number</strong>, or <strong>Booking ID: {bookingId}</strong>
+                      <strong>Important:</strong> {t('importantMemo')}: {bookingId}
                     </p>
                   </div>
                 </div>
@@ -344,7 +356,7 @@ function PaymentContent() {
                 disabled={checkingStatus}
                 className="w-full py-4 border-2 border-[#F5F5DC] text-[#F5F5DC] font-serif uppercase tracking-widest hover:bg-[#F5F5DC]/10 transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50"
               >
-                {checkingStatus ? "Checking..." : "Check Payment Status"}
+                {checkingStatus ? t('checking') : t('checkStatus')}
               </button>
 
               {paymentStatus && (
@@ -362,7 +374,7 @@ function PaymentContent() {
                 }}
                 className="w-full text-[#F5F5DC]/50 text-sm hover:text-[#F5F5DC] transition-colors py-2"
               >
-                Generate New Payment
+                {t('generateNew')}
               </button>
             </div>
           </>
@@ -370,10 +382,10 @@ function PaymentContent() {
 
         <div className="mt-8 text-center">
           <a
-            href="/"
+            href={localePrefix || "/"}
             className="text-[#F5F5DC]/50 text-sm hover:text-[#F5F5DC] transition-colors"
           >
-            &larr; Back to Home
+            &larr; {tBooking('backToHome')}
           </a>
         </div>
       </div>
@@ -382,10 +394,12 @@ function PaymentContent() {
 }
 
 export default function PaymentPage() {
+  const t = useTranslations('common');
+  
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-[#1A3C34] py-12 px-4 flex items-center justify-center">
-        <p className="text-[#F5F5DC]">Loading...</p>
+        <p className="text-[#F5F5DC]">{t('loading')}</p>
       </main>
     }>
       <PaymentContent />

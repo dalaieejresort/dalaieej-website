@@ -1,7 +1,7 @@
 # Dalai Eej Resort - Luxury Hotel Landing Page
 
 ## Overview
-A luxury hotel landing page for Dalai Eej Resort built with Next.js 16 (App Router). The site features a heritage luxury design with Deep Forest Green (#1A3C34), Cream (#F5F5DC), and White color scheme.
+A luxury hotel landing page for Dalai Eej Resort built with Next.js 16 (App Router). The site features a heritage luxury design with Deep Forest Green (#1A3C34), Cream (#F5F5DC), and White color scheme. Supports English and Mongolian languages.
 
 ## Project Architecture
 
@@ -12,18 +12,25 @@ A luxury hotel landing page for Dalai Eej Resort built with Next.js 16 (App Rout
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **HTTP Client**: Axios (for Cloudbeds & QPay APIs)
+- **i18n**: next-intl for English/Mongolian support
 - **Utilities**: clsx, tailwind-merge, uuid
 
 ### File Structure
 ```
 app/
-├── page.tsx                          # Main landing page with hero, rooms, amenities
-├── layout.tsx                        # Root layout with fonts
+├── layout.tsx                        # Root layout (minimal wrapper)
 ├── globals.css                       # Theme colors and custom styles
-├── booking/
-│   └── page.tsx                      # Custom booking page with room search
-├── payment/
-│   └── page.tsx                      # QPay payment terminal
+├── [locale]/
+│   ├── layout.tsx                    # Locale layout with NextIntlClientProvider
+│   ├── page.tsx                      # Main landing page with hero, rooms, amenities
+│   ├── booking/
+│   │   └── page.tsx                  # Custom booking page with room search
+│   └── payment/
+│       └── page.tsx                  # QPay payment terminal
+├── components/
+│   ├── AvailabilityBar.tsx           # Fixed booking bar with date pickers
+│   ├── LanguageSwitcher.tsx          # EN/MN toggle button
+│   └── BookingButton.tsx             # Booking button component
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
@@ -32,6 +39,12 @@ app/
 │   └── qpay/
 │       ├── create-invoice/route.ts   # QPay invoice creation
 │       └── webhook/route.ts          # QPay payment webhook
+messages/
+├── en.json                           # English translations
+├── mn.json                           # Mongolian translations
+i18n/
+└── request.ts                        # next-intl configuration
+middleware.ts                         # Locale routing middleware
 ```
 
 ### Key Features
@@ -52,9 +65,10 @@ app/
 - `POST /api/qpay/create-invoice` - Create QPay payment invoice
 
 ### Routes
-- `/` - Landing page
-- `/booking` - Room search and booking (accepts ?checkin=&checkout= params)
-- `/payment` - QPay payment terminal (accepts ?bookingId=&amount= params)
+- `/` or `/en` - English landing page
+- `/mn` - Mongolian landing page
+- `/booking` or `/mn/booking` - Room search and booking (accepts ?checkin=&checkout= params)
+- `/payment` or `/mn/payment` - QPay payment terminal (accepts ?bookingId=&amount=&nights= params)
 
 ### Environment Variables Required
 ```
@@ -75,6 +89,9 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-27**: Added multi-language support (English/Mongolian) with next-intl, language switcher, and translated UI
+- **2026-01-27**: Enhanced payment page with mobile deep links for Mongolian banks and manual transfer section
+- **2026-01-27**: Fixed booking flow: proper navigation, date defaults (3 nights), total price calculation
 - **2026-01-27**: Switched to Cloudbeds API Key authentication (x-api-key header), removed OAuth setup
 - **2026-01-22**: Added custom Cloudbeds booking integration with availability API and booking page
 - **2026-01-22**: Initial build - Created landing page, QPay API routes, theme styling

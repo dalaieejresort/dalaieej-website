@@ -3,14 +3,9 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Users, Star } from "lucide-react";
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import BookingButton from "./components/BookingButton";
-import AvailabilityBar from "./components/AvailabilityBar";
-
-function cn(...inputs: (string | undefined | null | false)[]) {
-  return twMerge(clsx(inputs));
-}
+import { useTranslations } from 'next-intl';
+import AvailabilityBar from "../components/AvailabilityBar";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 const rooms = [
   {
@@ -41,18 +36,19 @@ const amenities = [
 ];
 
 export default function Home() {
+  const t = useTranslations();
   const roomsRef = useRef<HTMLDivElement>(null);
 
   const scrollToRooms = () => {
     roomsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const openBooking = () => {
-    window.open("https://us2.cloudbeds.com/reservation/XQKeS3", "_blank");
-  };
-
   return (
     <main className="relative min-h-screen">
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSwitcher />
+      </div>
+
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-forest-green">
           <video
@@ -80,7 +76,7 @@ export default function Home() {
             transition={{ duration: 2, delay: 0.5 }}
             className="font-heading text-5xl md:text-7xl lg:text-8xl text-cream mb-6 tracking-wide"
           >
-            Dalai Eej Resort
+            {t('hero.title')}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -88,7 +84,7 @@ export default function Home() {
             transition={{ duration: 1.5, delay: 1 }}
             className="font-body text-lg md:text-xl text-cream/90 max-w-2xl mx-auto"
           >
-            Experience the timeless beauty of Mongolia in unparalleled luxury
+            {t('hero.subtitle')}
           </motion.p>
         </motion.div>
 
@@ -124,11 +120,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
-              A Sanctuary of Serenity
+              {t('amenities.title')}
             </h2>
             <p className="font-body text-forest-green/80 max-w-2xl mx-auto text-lg">
-              Nestled in the heart of Mongolia&apos;s pristine wilderness, Dalai Eej Resort 
-              offers an escape into nature without compromising on luxury.
+              {t('amenities.subtitle')}
             </p>
           </motion.div>
 
@@ -163,10 +158,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
-              Accommodations
+              {t('rooms.title')}
             </h2>
             <p className="font-body text-forest-green/80 max-w-2xl mx-auto text-lg">
-              Choose from our collection of thoughtfully designed spaces
+              {t('rooms.subtitle')}
             </p>
           </motion.div>
 
@@ -206,19 +201,17 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="font-heading text-4xl md:text-5xl text-cream mb-6">
-              Begin Your Journey
+              {t('nav.book')}
             </h2>
             <p className="font-body text-cream/80 text-lg mb-8 max-w-2xl mx-auto">
-              Let us create an unforgettable experience tailored to your desires. 
-              Contact our concierge team to start planning your stay.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <BookingButton variant="primary" label="View Rooms" />
               <button
                 onClick={scrollToRooms}
                 className="px-8 py-4 border-2 border-cream text-cream font-body font-semibold rounded-lg hover:bg-cream/10 transition-colors duration-300"
               >
-                Explore Rooms
+                {t('nav.rooms')}
               </button>
             </div>
           </motion.div>
@@ -229,9 +222,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div>
-              <h3 className="font-heading text-2xl text-cream mb-4">Dalai Eej Resort</h3>
+              <h3 className="font-heading text-2xl text-cream mb-4">{t('hero.title')}</h3>
               <p className="font-body text-cream/70 text-sm">
-                Luxury retreat in the heart of Mongolia
+                {t('hero.subtitle')}
               </p>
             </div>
             <div>
@@ -248,7 +241,7 @@ export default function Home() {
           </div>
           <div className="mt-12 pt-8 border-t border-cream/20 text-center">
             <p className="font-body text-cream/50 text-sm">
-              &copy; {new Date().getFullYear()} Dalai Eej Resort. All rights reserved.
+              &copy; {new Date().getFullYear()} {t('hero.title')}. All rights reserved.
             </p>
           </div>
         </div>

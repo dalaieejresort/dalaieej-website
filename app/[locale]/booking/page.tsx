@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { Users, Check } from "lucide-react";
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface Room {
   roomTypeID: string;
@@ -36,7 +38,12 @@ function calculateNights(checkinDate: string, checkoutDate: string): number {
 }
 
 function BookingContent() {
+  const t = useTranslations('booking');
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  
+  const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
+  const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
@@ -70,8 +77,6 @@ function BookingContent() {
       );
       const data: AvailabilityData = await response.json();
 
-      console.log("Frontend received:", data);
-
       if (!response.ok) {
         throw new Error((data as any).error || "Failed to fetch availability");
       }
@@ -95,7 +100,7 @@ function BookingContent() {
   };
 
   const handleBookWithQPay = (room: Room, totalPrice: number) => {
-    const paymentUrl = `/payment?bookingId=${room.roomTypeID}-${Date.now()}&amount=${totalPrice}&nights=${numberOfNights}`;
+    const paymentUrl = `${localePrefix}/payment?bookingId=${room.roomTypeID}-${Date.now()}&amount=${totalPrice}&nights=${numberOfNights}`;
     window.location.href = paymentUrl;
   };
 
@@ -109,19 +114,23 @@ function BookingContent() {
 
   return (
     <main className="min-h-screen bg-[#F5F5DC]">
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSwitcher />
+      </div>
+      
       <div className="bg-[#1A3C34] py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl text-[#F5F5DC] mb-4">
-            Find Your Perfect Room
+            {t('findRoom')}
           </h1>
           <p className="font-sans text-[#F5F5DC]/70 mb-8">
-            Select your dates to view available accommodations
+            {t('selectDates')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-3xl mx-auto">
             <div className="flex flex-col">
               <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                Check-in
+                {t('checkIn')}
               </label>
               <input
                 type="date"
@@ -134,7 +143,7 @@ function BookingContent() {
 
             <div className="flex flex-col">
               <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                Check-out
+                {t('checkOut')}
               </label>
               <input
                 type="date"
@@ -150,7 +159,7 @@ function BookingContent() {
               disabled={loading}
               className="mt-6 sm:mt-6 px-8 py-3 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50"
             >
-              {loading ? "Searching..." : "Search Rooms"}
+              {loading ? t('loading') : t('searchRooms')}
             </button>
           </div>
 
@@ -165,18 +174,14 @@ function BookingContent() {
       <div className="max-w-6xl mx-auto py-12 px-4">
         {loading && (
           <div className="text-center py-12">
-            <p className="text-[#1A3C34]/70">Loading available rooms...</p>
+            <p className="text-[#1A3C34]/70">{t('loading')}</p>
           </div>
         )}
 
         {!loading && searched && rooms.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-[#1A3C34]/70 text-lg">
-              No rooms available for the selected dates.
-            </p>
-            <p className="text-[#1A3C34]/50 mt-2">
-              Please try different dates.
-            </p>
+            <p className="text-[#1A3C34]/70 text-lg">{t('noRooms')}</p>
+            <p className="text-[#1A3C34]/50 mt-2">{t('tryDifferent')}</p>
           </div>
         )}
 
@@ -202,7 +207,7 @@ function BookingContent() {
                     />
                     {room.roomsAvailable && room.roomsAvailable <= 3 && (
                       <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                        Only {room.roomsAvailable} left
+                        {t('onlyLeft', { count: room.roomsAvailable })}
                       </div>
                     )}
                   </div>
@@ -219,7 +224,7 @@ function BookingContent() {
                     <div className="flex items-center gap-4 mb-4 text-sm text-[#1A3C34]/70">
                       <div className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
-                        <span>Up to {room.maxGuests || 2} guests</span>
+                        <span>{t('upToGuests', { count: room.maxGuests || 2 })}</span>
                       </div>
                     </div>
 
@@ -239,7 +244,7 @@ function BookingContent() {
 
                     <div className="pt-4 border-t border-[#1A3C34]/10">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-[#1A3C34]/50 text-xs uppercase">Per Night</p>
+                        <p className="text-[#1A3C34]/50 text-xs uppercase">{t('perNight')}</p>
                         {hasPrice && (
                           <p className="font-serif text-lg text-[#1A3C34]">
                             {perNightRate.toLocaleString()} <span className="text-sm">{room.currency || "MNT"}</span>
@@ -250,7 +255,7 @@ function BookingContent() {
                         <>
                           <div className="flex items-center justify-between mb-4">
                             <p className="text-[#1A3C34] text-sm font-semibold">
-                              Total for {numberOfNights} {numberOfNights === 1 ? "Night" : "Nights"}
+                              {t('totalFor')} {numberOfNights} {numberOfNights === 1 ? t('night') : t('nights')}
                             </p>
                             <p className="font-serif text-2xl text-[#1A3C34] font-bold">
                               {totalPrice.toLocaleString()} <span className="text-sm">{room.currency || "MNT"}</span>
@@ -260,19 +265,19 @@ function BookingContent() {
                             onClick={() => handleBookWithQPay(room, totalPrice)}
                             className="w-full px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
                           >
-                            Book with QPay
+                            {t('bookWithQPay')}
                           </button>
                         </>
                       ) : (
                         <div className="text-center">
                           <p className="font-serif text-lg text-[#1A3C34]/50 mb-4">
-                            Contact us for pricing
+                            {t('contactUs')}
                           </p>
                           <button
                             disabled
                             className="w-full px-6 py-3 bg-gray-300 text-gray-500 font-serif uppercase text-sm tracking-wider rounded-lg cursor-not-allowed"
                           >
-                            Unavailable
+                            {t('unavailable')}
                           </button>
                         </div>
                       )}
@@ -286,19 +291,17 @@ function BookingContent() {
 
         {!searched && !loading && (
           <div className="text-center py-12">
-            <p className="text-[#1A3C34]/50 text-lg">
-              Select your dates above to see available rooms
-            </p>
+            <p className="text-[#1A3C34]/50 text-lg">{t('selectDatesPrompt')}</p>
           </div>
         )}
       </div>
 
       <div className="py-8 text-center">
         <a
-          href="/"
+          href={localePrefix || "/"}
           className="text-[#1A3C34]/50 text-sm hover:text-[#1A3C34] transition-colors"
         >
-          &larr; Back to Home
+          &larr; {t('backToHome')}
         </a>
       </div>
     </main>
@@ -306,10 +309,12 @@ function BookingContent() {
 }
 
 export default function BookingPage() {
+  const t = useTranslations('common');
+  
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-[#F5F5DC] flex items-center justify-center">
-        <p className="text-[#1A3C34]">Loading...</p>
+        <p className="text-[#1A3C34]">{t('loading')}</p>
       </main>
     }>
       <BookingContent />

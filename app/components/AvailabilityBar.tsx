@@ -1,14 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 function getDateString(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 
 export default function AvailabilityBar() {
+  const t = useTranslations('booking');
   const router = useRouter();
+  const pathname = usePathname();
+  
+  const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
+  const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
   const today = new Date();
   const threeDaysLater = new Date(today);
@@ -30,9 +36,9 @@ export default function AvailabilityBar() {
 
   const handleCheckAvailability = () => {
     if (checkIn && checkOut) {
-      router.push(`/booking?checkin=${checkIn}&checkout=${checkOut}`);
+      router.push(`${localePrefix}/booking?checkin=${checkIn}&checkout=${checkOut}`);
     } else {
-      router.push("/booking");
+      router.push(`${localePrefix}/booking`);
     }
   };
 
@@ -40,13 +46,13 @@ export default function AvailabilityBar() {
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1A3C34] border-t border-[#F5F5DC]/20 py-4 px-4 md:py-6 md:px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
         <div className="text-center md:text-left hidden md:block">
-          <p className="font-serif text-[#F5F5DC] text-lg">Plan Your Stay</p>
+          <p className="font-serif text-[#F5F5DC] text-lg">{t('planYourStay')}</p>
         </div>
         
         <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4">
           <div className="flex flex-col">
             <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans">
-              Check-in
+              {t('checkIn')}
             </label>
             <input
               type="date"
@@ -59,7 +65,7 @@ export default function AvailabilityBar() {
           
           <div className="flex flex-col">
             <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans">
-              Check-out
+              {t('checkOut')}
             </label>
             <input
               type="date"
@@ -74,7 +80,7 @@ export default function AvailabilityBar() {
             onClick={handleCheckAvailability}
             className="mt-4 sm:mt-6 px-8 py-3 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold"
           >
-            Check Availability
+            {t('checkAvailability')}
           </button>
         </div>
       </div>

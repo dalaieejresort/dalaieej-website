@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "Home",
+    "rooms": "Rooms",
+    "amenities": "Amenities",
+    "book": "Book Now"
+  },
+  "hero": {
+    "title": "Dalai Eej Resort",
+    "subtitle": "Experience tranquility in the heart of Mongolia",
+    "cta": "Discover More"
+  },
+  "booking": {
+    "planYourStay": "Plan Your Stay",
+    "checkAvailability": "Check Availability",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "searchRooms": "Search Rooms",
+    "findRoom": "Find Your Perfect Room",
+    "selectDates": "Select your dates to view available accommodations",
+    "noRooms": "No rooms available for the selected dates.",
+    "tryDifferent": "Please try different dates.",
+    "selectDatesPrompt": "Select your dates above to see available rooms",
+    "loading": "Loading available rooms...",
+    "perNight": "Per Night",
+    "totalFor": "Total for",
+    "night": "Night",
+    "nights": "Nights",
+    "bookWithQPay": "Book with QPay",
+    "unavailable": "Unavailable",
+    "contactUs": "Contact us for pricing",
+    "upToGuests": "Up to {count} guests",
+    "onlyLeft": "Only {count} left",
+    "backToHome": "Back to Home"
+  },
+  "rooms": {
+    "title": "Our Accommodations",
+    "subtitle": "Choose from our carefully curated selection of rooms"
+  },
+  "amenities": {
+    "title": "Resort Amenities",
+    "subtitle": "Everything you need for a perfect stay"
+  },
+  "payment": {
+    "title": "Complete Your Reservation",
+    "subtitle": "Pay securely using QPay or Bank Transfer",
+    "bookingRef": "Booking Reference Number",
+    "enterBookingId": "Enter your booking ID",
+    "amount": "Amount to Pay (MNT)",
+    "enterAmount": "Enter amount in MNT",
+    "generatePayment": "Generate Payment",
+    "generating": "Generating...",
+    "payWithApp": "Pay with Banking App",
+    "tapBank": "Tap your bank to open the app and complete payment",
+    "scanQR": "Scan QR Code",
+    "scanWithApp": "Scan with your banking app to pay",
+    "scanOtherDevice": "Or scan this QR code with another device",
+    "manualTransfer": "Manual Bank Transfer",
+    "alternativePayment": "Alternative payment method",
+    "bank": "Bank",
+    "accountNumber": "Account Number",
+    "accountName": "Account Name",
+    "importantMemo": "In the transfer description/memo, please include your name, phone number, or Booking ID",
+    "checkStatus": "Check Payment Status",
+    "checking": "Checking...",
+    "generateNew": "Generate New Payment"
+  },
+  "common": {
+    "loading": "Loading..."
+  }
+}
