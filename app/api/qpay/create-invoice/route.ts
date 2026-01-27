@@ -40,18 +40,26 @@ async function getQPayToken(): Promise<string> {
 
   const credentials = Buffer.from(`${username}:${password}`).toString("base64");
 
-  const response = await axios.post<QPayTokenResponse>(
-    QPAY_AUTH_URL,
-    {},
-    {
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  try {
+    const response = await axios.post<QPayTokenResponse>(
+      QPAY_AUTH_URL,
+      {},
+      {
+        headers: {
+          Authorization: `Basic ${credentials}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  return response.data.access_token;
+    console.log("QPay token obtained successfully");
+    return response.data.access_token;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("QPay Auth Error:", error.response?.data || error.message);
+    }
+    throw error;
+  }
 }
 
 async function createInvoice(
@@ -63,25 +71,39 @@ async function createInvoice(
   const invoiceCode = process.env.QPAY_INVOICE_CODE || "DALAI_EEJ_INVOICE";
   const senderCode = uuidv4();
 
-  const response = await axios.post<QPayInvoiceResponse>(
-    QPAY_INVOICE_URL,
-    {
-      invoice_code: invoiceCode,
-      sender_invoice_no: senderCode,
-      invoice_receiver_code: "terminal",
-      invoice_description: description,
-      amount: amount,
-      callback_url: callbackUrl,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  console.log("Creating QPay invoice with:", {
+    invoice_code: invoiceCode,
+    amount: amount,
+    callback_url: callbackUrl,
+  });
 
-  return response.data;
+  try {
+    const response = await axios.post<QPayInvoiceResponse>(
+      QPAY_INVOICE_URL,
+      {
+        invoice_code: invoiceCode,
+        sender_invoice_no: senderCode,
+        invoice_receiver_code: "terminal",
+        invoice_description: description,
+        amount: amount,
+        callback_url: callbackUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("QPay invoice created successfully:", response.data.invoice_id);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("QPay Invoice Error:", error.response?.data || error.message);
+    }
+    throw error;
+  }
 }
 
 export async function POST(request: NextRequest) {
