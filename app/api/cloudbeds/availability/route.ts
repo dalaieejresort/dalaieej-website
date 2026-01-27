@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cloudbedsGet, AvailabilityResponse, RoomTypesResponse } from "@/app/lib/cloudbeds";
+import { cloudbedsGet, AvailabilityResponse } from "@/app/lib/cloudbeds";
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,26 +22,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const [availabilityData, roomTypesData] = await Promise.all([
-      cloudbedsGet<AvailabilityResponse>("/getAvailableRoomTypes", {
-        startDate: checkin,
-        endDate: checkout,
-      }),
-      cloudbedsGet<RoomTypesResponse>("/getRoomTypes"),
-    ]);
+    const availabilityData = await cloudbedsGet<AvailabilityResponse>("/getAvailableRoomTypes", {
+      startDate: checkin,
+      endDate: checkout,
+    });
 
     console.log("Cloudbeds availability response:", JSON.stringify(availabilityData, null, 2));
-    console.log("Cloudbeds room types response:", JSON.stringify(roomTypesData, null, 2));
 
-    const roomTypesArray = roomTypesData?.data || [];
-    const roomTypesMap = new Map(
-      roomTypesArray.map((rt) => [rt.roomTypeID, rt])
-    );
-
-    const availableRoomTypes = availabilityData?.data?.roomTypes || availabilityData?.data || [];
-    
-    if (!Array.isArray(availableRoomTypes)) {
-      console.log("No room types array found in response, returning empty");
+    const propertyData = availabilityData?.data?.[0];
+    if (!propertyData || !propertyData.propertyRooms) {
+      console.log("No property rooms found in response, returning empty");
       return NextResponse.json({
         success: true,
         checkin,
@@ -50,20 +40,26 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const enrichedRooms = availableRoomTypes.map((rate: any) => {
-      const roomTypeDetails = roomTypesMap.get(rate.roomTypeID);
+    const currency = propertyData.propertyCurrency?.currencyCode || "MNT";
+    const propertyRooms = propertyData.propertyRooms || [];
+
+    const enrichedRooms = propertyRooms.map((room: any) => {
+      const photos = (room.roomTypePhotos || []).map((p: any) => 
+        typeof p === 'string' ? p : p.image || p.thumb || ''
+      ).filter(Boolean);
+      
       return {
-        roomTypeID: rate.roomTypeID,
-        roomTypeName: rate.roomTypeName,
-        roomsAvailable: rate.roomsAvailable,
-        rateID: rate.rateID,
-        rateName: rate.rateName,
-        totalRate: rate.totalRate,
-        currency: rate.currency,
-        description: roomTypeDetails?.roomTypeDescription || "",
-        maxGuests: roomTypeDetails?.maxGuests || 2,
-        photos: roomTypeDetails?.roomTypePhotos || [],
-        features: roomTypeDetails?.roomTypeFeatures || [],
+        roomTypeID: room.roomTypeID,
+        roomTypeName: room.roomTypeName,
+        roomsAvailable: room.roomsAvailable || 0,
+        rateID: room.roomRateID,
+        rateName: room.ratePlanNamePublic || "Standard",
+        totalRate: room.roomRate || 0,
+        currency: currency,
+        description: room.roomTypeDescription || "",
+        maxGuests: parseInt(room.maxGuests) || 2,
+        photos: photos,
+        features: room.roomTypeFeatures || [],
       };
     });
 
