@@ -59,11 +59,13 @@ function BookingContent() {
       );
       const data: AvailabilityData = await response.json();
 
+      console.log("Frontend received:", data);
+
       if (!response.ok) {
         throw new Error((data as any).error || "Failed to fetch availability");
       }
 
-      setRooms(data.rooms);
+      setRooms(data.rooms || []);
       setSearched(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

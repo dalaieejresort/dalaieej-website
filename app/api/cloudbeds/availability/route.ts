@@ -30,11 +30,27 @@ export async function GET(request: NextRequest) {
       cloudbedsGet<RoomTypesResponse>("/getRoomTypes"),
     ]);
 
+    console.log("Cloudbeds availability response:", JSON.stringify(availabilityData, null, 2));
+    console.log("Cloudbeds room types response:", JSON.stringify(roomTypesData, null, 2));
+
+    const roomTypesArray = roomTypesData?.data || [];
     const roomTypesMap = new Map(
-      roomTypesData.data.map((rt) => [rt.roomTypeID, rt])
+      roomTypesArray.map((rt) => [rt.roomTypeID, rt])
     );
 
-    const enrichedRooms = availabilityData.data.roomTypes.map((rate) => {
+    const availableRoomTypes = availabilityData?.data?.roomTypes || availabilityData?.data || [];
+    
+    if (!Array.isArray(availableRoomTypes)) {
+      console.log("No room types array found in response, returning empty");
+      return NextResponse.json({
+        success: true,
+        checkin,
+        checkout,
+        rooms: [],
+      });
+    }
+
+    const enrichedRooms = availableRoomTypes.map((rate: any) => {
       const roomTypeDetails = roomTypesMap.get(rate.roomTypeID);
       return {
         roomTypeID: rate.roomTypeID,
