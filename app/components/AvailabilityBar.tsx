@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AvailabilityBar() {
+  const router = useRouter();
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [minDate, setMinDate] = useState("");
@@ -12,13 +14,10 @@ export default function AvailabilityBar() {
   }, []);
 
   const handleCheckAvailability = () => {
-    const baseUrl = "https://us2.cloudbeds.com/reservation/XQKeS3";
-    
     if (checkIn && checkOut) {
-      const url = `${baseUrl}?checkin=${checkIn}&checkout=${checkOut}`;
-      window.open(url, "_blank");
+      router.push(`/booking?checkin=${checkIn}&checkout=${checkOut}`);
     } else {
-      window.open(baseUrl, "_blank");
+      router.push("/booking");
     }
   };
 
