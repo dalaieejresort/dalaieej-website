@@ -170,71 +170,93 @@ function BookingContent() {
 
         {!loading && rooms.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rooms.map((room, index) => (
-              <div
-                key={room.roomTypeID}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={room.photos[0] || placeholderImages[index % placeholderImages.length]}
-                    alt={room.roomTypeName}
-                    className="w-full h-full object-cover"
-                  />
-                  {room.roomsAvailable <= 3 && (
-                    <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                      Only {room.roomsAvailable} left
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-serif text-xl text-[#1A3C34] mb-2">
-                    {room.roomTypeName}
-                  </h3>
-                  
-                  <p className="text-[#1A3C34]/60 text-sm mb-4 line-clamp-2">
-                    {room.description || "Luxurious accommodation with premium amenities"}
-                  </p>
-
-                  <div className="flex items-center gap-4 mb-4 text-sm text-[#1A3C34]/70">
-                    <div className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      <span>Up to {room.maxGuests} guests</span>
-                    </div>
+            {rooms.map((room, index) => {
+              const price = room.totalRate ? Number(room.totalRate).toLocaleString() : null;
+              const hasPrice = price !== null;
+              const photos = room.photos || [];
+              const features = room.features || [];
+              
+              return (
+                <div
+                  key={room.roomTypeID || index}
+                  className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={photos[0] || placeholderImages[index % placeholderImages.length]}
+                      alt={room.roomTypeName || "Room"}
+                      className="w-full h-full object-cover"
+                    />
+                    {room.roomsAvailable && room.roomsAvailable <= 3 && (
+                      <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                        Only {room.roomsAvailable} left
+                      </div>
+                    )}
                   </div>
 
-                  {room.features.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {room.features.slice(0, 3).map((feature, idx) => (
-                        <span
-                          key={idx}
-                          className="flex items-center gap-1 text-xs text-[#1A3C34]/60 bg-[#F5F5DC] px-2 py-1 rounded"
+                  <div className="p-6">
+                    <h3 className="font-serif text-xl text-[#1A3C34] mb-2">
+                      {room.roomTypeName || "Room"}
+                    </h3>
+                    
+                    <p className="text-[#1A3C34]/60 text-sm mb-4 line-clamp-2">
+                      {room.description || "Luxurious accommodation with premium amenities"}
+                    </p>
+
+                    <div className="flex items-center gap-4 mb-4 text-sm text-[#1A3C34]/70">
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        <span>Up to {room.maxGuests || 2} guests</span>
+                      </div>
+                    </div>
+
+                    {features.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {features.slice(0, 3).map((feature, idx) => (
+                          <span
+                            key={idx}
+                            className="flex items-center gap-1 text-xs text-[#1A3C34]/60 bg-[#F5F5DC] px-2 py-1 rounded"
+                          >
+                            <Check className="w-3 h-3" />
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between pt-4 border-t border-[#1A3C34]/10">
+                      <div>
+                        <p className="text-[#1A3C34]/50 text-xs uppercase">Total</p>
+                        {hasPrice ? (
+                          <p className="font-serif text-2xl text-[#1A3C34]">
+                            {price} <span className="text-sm">{room.currency || "MNT"}</span>
+                          </p>
+                        ) : (
+                          <p className="font-serif text-lg text-[#1A3C34]/50">
+                            Contact us
+                          </p>
+                        )}
+                      </div>
+                      {hasPrice ? (
+                        <button
+                          onClick={() => handleBookWithQPay(room)}
+                          className="px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
                         >
-                          <Check className="w-3 h-3" />
-                          {feature}
-                        </span>
-                      ))}
+                          Book with QPay
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="px-6 py-3 bg-gray-300 text-gray-500 font-serif uppercase text-sm tracking-wider rounded-lg cursor-not-allowed"
+                        >
+                          Unavailable
+                        </button>
+                      )}
                     </div>
-                  )}
-
-                  <div className="flex items-center justify-between pt-4 border-t border-[#1A3C34]/10">
-                    <div>
-                      <p className="text-[#1A3C34]/50 text-xs uppercase">Total</p>
-                      <p className="font-serif text-2xl text-[#1A3C34]">
-                        {room.totalRate.toLocaleString()} <span className="text-sm">{room.currency}</span>
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => handleBookWithQPay(room)}
-                      className="px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
-                    >
-                      Book with QPay
-                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
