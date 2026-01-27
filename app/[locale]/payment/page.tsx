@@ -224,7 +224,7 @@ function PaymentContent() {
             </div>
 
             {bankUrls.length > 0 && (
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
+              <div className="block md:hidden bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
                 <div className="flex items-center gap-2 mb-4">
                   <Smartphone className="w-5 h-5 text-[#F5F5DC]" />
                   <h2 className="font-serif text-lg text-[#F5F5DC]">{t('payWithApp')}</h2>
@@ -263,23 +263,23 @@ function PaymentContent() {
             )}
 
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-[#F5F5DC]/20 mb-4">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 <QrCode className="w-5 h-5 text-[#F5F5DC]" />
                 <h2 className="font-serif text-lg text-[#F5F5DC]">{t('scanQR')}</h2>
               </div>
-              <p className="text-[#F5F5DC]/60 text-sm mb-4 hidden md:block">
+              <p className="text-[#F5F5DC]/60 text-sm mb-4 text-center hidden md:block">
                 {t('scanWithApp')}
               </p>
-              <p className="text-[#F5F5DC]/60 text-sm mb-4 md:hidden">
+              <p className="text-[#F5F5DC]/60 text-sm mb-4 text-center md:hidden">
                 {t('scanOtherDevice')}
               </p>
               
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center">
                 <div className="bg-white p-3 rounded-xl inline-block">
                   <img
                     src={`data:image/png;base64,${qrCode}`}
                     alt="QPay QR Code"
-                    className="w-48 h-48 md:w-56 md:h-56"
+                    className="w-40 h-40 md:w-56 md:h-56"
                   />
                 </div>
               </div>
