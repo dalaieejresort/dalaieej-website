@@ -32,7 +32,11 @@
     "contactUs": "Үнийн мэдээлэл авах бол холбогдоно уу",
     "upToGuests": "{count} хүртэл зочин",
     "onlyLeft": "Зөвхөн {count} үлдсэн",
-    "backToHome": "Нүүр хуудас руу буцах"
+    "backToHome": "Нүүр хуудас руу буцах",
+    "promoCode": "Промо Код",
+    "enterPromo": "Код оруулах",
+    "apply": "Ашиглах",
+    "promoApplied": "Промо код амжилттай!"
   },
   "rooms": {
     "title": "Манай Өрөөнүүд",

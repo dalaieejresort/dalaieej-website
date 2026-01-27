@@ -32,7 +32,11 @@
     "contactUs": "Contact us for pricing",
     "upToGuests": "Up to {count} guests",
     "onlyLeft": "Only {count} left",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "promoCode": "Promo Code",
+    "enterPromo": "Enter code",
+    "apply": "Apply",
+    "promoApplied": "Promo code applied!"
   },
   "rooms": {
     "title": "Our Accommodations",

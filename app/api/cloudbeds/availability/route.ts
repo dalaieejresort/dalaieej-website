@@ -22,10 +22,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const availabilityData = await cloudbedsGet<any>("/getAvailableRoomTypes", {
+    const promo = searchParams.get("promo");
+    
+    const params: Record<string, string> = {
       startDate: checkin,
       endDate: checkout,
-    });
+    };
+    
+    if (promo) {
+      params.promoCode = promo;
+      console.log("Applying promo code:", promo);
+    }
+
+    const availabilityData = await cloudbedsGet<any>("/getAvailableRoomTypes", params);
 
     console.log("Cloudbeds availability response:", JSON.stringify(availabilityData, null, 2));
 

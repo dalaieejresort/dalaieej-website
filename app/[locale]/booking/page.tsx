@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
-import { Users, Check } from "lucide-react";
+import { Users, Check, Tag, Loader2 } from "lucide-react";
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 
@@ -52,29 +52,40 @@ function BookingContent() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [searched, setSearched] = useState(false);
   const [numberOfNights, setNumberOfNights] = useState(1);
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState("");
+  const [promoLoading, setPromoLoading] = useState(false);
 
   useEffect(() => {
     const urlCheckin = searchParams.get("checkin");
     const urlCheckout = searchParams.get("checkout");
+    const urlPromo = searchParams.get("promo");
     
     if (urlCheckin) setCheckin(urlCheckin);
     if (urlCheckout) setCheckout(urlCheckout);
+    if (urlPromo) {
+      setPromoCode(urlPromo);
+      setAppliedPromo(urlPromo);
+    }
 
     if (urlCheckin && urlCheckout) {
       setNumberOfNights(calculateNights(urlCheckin, urlCheckout));
-      fetchAvailability(urlCheckin, urlCheckout);
+      fetchAvailability(urlCheckin, urlCheckout, urlPromo || "");
     }
   }, [searchParams]);
 
-  const fetchAvailability = async (checkInDate: string, checkOutDate: string) => {
+  const fetchAvailability = async (checkInDate: string, checkOutDate: string, promo: string = "") => {
     setLoading(true);
     setError("");
     setRooms([]);
 
     try {
-      const response = await fetch(
-        `/api/cloudbeds/availability?checkin=${checkInDate}&checkout=${checkOutDate}`
-      );
+      let url = `/api/cloudbeds/availability?checkin=${checkInDate}&checkout=${checkOutDate}`;
+      if (promo) {
+        url += `&promo=${encodeURIComponent(promo)}`;
+      }
+      
+      const response = await fetch(url);
       const data: AvailabilityData = await response.json();
 
       if (!response.ok) {
@@ -96,7 +107,20 @@ function BookingContent() {
       return;
     }
     setNumberOfNights(calculateNights(checkin, checkout));
-    fetchAvailability(checkin, checkout);
+    fetchAvailability(checkin, checkout, appliedPromo);
+  };
+
+  const handleApplyPromo = async () => {
+    if (!promoCode.trim()) return;
+    
+    setPromoLoading(true);
+    setAppliedPromo(promoCode.trim());
+    
+    if (checkin && checkout) {
+      await fetchAvailability(checkin, checkout, promoCode.trim());
+    }
+    
+    setPromoLoading(false);
   };
 
   const handleBookWithQPay = (room: Room, totalPrice: number) => {
@@ -162,6 +186,36 @@ function BookingContent() {
               {loading ? t('loading') : t('searchRooms')}
             </button>
           </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 max-w-md mx-auto">
+            <div className="flex items-center gap-2 flex-1 w-full sm:w-auto">
+              <Tag className="w-4 h-4 text-[#F5F5DC]/70" />
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                placeholder={t('enterPromo')}
+                className="flex-1 px-3 py-2 bg-white/10 border border-[#F5F5DC]/30 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30 text-sm uppercase tracking-wider"
+              />
+            </div>
+            <button
+              onClick={handleApplyPromo}
+              disabled={promoLoading || !promoCode.trim()}
+              className="px-4 py-2 bg-[#F5F5DC]/20 text-[#F5F5DC] text-sm uppercase tracking-wider hover:bg-[#F5F5DC]/30 transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {promoLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {t('apply')}
+            </button>
+          </div>
+          
+          {appliedPromo && (
+            <div className="mt-3 text-center">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 text-green-300 text-sm rounded-full">
+                <Check className="w-4 h-4" />
+                {t('promoApplied')} ({appliedPromo})
+              </span>
+            </div>
+          )}
 
           {error && (
             <div className="mt-4 text-red-300 text-sm">
