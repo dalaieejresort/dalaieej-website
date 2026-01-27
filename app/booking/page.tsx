@@ -26,6 +26,15 @@ interface AvailabilityData {
   rooms: Room[];
 }
 
+function calculateNights(checkinDate: string, checkoutDate: string): number {
+  if (!checkinDate || !checkoutDate) return 1;
+  const start = new Date(checkinDate);
+  const end = new Date(checkoutDate);
+  const diffTime = end.getTime() - start.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays > 0 ? diffDays : 1;
+}
+
 function BookingContent() {
   const searchParams = useSearchParams();
   
@@ -35,6 +44,7 @@ function BookingContent() {
   const [error, setError] = useState("");
   const [rooms, setRooms] = useState<Room[]>([]);
   const [searched, setSearched] = useState(false);
+  const [numberOfNights, setNumberOfNights] = useState(1);
 
   useEffect(() => {
     const urlCheckin = searchParams.get("checkin");
@@ -44,6 +54,7 @@ function BookingContent() {
     if (urlCheckout) setCheckout(urlCheckout);
 
     if (urlCheckin && urlCheckout) {
+      setNumberOfNights(calculateNights(urlCheckin, urlCheckout));
       fetchAvailability(urlCheckin, urlCheckout);
     }
   }, [searchParams]);
@@ -79,11 +90,12 @@ function BookingContent() {
       setError("Please select both check-in and check-out dates");
       return;
     }
+    setNumberOfNights(calculateNights(checkin, checkout));
     fetchAvailability(checkin, checkout);
   };
 
-  const handleBookWithQPay = (room: Room) => {
-    const paymentUrl = `/payment?bookingId=${room.roomTypeID}-${Date.now()}&amount=${room.totalRate}`;
+  const handleBookWithQPay = (room: Room, totalPrice: number) => {
+    const paymentUrl = `/payment?bookingId=${room.roomTypeID}-${Date.now()}&amount=${totalPrice}&nights=${numberOfNights}`;
     window.location.href = paymentUrl;
   };
 
@@ -171,8 +183,9 @@ function BookingContent() {
         {!loading && rooms.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {rooms.map((room, index) => {
-              const price = room.totalRate ? Number(room.totalRate).toLocaleString() : null;
-              const hasPrice = price !== null;
+              const perNightRate = room.totalRate ? Number(room.totalRate) : 0;
+              const totalPrice = perNightRate * numberOfNights;
+              const hasPrice = perNightRate > 0;
               const photos = room.photos || [];
               const features = room.features || [];
               
@@ -224,33 +237,44 @@ function BookingContent() {
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between pt-4 border-t border-[#1A3C34]/10">
-                      <div>
+                    <div className="pt-4 border-t border-[#1A3C34]/10">
+                      <div className="flex items-center justify-between mb-2">
                         <p className="text-[#1A3C34]/50 text-xs uppercase">Per Night</p>
-                        {hasPrice ? (
-                          <p className="font-serif text-2xl text-[#1A3C34]">
-                            {price} <span className="text-sm">{room.currency || "MNT"}</span>
-                          </p>
-                        ) : (
-                          <p className="font-serif text-lg text-[#1A3C34]/50">
-                            Contact us
+                        {hasPrice && (
+                          <p className="font-serif text-lg text-[#1A3C34]">
+                            {perNightRate.toLocaleString()} <span className="text-sm">{room.currency || "MNT"}</span>
                           </p>
                         )}
                       </div>
                       {hasPrice ? (
-                        <button
-                          onClick={() => handleBookWithQPay(room)}
-                          className="px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
-                        >
-                          Book with QPay
-                        </button>
+                        <>
+                          <div className="flex items-center justify-between mb-4">
+                            <p className="text-[#1A3C34] text-sm font-semibold">
+                              Total for {numberOfNights} {numberOfNights === 1 ? "Night" : "Nights"}
+                            </p>
+                            <p className="font-serif text-2xl text-[#1A3C34] font-bold">
+                              {totalPrice.toLocaleString()} <span className="text-sm">{room.currency || "MNT"}</span>
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => handleBookWithQPay(room, totalPrice)}
+                            className="w-full px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
+                          >
+                            Book with QPay
+                          </button>
+                        </>
                       ) : (
-                        <button
-                          disabled
-                          className="px-6 py-3 bg-gray-300 text-gray-500 font-serif uppercase text-sm tracking-wider rounded-lg cursor-not-allowed"
-                        >
-                          Unavailable
-                        </button>
+                        <div className="text-center">
+                          <p className="font-serif text-lg text-[#1A3C34]/50 mb-4">
+                            Contact us for pricing
+                          </p>
+                          <button
+                            disabled
+                            className="w-full px-6 py-3 bg-gray-300 text-gray-500 font-serif uppercase text-sm tracking-wider rounded-lg cursor-not-allowed"
+                          >
+                            Unavailable
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>

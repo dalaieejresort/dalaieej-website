@@ -3,14 +3,29 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+function getDateString(date: Date): string {
+  return date.toISOString().split("T")[0];
+}
+
 export default function AvailabilityBar() {
   const router = useRouter();
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [minDate, setMinDate] = useState("");
+  
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const [checkIn, setCheckIn] = useState(getDateString(today));
+  const [checkOut, setCheckOut] = useState(getDateString(tomorrow));
+  const [minDate, setMinDate] = useState(getDateString(today));
 
   useEffect(() => {
-    setMinDate(new Date().toISOString().split("T")[0]);
+    const now = new Date();
+    const nextDay = new Date(now);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    setMinDate(getDateString(now));
+    setCheckIn(getDateString(now));
+    setCheckOut(getDateString(nextDay));
   }, []);
 
   const handleCheckAvailability = () => {
