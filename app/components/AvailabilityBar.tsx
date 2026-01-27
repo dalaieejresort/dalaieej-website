@@ -11,21 +11,21 @@ export default function AvailabilityBar() {
   const router = useRouter();
   
   const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  const threeDaysLater = new Date(today);
+  threeDaysLater.setDate(threeDaysLater.getDate() + 3);
   
   const [checkIn, setCheckIn] = useState(getDateString(today));
-  const [checkOut, setCheckOut] = useState(getDateString(tomorrow));
+  const [checkOut, setCheckOut] = useState(getDateString(threeDaysLater));
   const [minDate, setMinDate] = useState(getDateString(today));
 
   useEffect(() => {
     const now = new Date();
-    const nextDay = new Date(now);
-    nextDay.setDate(nextDay.getDate() + 1);
+    const defaultCheckout = new Date(now);
+    defaultCheckout.setDate(defaultCheckout.getDate() + 3);
     
     setMinDate(getDateString(now));
     setCheckIn(getDateString(now));
-    setCheckOut(getDateString(nextDay));
+    setCheckOut(getDateString(defaultCheckout));
   }, []);
 
   const handleCheckAvailability = () => {
