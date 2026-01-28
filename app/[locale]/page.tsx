@@ -25,16 +25,16 @@ export default function Home() {
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
   const services = [
-    { icon: serviceIcons[0], titleKey: 'services.service1_title', descKey: 'services.service1_desc' },
-    { icon: serviceIcons[1], titleKey: 'services.service2_title', descKey: 'services.service2_desc' },
-    { icon: serviceIcons[2], titleKey: 'services.service3_title', descKey: 'services.service3_desc' },
-    { icon: serviceIcons[3], titleKey: 'services.service4_title', descKey: 'services.service4_desc' },
+    { icon: serviceIcons[0], titleKey: 'home.services.service1_title', descKey: 'home.services.service1_desc' },
+    { icon: serviceIcons[1], titleKey: 'home.services.service2_title', descKey: 'home.services.service2_desc' },
+    { icon: serviceIcons[2], titleKey: 'home.services.service3_title', descKey: 'home.services.service3_desc' },
+    { icon: serviceIcons[3], titleKey: 'home.services.service4_title', descKey: 'home.services.service4_desc' },
   ];
   
   const featuredRooms = [
-    { nameKey: 'featuredRooms.room1_name', descKey: 'featuredRooms.room1_desc', priceKey: 'featuredRooms.room1_price', image: roomImages[0] },
-    { nameKey: 'featuredRooms.room2_name', descKey: 'featuredRooms.room2_desc', priceKey: 'featuredRooms.room2_price', image: roomImages[1] },
-    { nameKey: 'featuredRooms.room3_name', descKey: 'featuredRooms.room3_desc', priceKey: 'featuredRooms.room3_price', image: roomImages[2] },
+    { nameKey: 'home.featured_rooms.room1_name', descKey: 'home.featured_rooms.room1_desc', priceKey: 'home.featured_rooms.room1_price', image: roomImages[0] },
+    { nameKey: 'home.featured_rooms.room2_name', descKey: 'home.featured_rooms.room2_desc', priceKey: 'home.featured_rooms.room2_price', image: roomImages[1] },
+    { nameKey: 'home.featured_rooms.room3_name', descKey: 'home.featured_rooms.room3_desc', priceKey: 'home.featured_rooms.room3_price', image: roomImages[2] },
   ];
 
   const scrollToRooms = () => {
@@ -118,10 +118,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
-              {t('services.title')}
+              {t('home.services.title')}
             </h2>
             <p className="font-body text-forest-green/80 max-w-2xl mx-auto text-lg">
-              {t('services.subtitle')}
+              {t('home.services.subtitle')}
             </p>
           </motion.div>
 
@@ -156,10 +156,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
-              {t('rooms.title')}
+              {t('home.featured_rooms.title')}
             </h2>
             <p className="font-body text-forest-green/80 max-w-2xl mx-auto text-lg">
-              {t('rooms.subtitle')}
+              {t('home.featured_rooms.subtitle')}
             </p>
           </motion.div>
 
@@ -249,17 +249,17 @@ export default function Home() {
               <ul className="space-y-2">
                 <li>
                   <a href={localePrefix || "/"} className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
-                    {t('footer.home')}
+                    {t('nav.home')}
                   </a>
                 </li>
                 <li>
                   <a href="#rooms" className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
-                    {t('footer.rooms')}
+                    {t('nav.rooms')}
                   </a>
                 </li>
                 <li>
                   <a href={`${localePrefix}/booking`} className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
-                    {t('footer.booking')}
+                    {t('nav.book')}
                   </a>
                 </li>
               </ul>
