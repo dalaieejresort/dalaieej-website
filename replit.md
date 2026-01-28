@@ -100,6 +100,8 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-28**: Updated InteractiveMap to use custom image from App Storage (Careyes_Spirit_of_Dalai_Eej.JPG)
+- **2026-01-28**: Added custom Sloops font from App Storage for DiscoverGrid titles
 - **2026-01-28**: Fixed Amenities page translation issue - removed duplicate amenities keys in JSON files that were overwriting full content
 - **2026-01-28**: Created Amenities & Guest Experience page with hero, features, inclusions, testimonials, and policies accordion
 - **2026-01-28**: Updated Special Offers to 6 cards (Couples, Erdenet 50th, Pioneer, Early Bird, Long Stay, Family)

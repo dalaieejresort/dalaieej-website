@@ -59,8 +59,8 @@ export default function InteractiveMap() {
 
         <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden shadow-xl">
           <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&auto=format&fit=crop&q=80"
-            alt="Resort Map"
+            src="/images/dalai-eej-map.jpg"
+            alt="Dalai Eej Resort Map"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-forest-green/10" />

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Sloops';
+  src: url('/fonts/Sloops.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --forest-green: #1A3C34;
   --cream: #F5F5DC;
@@ -25,6 +33,10 @@ body {
 
 .font-body {
   font-family: var(--font-body), sans-serif;
+}
+
+.font-sloops {
+  font-family: 'Sloops', serif;
 }
 
 html {

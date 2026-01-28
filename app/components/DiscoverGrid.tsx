@@ -52,7 +52,7 @@ export default function DiscoverGrid() {
             />
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-500" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white text-center tracking-wider uppercase">
+              <h3 className="font-sloops text-3xl md:text-4xl lg:text-5xl text-white text-center tracking-wider uppercase">
                 {t(item.titleKey)}
               </h3>
             </div>
