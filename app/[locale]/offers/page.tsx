@@ -7,24 +7,51 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 const offers = [
   {
     id: "couples",
-    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&auto=format&fit=crop&q=80",
-    promoCode: "LOVE2026",
+    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop&q=80",
     titleKey: "offers.couples.title",
-    descKey: "offers.couples.desc"
+    descKey: "offers.couples.desc",
+    offerKey: "offers.couples.offer",
+    ctaType: "book"
   },
   {
     id: "erdenet",
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80",
-    promoCode: "ERDENET",
     titleKey: "offers.erdenet.title",
-    descKey: "offers.erdenet.desc"
+    descKey: "offers.erdenet.desc",
+    offerKey: "offers.erdenet.offer",
+    ctaType: "book"
+  },
+  {
+    id: "pioneer",
+    image: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800&auto=format&fit=crop&q=80",
+    titleKey: "offers.pioneer.title",
+    descKey: "offers.pioneer.desc",
+    offerKey: "offers.pioneer.offer",
+    ctaType: "book"
   },
   {
     id: "early",
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&auto=format&fit=crop&q=80",
-    promoCode: "WELCOMEBACK",
     titleKey: "offers.early.title",
-    descKey: "offers.early.desc"
+    descKey: "offers.early.desc",
+    offerKey: "offers.early.offer",
+    ctaType: "check"
+  },
+  {
+    id: "longstay",
+    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&auto=format&fit=crop&q=80",
+    titleKey: "offers.longstay.title",
+    descKey: "offers.longstay.desc",
+    offerKey: "offers.longstay.offer",
+    ctaType: "book"
+  },
+  {
+    id: "family",
+    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&auto=format&fit=crop&q=80",
+    titleKey: "offers.family.title",
+    descKey: "offers.family.desc",
+    offerKey: "offers.family.offer",
+    ctaType: "contact"
   }
 ];
 
@@ -33,38 +60,46 @@ export default function OffersPage() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
 
+  const getCtaText = (type: string) => {
+    switch (type) {
+      case 'check': return t('offers.checkAvailability');
+      case 'contact': return t('offers.contactBook');
+      default: return t('offers.bookNow');
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-cream">
+    <main className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
       <div className="absolute top-4 right-4 z-50">
         <LanguageSwitcher />
       </div>
 
-      <div className="bg-forest-green py-20 px-4">
+      <div className="bg-gradient-to-r from-sky-700 to-sky-900 py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <a
             href={localePrefix || "/"}
-            className="inline-flex items-center gap-2 text-cream/70 hover:text-cream transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-body text-sm">{t('nav.home')}</span>
           </a>
-          <h1 className="font-heading text-4xl md:text-6xl text-cream">
+          <h1 className="font-heading text-4xl md:text-6xl text-white">
             {t('offers.title')}
           </h1>
-          <p className="font-body text-cream/80 text-lg mt-4 max-w-2xl">
+          <p className="font-body text-white/80 text-lg mt-4 max-w-2xl">
             {t('offers.subtitle')}
           </p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {offers.map((offer) => (
             <div
               key={offer.id}
-              className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-sky-100"
             >
-              <div className="aspect-[3/4] overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={offer.image}
                   alt={t(offer.titleKey)}
@@ -72,20 +107,22 @@ export default function OffersPage() {
                 />
               </div>
               <div className="p-6">
-                <span className="inline-block bg-forest-green/10 text-forest-green font-body text-xs px-3 py-1 rounded-full mb-3">
-                  {t('offers.promoLabel')}: {offer.promoCode}
-                </span>
-                <h2 className="font-heading text-2xl text-forest-green mb-3">
+                <h2 className="font-heading text-xl text-sky-900 mb-3">
                   {t(offer.titleKey)}
                 </h2>
-                <p className="font-body text-forest-green/70 text-sm mb-6 leading-relaxed">
+                <p className="font-body text-slate-600 text-sm mb-4 leading-relaxed">
                   {t(offer.descKey)}
                 </p>
+                <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-5">
+                  <p className="font-body text-amber-800 font-semibold text-sm">
+                    {t(offer.offerKey)}
+                  </p>
+                </div>
                 <a
-                  href={`${localePrefix}/booking?promo=${offer.promoCode}`}
-                  className="block w-full text-center px-6 py-3 bg-forest-green text-cream font-body font-semibold rounded-lg hover:bg-forest-green/90 transition-colors duration-300"
+                  href={offer.ctaType === 'contact' ? '#contact' : `${localePrefix}/booking`}
+                  className="block w-full text-center px-6 py-3 bg-sky-700 text-white font-body font-semibold rounded-lg hover:bg-sky-800 transition-colors duration-300 uppercase tracking-wide text-sm"
                 >
-                  {t('offers.bookNow')}
+                  {getCtaText(offer.ctaType)}
                 </a>
               </div>
             </div>
@@ -93,9 +130,9 @@ export default function OffersPage() {
         </div>
       </div>
 
-      <footer className="bg-forest-green/95 py-8 px-4 border-t border-cream/20">
+      <footer className="bg-sky-900 py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="font-body text-cream/50 text-sm">
+          <p className="font-body text-white/50 text-sm">
             &copy; {new Date().getFullYear()} {t('hero.title')}. {t('footer.rights')}
           </p>
         </div>

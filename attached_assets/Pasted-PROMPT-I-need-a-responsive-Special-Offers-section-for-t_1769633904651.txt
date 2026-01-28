@@ -1,0 +1,42 @@
+PROMPT:
+
+I need a responsive "Special Offers" section for the Dalai Eej Resort website (Summer 2026 season). Please use HTML and CSS (you can use Tailwind CSS if it's easier, or plain CSS).
+
+Design Requirements:
+Layout: A 3-column grid on desktop, 2-column on tablet, 1-column on mobile.
+Card Style: Similar to the "Meritage" style—Image at the top, followed by a Title, a short Description, the Highlighted Offer (e.g., "25% Off"), and a "Book Now" button.
+Colors: Use natural tones suitable for a lake resort (Blues, Whites, soft Earth tones).
+Since I don't have a nav bar yet, please make this a self-contained section I can paste into my landing page.
+Content for the 6 Cards:
+
+Card 1: Couples
+Title: Romantic Lakeview Escape
+Description: A private yurt for two, secluded from the crowd with uninterrupted views of the lake.
+Offer: 15% Off + Welcome Wine & Chocolates
+CTA: BOOK NOW
+Card 2: Erdenet 50th Anniversary
+Title: Erdenet 50th Celebration Special
+Description: Celebrating half a century of the Copper City! A special thank you to the residents and builders of Erdenet.
+Offer: Exclusive 20% Discount for Erdenet Residents (ID Required)
+CTA: BOOK NOW
+Card 3: Pioneer Camp Returnee
+Title: Nostalgia Returns
+Description: Did you spend your childhood summers at a Khuvsgul pioneer camp? Relive the memories and show your own kids the magic of the lake.
+Offer: Free 'Campfire' Dinner Package + Souvenir
+CTA: BOOK NOW
+Card 4: Advance Purchase
+Title: Summer 2026 Early Bird
+Description: Secure your favorite cabin or yurt before the rush. Planning ahead pays off.
+Offer: Prepay & Save 15%
+CTA: CHECK AVAILABILITY
+Card 5: Stay More, Save More
+Title: The Long Weekend & Beyond
+Description: Khuvsgul is too big to see in a day. Take your time to explore the mountains and the water.
+Offer: Stay 4 Nights, Pay for 3
+CTA: BOOK NOW
+Card 6: Two or More Families
+Title: The Big Family Reunion
+Description: Traveling with friends or extended family? Book neighboring yurts to keep the group together.
+Offer: 10% Off when booking 2+ Units
+CTA: CONTACT TO BOOK
+Please provide the code with placeholder images (via unsplash or similar) so I can see how it looks immediately.

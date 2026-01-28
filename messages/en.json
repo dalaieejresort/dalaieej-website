@@ -79,20 +79,39 @@
   },
   "offers": {
     "title": "Special Offers",
-    "subtitle": "Exclusive packages designed for unforgettable experiences",
-    "promoLabel": "Promo Code",
-    "bookNow": "Book This Offer",
+    "subtitle": "Summer 2026 exclusive packages for unforgettable experiences",
+    "bookNow": "Book Now",
+    "checkAvailability": "Check Availability",
+    "contactBook": "Contact to Book",
     "couples": {
-      "title": "Romantic Couples Retreat",
-      "desc": "Escape to paradise with your loved one. Enjoy private lakeside dining, couples spa treatments, and a complimentary bottle of champagne. Perfect for anniversaries and honeymoons."
+      "title": "Romantic Lakeview Escape",
+      "desc": "A private yurt for two, secluded from the crowd with uninterrupted views of the lake.",
+      "offer": "15% Off + Welcome Wine & Chocolates"
     },
     "erdenet": {
-      "title": "Erdenet Residents Special",
-      "desc": "A special discount for our neighbors from Erdenet and mining community members. Show your Erdenet ID or mining company badge for exclusive rates on all room types."
+      "title": "Erdenet 50th Celebration Special",
+      "desc": "Celebrating half a century of the Copper City! A special thank you to the residents and builders of Erdenet.",
+      "offer": "Exclusive 20% Discount for Erdenet Residents (ID Required)"
+    },
+    "pioneer": {
+      "title": "Nostalgia Returns",
+      "desc": "Did you spend your childhood summers at a Khuvsgul pioneer camp? Relive the memories and show your own kids the magic of the lake.",
+      "offer": "Free 'Campfire' Dinner Package + Souvenir"
     },
     "early": {
-      "title": "Early Bird & Returning Guests",
-      "desc": "Book 30 days in advance or return as a loyal guest to unlock special savings. Includes complimentary breakfast and late checkout."
+      "title": "Summer 2026 Early Bird",
+      "desc": "Secure your favorite cabin or yurt before the rush. Planning ahead pays off.",
+      "offer": "Prepay & Save 15%"
+    },
+    "longstay": {
+      "title": "The Long Weekend & Beyond",
+      "desc": "Khuvsgul is too big to see in a day. Take your time to explore the mountains and the water.",
+      "offer": "Stay 4 Nights, Pay for 3"
+    },
+    "family": {
+      "title": "The Big Family Reunion",
+      "desc": "Traveling with friends or extended family? Book neighboring yurts to keep the group together.",
+      "offer": "10% Off when booking 2+ Units"
     }
   },
   "booking": {
