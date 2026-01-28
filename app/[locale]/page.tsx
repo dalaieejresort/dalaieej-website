@@ -226,7 +226,7 @@ export default function Home() {
 
       <footer className="bg-forest-green/95 py-12 px-4 border-t border-cream/20">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
             <div>
               <h3 className="font-heading text-2xl text-cream mb-4">{t('hero.title')}</h3>
               <p className="font-body text-cream/70 text-sm">
@@ -234,21 +234,49 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h4 className="font-heading text-lg text-cream mb-4">{t('footer.contact')}</h4>
+              <h4 className="font-heading text-lg text-cream mb-4">{t('footer.contact_title')}</h4>
               <p className="font-body text-cream/70 text-sm">info@dalaieej.com</p>
               <p className="font-body text-cream/70 text-sm">+976 XXXX XXXX</p>
             </div>
             <div>
-              <h4 className="font-heading text-lg text-cream mb-4">{t('footer.location')}</h4>
+              <h4 className="font-heading text-lg text-cream mb-4">{t('footer.location_title')}</h4>
               <p className="font-body text-cream/70 text-sm">
-                {t('footer.locationText')}
+                {t('footer.address')}
               </p>
             </div>
+            <div>
+              <h4 className="font-heading text-lg text-cream mb-4">{t('footer.links_title')}</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href={localePrefix || "/"} className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
+                    {t('footer.home')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#rooms" className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
+                    {t('footer.rooms')}
+                  </a>
+                </li>
+                <li>
+                  <a href={`${localePrefix}/booking`} className="font-body text-cream/70 text-sm hover:text-cream transition-colors">
+                    {t('footer.booking')}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-cream/20 text-center">
+          <div className="mt-12 pt-8 border-t border-cream/20 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-body text-cream/50 text-sm">
               &copy; {new Date().getFullYear()} {t('hero.title')}. {t('footer.rights')}
             </p>
+            <div className="flex gap-6">
+              <a href="#" className="font-body text-cream/50 text-sm hover:text-cream transition-colors">
+                {t('footer.privacy')}
+              </a>
+              <a href="#" className="font-body text-cream/50 text-sm hover:text-cream transition-colors">
+                {t('footer.terms')}
+              </a>
+            </div>
           </div>
         </div>
       </footer>

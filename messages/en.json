@@ -34,10 +34,17 @@
     "room3_price": "From ₮450,000"
   },
   "footer": {
-    "contact": "Contact",
-    "location": "Location",
-    "locationText": "Khuvsgul Province, Mongolia",
-    "rights": "All rights reserved."
+    "contact_title": "Contact",
+    "location_title": "Location",
+    "address": "Khuvsgul Province, Mongolia",
+    "links_title": "Quick Links",
+    "legal_title": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "All rights reserved.",
+    "home": "Home",
+    "rooms": "Rooms",
+    "booking": "Book Now"
   },
   "cta": {
     "title": "Ready to Experience Paradise?",
