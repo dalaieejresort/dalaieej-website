@@ -53,6 +53,12 @@
     "viewRooms": "View Rooms",
     "bookNow": "Book Now"
   },
+  "discover": {
+    "rooms": "The Gers",
+    "dining": "Dining & Bar",
+    "wellness": "Wellness",
+    "experiences": "Experiences"
+  },
   "offers": {
     "title": "Special Offers",
     "subtitle": "Exclusive packages designed for unforgettable experiences",

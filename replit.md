@@ -31,7 +31,8 @@ app/
 │   ├── AvailabilityBar.tsx           # Fixed booking bar with date pickers
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button
 │   ├── BookingButton.tsx             # Booking button component
-│   └── SpecialOffers.tsx             # Carousel with 3 special offer packages
+│   ├── SpecialOffers.tsx             # Carousel with 3 special offer packages
+│   └── DiscoverGrid.tsx              # 4-card visual navigation grid (Alpine Luxury style)
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
@@ -53,11 +54,10 @@ middleware.ts                         # Locale routing middleware
 2. **Booking Bar**: Fixed floating bar with:
    - "Book Your Stay" - Opens Cloudbeds reservation
    - "Check Availability" - Scrolls to Rooms section
-3. **Services Section**: 4 key features with icons
-4. **Rooms Section**: Three accommodation types with hover effects
-5. **Special Offers Carousel**: 3 promotional packages (Couples, Erdenet, Early Bird) with promo codes
-6. **CTA Section**: Call-to-action buttons
-5. **Custom Booking Flow**: 
+3. **Discover Grid**: 4 large visual navigation cards (Gers, Dining, Wellness, Experiences) with hover zoom
+4. **Special Offers Carousel**: Shows only for Mongolian locale - 3 packages with promo codes
+5. **CTA Section**: Call-to-action buttons
+6. **Custom Booking Flow**: 
    - Cloudbeds API v1.2 integration for real-time room availability
    - Simple x-api-key authentication
    - Date-based room search with enriched room details
@@ -92,8 +92,9 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-28**: Alpine Luxury redesign - added DiscoverGrid component, removed Services/Featured Rooms sections
+- **2026-01-28**: Special Offers carousel now shows only for Mongolian locale
 - **2026-01-28**: Added Special Offers carousel with 3 packages (Couples, Erdenet, Early Bird) and promo codes
-- **2026-01-28**: Simplified homepage - removed scroll animations and photo gallery for static snappy feel
 - **2026-01-28**: Aligned homepage components with standardized nested JSON structure (home.services, home.featured_rooms)
 - **2026-01-27**: Added multi-language support (English/Mongolian) with next-intl, language switcher, and translated UI
 - **2026-01-27**: Enhanced payment page with mobile deep links for Mongolian banks and manual transfer section
