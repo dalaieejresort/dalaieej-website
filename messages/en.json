@@ -10,6 +10,41 @@
     "subtitle": "Experience tranquility in the heart of Mongolia",
     "cta": "Discover More"
   },
+  "services": {
+    "title": "Resort Services",
+    "subtitle": "Everything you need for your stay",
+    "service1_title": "5-Star Service",
+    "service1_desc": "World-class hospitality",
+    "service2_title": "Prime Location",
+    "service2_desc": "Heart of Mongolian wilderness",
+    "service3_title": "Private Tours",
+    "service3_desc": "Exclusive guided experiences",
+    "service4_title": "Flexible Booking",
+    "service4_desc": "Easy reservations"
+  },
+  "featuredRooms": {
+    "room1_name": "Standard Ger",
+    "room1_desc": "Traditional Mongolian experience with authentic furnishings",
+    "room1_price": "From ₮150,000",
+    "room2_name": "Deluxe Ger",
+    "room2_desc": "Added comfort with stunning lake views",
+    "room2_price": "From ₮250,000",
+    "room3_name": "Lakeside Villa",
+    "room3_desc": "Panoramic lake views with private terrace",
+    "room3_price": "From ₮450,000"
+  },
+  "footer": {
+    "contact": "Contact",
+    "location": "Location",
+    "locationText": "Khuvsgul Province, Mongolia",
+    "rights": "All rights reserved."
+  },
+  "cta": {
+    "title": "Ready to Experience Paradise?",
+    "subtitle": "Book your unforgettable stay at Dalai Eej Resort",
+    "viewRooms": "View Rooms",
+    "bookNow": "Book Now"
+  },
   "booking": {
     "planYourStay": "Plan Your Stay",
     "checkAvailability": "Check Availability",
