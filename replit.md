@@ -22,7 +22,7 @@ app/
 ├── globals.css                       # Theme colors and custom styles
 ├── [locale]/
 │   ├── layout.tsx                    # Locale layout with NextIntlClientProvider
-│   ├── page.tsx                      # Main landing page with hero, rooms, amenities
+│   ├── page.tsx                      # Main landing page with hero, rooms, amenities, gallery
 │   ├── booking/
 │   │   └── page.tsx                  # Custom booking page with room search
 │   └── payment/
@@ -30,7 +30,9 @@ app/
 ├── components/
 │   ├── AvailabilityBar.tsx           # Fixed booking bar with date pickers
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button
-│   └── BookingButton.tsx             # Booking button component
+│   ├── BookingButton.tsx             # Booking button component
+│   ├── FadeIn.tsx                    # Reusable scroll animation wrapper
+│   └── Gallery.tsx                   # Photo gallery with hover zoom effects
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
@@ -48,12 +50,14 @@ middleware.ts                         # Locale routing middleware
 ```
 
 ### Key Features
-1. **Hero Section**: Full-screen video background with fade-in title
+1. **Hero Section**: Full-screen video background with fade-in title animations
 2. **Booking Bar**: Fixed floating bar with:
    - "Book Your Stay" - Opens Cloudbeds reservation
    - "Check Availability" - Scrolls to Rooms section
-3. **Rooms Section**: Three accommodation types with hover effects
-4. **Amenities Section**: 4 key features with icons
+3. **Services Section**: 4 key features with icons and scroll fade-in animations
+4. **Rooms Section**: Three accommodation types with hover effects and scroll animations
+5. **Photo Gallery**: 6-image grid with hover zoom effects (scale 1.05)
+6. **CTA Section**: Call-to-action with animated buttons
 5. **Custom Booking Flow**: 
    - Cloudbeds API v1.2 integration for real-time room availability
    - Simple x-api-key authentication
@@ -89,6 +93,8 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-28**: Added FadeIn component for scroll animations and Photo Gallery section with hover zoom effects
+- **2026-01-28**: Aligned homepage components with standardized nested JSON structure (home.services, home.featured_rooms)
 - **2026-01-27**: Added multi-language support (English/Mongolian) with next-intl, language switcher, and translated UI
 - **2026-01-27**: Enhanced payment page with mobile deep links for Mongolian banks and manual transfer section
 - **2026-01-27**: Fixed booking flow: proper navigation, date defaults (3 nights), total price calculation

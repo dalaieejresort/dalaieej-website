@@ -7,6 +7,8 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import AvailabilityBar from "../components/AvailabilityBar";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import FadeIn from "../components/FadeIn";
+import Gallery from "../components/Gallery";
 
 const roomImages = [
   "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80",
@@ -62,16 +64,11 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-forest-green/50 via-transparent to-forest-green/80" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="relative z-10 text-center px-4"
-        >
+        <FadeIn delay={0.3} duration={1.2} className="relative z-10 text-center px-4">
           <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 0.5 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
             className="font-heading text-5xl md:text-7xl lg:text-8xl text-cream mb-6 tracking-wide"
           >
             {t('hero.title')}
@@ -79,12 +76,12 @@ export default function Home() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 1 }}
+            transition={{ duration: 1, delay: 1 }}
             className="font-body text-lg md:text-xl text-cream/90 max-w-2xl mx-auto"
           >
             {t('hero.subtitle')}
           </motion.p>
-        </motion.div>
+        </FadeIn>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -127,20 +124,15 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <motion.div
-                key={service.titleKey}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-6"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-forest-green/10 mb-4">
-                  <service.icon className="w-8 h-8 text-forest-green" />
+              <FadeIn key={service.titleKey} delay={index * 0.1}>
+                <div className="text-center p-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-forest-green/10 mb-4">
+                    <service.icon className="w-8 h-8 text-forest-green" />
+                  </div>
+                  <h3 className="font-heading text-xl text-forest-green mb-2">{t(service.titleKey)}</h3>
+                  <p className="font-body text-forest-green/70">{t(service.descKey)}</p>
                 </div>
-                <h3 className="font-heading text-xl text-forest-green mb-2">{t(service.titleKey)}</h3>
-                <p className="font-body text-forest-green/70">{t(service.descKey)}</p>
-              </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -165,41 +157,39 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredRooms.map((room, index) => (
-              <motion.div
-                key={room.nameKey}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer"
-              >
-                <a href={`${localePrefix}/booking`}>
-                  <div className="relative overflow-hidden rounded-lg mb-4">
-                    <img
-                      src={room.image}
-                      alt={t(room.nameKey)}
-                      className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-forest-green/20 group-hover:bg-forest-green/40 transition-colors duration-300" />
-                  </div>
-                  <h3 className="font-heading text-2xl text-forest-green mb-2">{t(room.nameKey)}</h3>
-                  <p className="font-body text-forest-green/70 mb-2">{t(room.descKey)}</p>
-                  <p className="font-body text-forest-green font-semibold">{t(room.priceKey)}</p>
-                </a>
-              </motion.div>
+              <FadeIn key={room.nameKey} delay={index * 0.15}>
+                <motion.div
+                  className="group cursor-pointer"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <a href={`${localePrefix}/booking`}>
+                    <div className="relative overflow-hidden rounded-lg mb-4">
+                      <motion.img
+                        src={room.image}
+                        alt={t(room.nameKey)}
+                        className="w-full h-72 object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                      />
+                      <div className="absolute inset-0 bg-forest-green/20 group-hover:bg-forest-green/40 transition-colors duration-300" />
+                    </div>
+                    <h3 className="font-heading text-2xl text-forest-green mb-2">{t(room.nameKey)}</h3>
+                    <p className="font-body text-forest-green/70 mb-2">{t(room.descKey)}</p>
+                    <p className="font-body text-forest-green font-semibold">{t(room.priceKey)}</p>
+                  </a>
+                </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
+      <Gallery />
+
       <section className="bg-forest-green py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <FadeIn>
             <h2 className="font-heading text-4xl md:text-5xl text-cream mb-6">
               {t('cta.title')}
             </h2>
@@ -207,20 +197,24 @@ export default function Home() {
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
+              <motion.button
                 onClick={scrollToRooms}
                 className="px-8 py-4 border-2 border-cream text-cream font-body font-semibold rounded-lg hover:bg-cream/10 transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {t('cta.viewRooms')}
-              </button>
-              <a
+              </motion.button>
+              <motion.a
                 href={`${localePrefix}/booking`}
                 className="px-8 py-4 bg-cream text-forest-green font-body font-semibold rounded-lg hover:bg-white transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {t('cta.bookNow')}
-              </a>
+              </motion.a>
             </div>
-          </motion.div>
+          </FadeIn>
         </div>
       </section>
 
