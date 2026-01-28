@@ -23,8 +23,12 @@ app/
 ├── [locale]/
 │   ├── layout.tsx                    # Locale layout with NextIntlClientProvider
 │   ├── page.tsx                      # Main landing page with hero, rooms, amenities, gallery
+│   ├── amenities/
+│   │   └── page.tsx                  # Amenities & Guest Experience page
 │   ├── booking/
 │   │   └── page.tsx                  # Custom booking page with room search
+│   ├── offers/
+│   │   └── page.tsx                  # Special Offers page (6 cards, Mongolian only)
 │   └── payment/
 │       └── page.tsx                  # QPay payment terminal
 ├── components/
@@ -72,8 +76,9 @@ middleware.ts                         # Locale routing middleware
 ### Routes
 - `/` or `/en` - English landing page
 - `/mn` - Mongolian landing page
+- `/amenities` or `/mn/amenities` - Amenities & Guest Experience page
 - `/booking` or `/mn/booking` - Room search and booking (accepts ?checkin=&checkout= params)
-- `/mn/offers` - Special Offers page (Mongolian only - grid layout with 3 offer cards)
+- `/mn/offers` - Special Offers page (Mongolian only - grid layout with 6 offer cards)
 - `/payment` or `/mn/payment` - QPay payment terminal (accepts ?bookingId=&amount=&nights= params)
 
 ### Environment Variables Required
@@ -95,7 +100,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
-- **2026-01-28**: Created dedicated /offers page with grid layout (3 cards, 3:4 aspect ratio)
+- **2026-01-28**: Fixed Amenities page translation issue - removed duplicate amenities keys in JSON files that were overwriting full content
+- **2026-01-28**: Created Amenities & Guest Experience page with hero, features, inclusions, testimonials, and policies accordion
+- **2026-01-28**: Updated Special Offers to 6 cards (Couples, Erdenet 50th, Pioneer, Early Bird, Long Stay, Family)
+- **2026-01-28**: Created dedicated /offers page with grid layout (6 cards, Meritage style)
 - **2026-01-28**: Added Navbar component with conditional offers link (MN only)
 - **2026-01-28**: Added InteractiveMap with clickable hotspots showing resort areas
 - **2026-01-28**: Reordered homepage: Hero → DiscoverGrid → SpecialOffers (MN only) → InteractiveMap → Footer

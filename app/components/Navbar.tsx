@@ -13,11 +13,12 @@ export default function Navbar() {
 
   const navLinks = [
     { href: localePrefix || "/", label: t('nav.home') },
+    { href: `${localePrefix}/amenities`, label: t('nav.amenities') },
     { href: `${localePrefix}/booking`, label: t('nav.book') },
   ];
 
   if (locale === 'mn') {
-    navLinks.splice(1, 0, { href: `${localePrefix}/offers`, label: t('nav.offers') });
+    navLinks.splice(2, 0, { href: `${localePrefix}/offers`, label: t('nav.offers') });
   }
 
   return (

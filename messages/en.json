@@ -6,6 +6,82 @@
     "book": "Book Now",
     "offers": "Special Offers"
   },
+  "amenities": {
+    "hero": {
+      "title": "The Ultimate Nature Escape",
+      "subtitle": "Situated on the pristine shores of Lake Khuvsgul, Dalai Eej Resort offers a sanctuary of comfort in the heart of the National Park."
+    },
+    "keyAmenities": {
+      "title": "Key Amenities",
+      "items": {
+        "yurts": "Luxury & Standard Yurts with Lake Views",
+        "shoreline": "Private Shoreline Access",
+        "restaurant": "On-site Restaurant with Panoramic Deck",
+        "sauna": "Traditional Sauna & Shower Facilities",
+        "tours": "Daily Guided Tours & Horse Trekking"
+      }
+    },
+    "dining": {
+      "title": "Flavors of the Steppe",
+      "desc": "Experience warm Mongolian hospitality. From hearty Khorkhog (stone-cooked meat) to fresh European favorites, our restaurant serves delicious meals prepared with local ingredients. Enjoy your morning coffee while watching the sunrise over the lake.",
+      "cta": "View Menu"
+    },
+    "activities": {
+      "title": "Adventures on the Blue Pearl",
+      "desc": "The lake is your playground. Charter a motorboat to the islands, hike the surrounding larch forests, or experience the nomadic lifestyle on a guided horse trek through the valley.",
+      "cta": "View Activities"
+    },
+    "relaxation": {
+      "title": "Disconnect to Reconnect",
+      "desc": "Far from the city lights and noise. Spend your evenings by a crackling bonfire, gazing at the Milky Way, or relaxing in our wood-fired sauna after a day of exploration.",
+      "cta": "See Accommodations"
+    },
+    "inclusions": {
+      "title": "Your Stay Includes",
+      "breakfast": "Daily Breakfast Buffet",
+      "firewood": "Daily Firewood Basket (for Yurt stoves)",
+      "parking": "Secure On-site Parking",
+      "security": "24/7 Security Service",
+      "concierge": "Concierge for Tour Bookings",
+      "wifi": "High-Speed WiFi (Lodge Area)",
+      "water": "Filtered Water Stations",
+      "luggage": "Luggage Assistance"
+    },
+    "testimonials": {
+      "title": "Guest Experiences",
+      "review1": {
+        "text": "Waking up to the sound of the waves and the smell of pine trees was magical. The yurt was cozy and warm even on chilly nights.",
+        "author": "Sarah J., USA"
+      },
+      "review2": {
+        "text": "The staff went above and beyond to help us organize a trip to the Reindeer herders. Truly the highlight of our Mongolia trip.",
+        "author": "Bat-Erdene, Ulaanbaatar"
+      },
+      "review3": {
+        "text": "Perfect location. Right on the water, but quiet and peaceful. The food at the restaurant was surprisingly good for such a remote spot!",
+        "author": "Alex & Marie, France"
+      }
+    },
+    "policies": {
+      "title": "Resort Policies",
+      "checkin": {
+        "title": "Check-In / Check-Out",
+        "desc": "Check-In: 14:00 | Check-Out: 11:00. Early check-in and late check-out may be available upon request."
+      },
+      "cancellation": {
+        "title": "Cancellations",
+        "desc": "Flexible cancellation up to 14 days prior to arrival. Cancellations within 14 days are subject to one night's charge."
+      },
+      "quiet": {
+        "title": "Quiet Hours",
+        "desc": "23:00 - 07:00 to maintain the peace of the National Park and respect for fellow guests."
+      },
+      "pets": {
+        "title": "Pet Policy",
+        "desc": "Pets are welcome on leashes in outdoor areas. Please inform us in advance if traveling with pets."
+      }
+    }
+  },
   "hero": {
     "title": "Dalai Eej Resort",
     "subtitle": "Experience tranquility in the heart of Mongolia",
@@ -145,10 +221,6 @@
   "rooms": {
     "title": "Our Accommodations",
     "subtitle": "Choose from our carefully curated selection of rooms"
-  },
-  "amenities": {
-    "title": "Resort Amenities",
-    "subtitle": "Everything you need for a perfect stay"
   },
   "payment": {
     "title": "Complete Your Reservation",
