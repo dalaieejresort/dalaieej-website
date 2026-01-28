@@ -53,9 +53,23 @@
     "viewRooms": "View Rooms",
     "bookNow": "Book Now"
   },
-  "gallery": {
-    "title": "Explore Our Resort",
-    "subtitle": "Discover the natural beauty surrounding Dalai Eej Resort"
+  "offers": {
+    "title": "Special Offers",
+    "subtitle": "Exclusive packages designed for unforgettable experiences",
+    "promoLabel": "Promo Code",
+    "bookNow": "Book This Offer",
+    "couples": {
+      "title": "Romantic Couples Retreat",
+      "desc": "Escape to paradise with your loved one. Enjoy private lakeside dining, couples spa treatments, and a complimentary bottle of champagne. Perfect for anniversaries and honeymoons."
+    },
+    "erdenet": {
+      "title": "Erdenet Residents Special",
+      "desc": "A special discount for our neighbors from Erdenet and mining community members. Show your Erdenet ID or mining company badge for exclusive rates on all room types."
+    },
+    "early": {
+      "title": "Early Bird & Returning Guests",
+      "desc": "Book 30 days in advance or return as a loyal guest to unlock special savings. Includes complimentary breakfast and late checkout."
+    }
   },
   "booking": {
     "planYourStay": "Plan Your Stay",
