@@ -53,6 +53,23 @@
     "viewRooms": "View Rooms",
     "bookNow": "Book Now"
   },
+  "map": {
+    "title": "Explore Our Resort",
+    "subtitle": "Click on the hotspots to discover what awaits you",
+    "hint": "Click the + icons to learn more about each area",
+    "reception": {
+      "title": "Reception & Dining",
+      "desc": "Our main lodge features a warm reception, gourmet restaurant, and lounge bar with panoramic views."
+    },
+    "lakefront": {
+      "title": "Lakefront Gers",
+      "desc": "Traditional Mongolian gers positioned along the pristine lakefront, offering stunning sunrise views."
+    },
+    "forest": {
+      "title": "Forest Cabins",
+      "desc": "Secluded wooden cabins nestled in the forest, perfect for those seeking tranquility and privacy."
+    }
+  },
   "discover": {
     "rooms": "The Gers",
     "dining": "Dining & Bar",

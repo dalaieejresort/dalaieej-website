@@ -32,7 +32,8 @@ app/
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button
 │   ├── BookingButton.tsx             # Booking button component
 │   ├── SpecialOffers.tsx             # Carousel with 3 special offer packages
-│   └── DiscoverGrid.tsx              # 4-card visual navigation grid (Alpine Luxury style)
+│   ├── DiscoverGrid.tsx              # 4-card visual navigation grid (Alpine Luxury style)
+│   └── InteractiveMap.tsx            # Resort map with clickable hotspots
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
@@ -56,7 +57,7 @@ middleware.ts                         # Locale routing middleware
    - "Check Availability" - Scrolls to Rooms section
 3. **Discover Grid**: 4 large visual navigation cards (Gers, Dining, Wellness, Experiences) with hover zoom
 4. **Special Offers Carousel**: Shows only for Mongolian locale - 3 packages with promo codes
-5. **CTA Section**: Call-to-action buttons
+5. **Interactive Map**: Resort map with 3 clickable hotspots (Reception, Lakefront Gers, Forest Cabins)
 6. **Custom Booking Flow**: 
    - Cloudbeds API v1.2 integration for real-time room availability
    - Simple x-api-key authentication
@@ -92,6 +93,8 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-28**: Added InteractiveMap with clickable hotspots showing resort areas
+- **2026-01-28**: Reordered homepage: Hero → DiscoverGrid → SpecialOffers (MN only) → InteractiveMap → Footer
 - **2026-01-28**: Alpine Luxury redesign - added DiscoverGrid component, removed Services/Featured Rooms sections
 - **2026-01-28**: Special Offers carousel now shows only for Mongolian locale
 - **2026-01-28**: Added Special Offers carousel with 3 packages (Couples, Erdenet, Early Bird) and promo codes

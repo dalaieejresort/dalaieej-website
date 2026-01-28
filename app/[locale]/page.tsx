@@ -2,18 +2,17 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import AvailabilityBar from "../components/AvailabilityBar";
 import LanguageSwitcher from "../components/LanguageSwitcher";
-import SpecialOffers from "../components/SpecialOffers";
 import DiscoverGrid from "../components/DiscoverGrid";
+import SpecialOffers from "../components/SpecialOffers";
+import InteractiveMap from "../components/InteractiveMap";
 
 export default function Home() {
   const t = useTranslations();
-  const pathname = usePathname();
-  
-  const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
-  const localePrefix = currentLocale === 'mn' ? '/mn' : '';
+  const locale = useLocale();
+  const localePrefix = locale === 'mn' ? '/mn' : '';
 
   return (
     <main className="relative min-h-screen">
@@ -77,28 +76,11 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {currentLocale === 'mn' && <SpecialOffers />}
-
       <DiscoverGrid />
 
-      <section className="bg-forest-green py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-heading text-4xl md:text-5xl text-cream mb-6">
-            {t('cta.title')}
-          </h2>
-          <p className="font-body text-cream/80 text-lg mb-8 max-w-2xl mx-auto">
-            {t('cta.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`${localePrefix}/booking`}
-              className="px-8 py-4 bg-cream text-forest-green font-body font-semibold rounded-lg hover:bg-white transition-colors duration-300"
-            >
-              {t('cta.bookNow')}
-            </a>
-          </div>
-        </div>
-      </section>
+      {locale === 'mn' && <SpecialOffers />}
+
+      <InteractiveMap />
 
       <footer className="bg-forest-green/95 py-12 px-4 border-t border-cream/20">
         <div className="max-w-6xl mx-auto">
