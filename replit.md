@@ -33,7 +33,8 @@ app/
 │   ├── BookingButton.tsx             # Booking button component
 │   ├── SpecialOffers.tsx             # Carousel with 3 special offer packages
 │   ├── DiscoverGrid.tsx              # 4-card visual navigation grid (Alpine Luxury style)
-│   └── InteractiveMap.tsx            # Resort map with clickable hotspots
+│   ├── InteractiveMap.tsx            # Resort map with clickable hotspots
+│   └── Navbar.tsx                    # Navigation bar with locale-conditional links
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
@@ -72,6 +73,7 @@ middleware.ts                         # Locale routing middleware
 - `/` or `/en` - English landing page
 - `/mn` - Mongolian landing page
 - `/booking` or `/mn/booking` - Room search and booking (accepts ?checkin=&checkout= params)
+- `/mn/offers` - Special Offers page (Mongolian only - grid layout with 3 offer cards)
 - `/payment` or `/mn/payment` - QPay payment terminal (accepts ?bookingId=&amount=&nights= params)
 
 ### Environment Variables Required
@@ -93,6 +95,8 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-28**: Created dedicated /offers page with grid layout (3 cards, 3:4 aspect ratio)
+- **2026-01-28**: Added Navbar component with conditional offers link (MN only)
 - **2026-01-28**: Added InteractiveMap with clickable hotspots showing resort areas
 - **2026-01-28**: Reordered homepage: Hero → DiscoverGrid → SpecialOffers (MN only) → InteractiveMap → Footer
 - **2026-01-28**: Alpine Luxury redesign - added DiscoverGrid component, removed Services/Featured Rooms sections
