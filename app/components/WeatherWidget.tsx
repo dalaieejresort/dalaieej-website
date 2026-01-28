@@ -37,26 +37,27 @@ export default function WeatherWidget() {
   };
 
   return (
-    <div className="text-center py-8">
-      <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-sans">
+    <div className="text-center md:text-left py-4">
+      <p className="text-xs uppercase tracking-[0.2em] text-cream/50 mb-2 font-sans">
         Weather Conditions
       </p>
       
-      <p className="font-heading text-5xl md:text-6xl text-forest-green">
+      <p className="font-heading text-2xl md:text-3xl text-cream">
         {displayTemp()}
       </p>
 
-      <div className="mt-6">
+      <div className="mt-3">
         <a
           href="#"
-          className="text-sm font-bold uppercase tracking-widest border-b border-gray-400 pb-1 hover:border-black transition-colors text-forest-green"
+          className="text-xs font-bold uppercase tracking-widest border-b border-cream/40 pb-1 hover:border-cream transition-colors text-cream/70 hover:text-cream"
         >
           Webcam
         </a>
       </div>
 
-      <p className="text-[10px] text-gray-400 mt-4">
-        Weather data and forecasts are provided by OpenWeatherMap. © OpenWeather Ltd used under the Open License.
+      <p className="text-[9px] text-cream/30 mt-3 leading-relaxed">
+        Weather data provided by OpenWeatherMap.<br />
+        © OpenWeather Ltd, Open License.
       </p>
     </div>
   );

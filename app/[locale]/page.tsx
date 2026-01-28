@@ -8,6 +8,7 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import DiscoverGrid from "../components/DiscoverGrid";
 import SpecialOffers from "../components/SpecialOffers";
 import InteractiveMap from "../components/InteractiveMap";
+import WeatherWidget from "../components/WeatherWidget";
 
 export default function Home() {
   const t = useTranslations();
@@ -98,9 +99,12 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-heading text-lg text-cream mb-4">{t('footer.location_title')}</h4>
-              <p className="font-body text-cream/70 text-sm">
+              <p className="font-body text-cream/70 text-sm mb-4">
                 {t('footer.address')}
               </p>
+              <div className="text-cream">
+                <WeatherWidget />
+              </div>
             </div>
             <div>
               <h4 className="font-heading text-lg text-cream mb-4">{t('footer.links_title')}</h4>
