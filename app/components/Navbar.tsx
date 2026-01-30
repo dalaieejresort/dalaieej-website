@@ -23,7 +23,6 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const navItems: NavItem[] = [
-    { href: localePrefix || "/", label: t('nav.home') },
     { 
       label: t('nav.about'),
       dropdown: [
@@ -50,7 +49,6 @@ export default function Navbar() {
   ];
 
   const mobileNavItems = [
-    { href: localePrefix || "/", label: t('nav.home') },
     { href: `${localePrefix}/about`, label: t('nav.about') },
     { href: `${localePrefix}/about/the-family`, label: locale === 'mn' ? "Гэр бүл" : "The Family" },
     { href: `${localePrefix}/about/the-lake`, label: locale === 'mn' ? "Нуур" : "The Lake" },

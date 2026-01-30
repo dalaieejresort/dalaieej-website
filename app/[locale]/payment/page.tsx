@@ -33,6 +33,7 @@ function PaymentContent() {
   const [paymentStatus, setPaymentStatus] = useState("");
   const [copied, setCopied] = useState(false);
   const [manualExpanded, setManualExpanded] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     const urlBookingId = searchParams.get("bookingId");
@@ -190,10 +191,30 @@ function PaymentContent() {
                 </div>
               )}
 
+              <div className="flex items-start gap-3 py-2">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="w-5 h-5 mt-0.5 rounded border-[#F5F5DC]/50 bg-transparent text-[#F5F5DC] focus:ring-[#F5F5DC] focus:ring-offset-0 cursor-pointer accent-[#F5F5DC]"
+                />
+                <label htmlFor="terms" className="text-[#F5F5DC]/80 text-sm font-sans cursor-pointer leading-relaxed">
+                  {currentLocale === 'mn' 
+                    ? <>Би <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Үйлчилгээний нөхцөл</a> болон <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Цуцлалтын бодлого</a>-г зөвшөөрч байна</>
+                    : <>I agree to the <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Terms & Conditions</a> and <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Cancellation Policy</a></>
+                  }
+                </label>
+              </div>
+
               <button
                 onClick={generateQR}
-                disabled={loading}
-                className="w-full py-4 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading || !termsAccepted}
+                className={`w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold ${
+                  termsAccepted 
+                    ? 'bg-[#F5F5DC] text-[#1A3C34] hover:bg-white cursor-pointer' 
+                    : 'bg-[#F5F5DC]/30 text-[#1A3C34]/50 cursor-not-allowed'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {loading ? t('generating') : t('generatePayment')}
               </button>

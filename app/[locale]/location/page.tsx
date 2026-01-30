@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
-import { Plane, Car, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Plane, Car, MapPin, Phone, Mail, Clock, Play } from "lucide-react";
 
 export default function LocationPage() {
   const t = useTranslations();
@@ -53,6 +53,33 @@ export default function LocationPage() {
 
       <section className="py-16 px-4 bg-cream">
         <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <h2 className="font-serif text-3xl text-forest-green text-center mb-8">
+              {locale === 'mn' ? "Хөвсгөл рүү аялал" : "The Journey to Khuvsgul"}
+            </h2>
+            <div className="relative aspect-video bg-gradient-to-br from-forest-green/20 to-forest-green/40 rounded-2xl overflow-hidden shadow-xl group cursor-pointer">
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="w-24 h-24 rounded-full bg-forest-green/90 flex items-center justify-center mb-6 group-hover:bg-forest-green transition-colors group-hover:scale-110 duration-300">
+                  <Play className="w-10 h-10 text-cream ml-1" fill="currentColor" />
+                </div>
+                <p className="font-serif text-2xl text-forest-green mb-2">
+                  {locale === 'mn' ? "Хөвсгөл рүү аялал" : "The Journey to Khuvsgul"}
+                </p>
+                <p className="font-body text-forest-green/60 text-sm">
+                  {locale === 'mn' ? "Далай Ээж Resort руу хүрэх замын видео" : "Experience the off-road adventure to our resort"}
+                </p>
+              </div>
+              <div className="absolute bottom-4 right-4 bg-forest-green/80 text-cream px-3 py-1 rounded text-sm font-body">
+                {locale === 'mn' ? "Видео тун удахгүй" : "Coming Soon"}
+              </div>
+            </div>
+          </motion.div>
+
           <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center mb-12">
             <div className="text-center">
               <MapPin className="w-16 h-16 text-forest-green/40 mx-auto mb-4" />
