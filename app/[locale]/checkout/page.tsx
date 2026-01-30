@@ -46,7 +46,7 @@ function CheckoutContent() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("MN");
   const [specialRequests, setSpecialRequests] = useState("");
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
@@ -285,13 +285,22 @@ function CheckoutContent() {
                     <Globe className="w-4 h-4" />
                     {t('country')}
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    placeholder={t('countryPlaceholder')}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors"
-                  />
+                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors bg-white"
+                  >
+                    <option value="MN">{currentLocale === 'mn' ? 'Монгол' : 'Mongolia'}</option>
+                    <option value="US">{currentLocale === 'mn' ? 'АНУ' : 'USA'}</option>
+                    <option value="CN">{currentLocale === 'mn' ? 'Хятад' : 'China'}</option>
+                    <option value="RU">{currentLocale === 'mn' ? 'Орос' : 'Russia'}</option>
+                    <option value="KR">{currentLocale === 'mn' ? 'Өмнөд Солонгос' : 'South Korea'}</option>
+                    <option value="JP">{currentLocale === 'mn' ? 'Япон' : 'Japan'}</option>
+                    <option value="DE">{currentLocale === 'mn' ? 'Герман' : 'Germany'}</option>
+                    <option value="GB">{currentLocale === 'mn' ? 'Их Британи' : 'UK'}</option>
+                    <option value="FR">{currentLocale === 'mn' ? 'Франц' : 'France'}</option>
+                    <option value="AU">{currentLocale === 'mn' ? 'Австрали' : 'Australia'}</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-[#333]/70 text-sm mb-1">
@@ -535,8 +544,8 @@ function CheckoutContent() {
                   disabled={loading || !termsAccepted}
                   className={`w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold flex items-center justify-center gap-2 ${
                     termsAccepted && !loading
-                      ? 'bg-[#1D3C45] text-[#F5F5F0] hover:bg-[#1D3C45]/90 cursor-pointer'
-                      : 'bg-[#333]/20 text-[#333]/50 cursor-not-allowed'
+                      ? 'bg-[#1D3C45] text-white hover:bg-[#1D3C45]/90 cursor-pointer'
+                      : 'bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed'
                   }`}
                 >
                   {loading && <Loader2 className="w-5 h-5 animate-spin" />}
