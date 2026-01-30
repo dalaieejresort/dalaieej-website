@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.8",
     "@replit/object-storage": "^1.0.0",
     "@types/uuid": "^10.0.0",
     "axios": "^1.13.2",

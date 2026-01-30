@@ -3,7 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 import { useRef, useState } from "react";
-import { Compass, Flag, Flame, Link2 } from "lucide-react";
+import { Compass, Flag, Flame, Link2, MapPin } from "lucide-react";
+import TrustBadge from "@/app/components/TrustBadge";
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -336,6 +337,50 @@ export default function AboutPage() {
                 </p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Module 6: Location & Trust */}
+      <section className="relative">
+        <div className="h-[60vh] md:h-[70vh] w-full relative">
+          <div className="absolute inset-0 bg-lake-blue">
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-center p-8">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-pine-green/30 flex items-center justify-center">
+                  <MapPin className="w-10 h-10 text-warm-beige" />
+                </div>
+                <h3 className="font-serif text-3xl md:text-4xl text-warm-beige mb-4">
+                  {locale === 'mn' ? "Далай Ээж Resort" : "Dalai Eej Resort"}
+                </h3>
+                <p className="font-body text-warm-beige/70 text-lg mb-2">
+                  {locale === 'mn' ? "Хөвсгөл нуур, Монгол" : "Khuvsgul Lake, Mongolia"}
+                </p>
+                <p className="font-body text-warm-beige/50 text-sm">50.4431° N, 100.1667° E</p>
+                
+                <motion.a
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  href={`${localePrefix}/location`}
+                  className="inline-block mt-8 px-6 py-3 border border-warm-beige/30 text-warm-beige font-body text-sm tracking-wide hover:bg-warm-beige/10 transition-colors rounded"
+                >
+                  {locale === 'mn' ? "Чиглэлийг харах" : "View Directions"}
+                </motion.a>
+              </div>
+            </div>
+          </div>
+          
+          {/* Trust Badge - Desktop: Top Right, Mobile: Below Map */}
+          <div className="hidden md:block absolute top-8 right-8 z-10 w-72">
+            <TrustBadge locale={locale} />
+          </div>
+        </div>
+        
+        {/* Trust Badge - Mobile: Below Map */}
+        <div className="md:hidden px-6 py-8 bg-pine-green/5">
+          <div className="max-w-sm mx-auto">
+            <TrustBadge locale={locale} />
           </div>
         </div>
       </section>
