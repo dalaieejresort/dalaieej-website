@@ -3,6 +3,14 @@ import axios from "axios";
 
 const CLOUDBEDS_API_BASE = "https://hotels.cloudbeds.com/api/v1.2";
 
+interface RoomBooking {
+  roomTypeID: string;
+  roomRateID?: string;
+  quantity: number;
+  adults: number;
+  children: number;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.CLOUDBEDS_API_KEY;
@@ -14,8 +22,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const {
-      roomTypeId,
-      rateId,
+      rooms,
       checkin,
       checkout,
       guestFirstName,
@@ -24,13 +31,18 @@ export async function POST(request: NextRequest) {
       guestPhone,
       guestCountry,
       specialRequests,
-      adults,
-      children,
       addons,
       totalAmount,
     } = body;
 
-    if (!roomTypeId || !checkin || !checkout || !guestFirstName || !guestLastName || !guestEmail) {
+    if (!rooms || !Array.isArray(rooms) || rooms.length === 0) {
+      return NextResponse.json(
+        { error: "At least one room is required" },
+        { status: 400 }
+      );
+    }
+
+    if (!checkin || !checkout || !guestFirstName || !guestLastName || !guestEmail) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -45,32 +57,23 @@ export async function POST(request: NextRequest) {
     reservationParams.set("guestLastName", guestLastName);
     reservationParams.set("guestEmail", guestEmail);
     if (guestPhone) reservationParams.set("guestPhone", guestPhone);
-    if (guestCountry) {
-      const countryCodeMap: { [key: string]: string } = {
-        "Mongolia": "MN", "Монгол": "MN",
-        "United States": "US", "USA": "US",
-        "China": "CN", "Хятад": "CN",
-        "Russia": "RU", "Орос": "RU",
-        "Japan": "JP", "Япон": "JP",
-        "South Korea": "KR", "Солонгос": "KR",
-        "Germany": "DE", "Герман": "DE",
-        "France": "FR", "Франц": "FR",
-        "United Kingdom": "GB", "UK": "GB", "Англи": "GB",
-        "Australia": "AU", "Австрали": "AU",
-        "Canada": "CA", "Канад": "CA",
-      };
-      const countryCode = countryCodeMap[guestCountry] || guestCountry;
-      if (countryCode.length === 2) {
-        reservationParams.set("guestCountry", countryCode);
-      }
-    }
-    if (specialRequests) reservationParams.set("customNotes", specialRequests);
-    reservationParams.set("adults[0]", String(parseInt(adults) || 1));
-    reservationParams.set("children[0]", String(parseInt(children) || 0));
     
-    reservationParams.set("rooms[0][roomTypeID]", roomTypeId);
-    if (rateId) reservationParams.set("rooms[0][roomRateID]", rateId);
-    reservationParams.set("rooms[0][quantity]", "1");
+    if (guestCountry) {
+      const countryCode = guestCountry.length === 2 ? guestCountry : "MN";
+      reservationParams.set("guestCountry", countryCode);
+    }
+    
+    if (specialRequests) reservationParams.set("customNotes", specialRequests);
+
+    (rooms as RoomBooking[]).forEach((room, index) => {
+      reservationParams.set(`rooms[${index}][roomTypeID]`, room.roomTypeID);
+      if (room.roomRateID) {
+        reservationParams.set(`rooms[${index}][roomRateID]`, room.roomRateID);
+      }
+      reservationParams.set(`rooms[${index}][quantity]`, String(room.quantity || 1));
+      reservationParams.set(`rooms[${index}][adults]`, String(parseInt(String(room.adults)) || 1));
+      reservationParams.set(`rooms[${index}][children]`, String(parseInt(String(room.children)) || 0));
+    });
 
     reservationParams.set("source", "Website");
     reservationParams.set("status", "not_confirmed");

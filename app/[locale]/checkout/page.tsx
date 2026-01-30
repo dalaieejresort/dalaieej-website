@@ -3,9 +3,21 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { User, Mail, Phone, Globe, MessageSquare, Plus, Minus, Loader2, AlertCircle, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { User, Mail, Phone, Globe, MessageSquare, Plus, Minus, Loader2, AlertCircle, Check, ChevronDown, ChevronUp, Bed } from "lucide-react";
 import { useTranslations } from 'next-intl';
 import { motion } from "framer-motion";
+
+interface CartRoom {
+  roomTypeID: string;
+  roomTypeName: string;
+  rateID: string;
+  maxGuests: number;
+  pricePerNight: number;
+  currency: string;
+  adults: number;
+  children: number;
+  quantity: number;
+}
 
 interface Addon {
   id: string;
@@ -33,14 +45,12 @@ function CheckoutContent() {
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
-  const [roomTypeId, setRoomTypeId] = useState("");
-  const [rateId, setRateId] = useState("");
-  const [roomName, setRoomName] = useState("");
+  const [cartRooms, setCartRooms] = useState<CartRoom[]>([]);
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
   const [nights, setNights] = useState(1);
-  const [basePrice, setBasePrice] = useState(0);
-  const [currency, setCurrency] = useState("MNT");
+  const [totalAdults, setTotalAdults] = useState(1);
+  const [totalChildren, setTotalChildren] = useState(0);
   
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -48,8 +58,6 @@ function CheckoutContent() {
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("MN");
   const [specialRequests, setSpecialRequests] = useState("");
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
   
   const [addons, setAddons] = useState<Addon[]>([]);
   const [selectedAddons, setSelectedAddons] = useState<SelectedAddon[]>([]);
@@ -61,26 +69,31 @@ function CheckoutContent() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const urlRoomTypeId = searchParams.get("roomTypeId");
-    const urlRateId = searchParams.get("rateId");
-    const urlRoomName = searchParams.get("roomName");
     const urlCheckin = searchParams.get("checkin");
     const urlCheckout = searchParams.get("checkout");
     const urlNights = searchParams.get("nights");
-    const urlPrice = searchParams.get("price");
-    const urlCurrency = searchParams.get("currency");
+    const urlCart = searchParams.get("cart");
+    const urlTotalAdults = searchParams.get("totalAdults");
+    const urlTotalChildren = searchParams.get("totalChildren");
     
-    if (urlRoomTypeId) setRoomTypeId(urlRoomTypeId);
-    if (urlRateId) setRateId(urlRateId);
-    if (urlRoomName) setRoomName(decodeURIComponent(urlRoomName));
     if (urlCheckin) setCheckin(urlCheckin);
     if (urlCheckout) setCheckout(urlCheckout);
     if (urlNights) setNights(parseInt(urlNights));
-    if (urlPrice) setBasePrice(parseFloat(urlPrice));
-    if (urlCurrency) setCurrency(urlCurrency);
+    if (urlTotalAdults) setTotalAdults(parseInt(urlTotalAdults));
+    if (urlTotalChildren) setTotalChildren(parseInt(urlTotalChildren));
     
-    if (urlCheckin && urlCheckout && urlRoomTypeId) {
-      fetchAddons(urlCheckin, urlCheckout, urlRoomTypeId);
+    if (urlCart) {
+      try {
+        const decodedCart = decodeURIComponent(urlCart);
+        const parsedCart = JSON.parse(decodedCart);
+        setCartRooms(parsedCart);
+        
+        if (urlCheckin && urlCheckout && parsedCart.length > 0) {
+          fetchAddons(urlCheckin, urlCheckout, parsedCart[0].roomTypeID);
+        }
+      } catch (e) {
+        console.error("Failed to parse cart:", e);
+      }
     }
   }, [searchParams]);
 
@@ -128,7 +141,9 @@ function CheckoutContent() {
     }, 0);
   };
 
-  const totalPrice = basePrice + calculateAddonsTotal();
+  const roomsTotal = cartRooms.reduce((sum, room) => sum + (room.pricePerNight * room.quantity * nights), 0);
+  const totalPrice = roomsTotal + calculateAddonsTotal();
+  const currency = cartRooms[0]?.currency || "MNT";
 
   const validateForm = () => {
     if (!firstName.trim()) return t('errorFirstName');
@@ -150,12 +165,19 @@ function CheckoutContent() {
     setError("");
 
     try {
+      const rooms = cartRooms.map(room => ({
+        roomTypeID: room.roomTypeID,
+        roomRateID: room.rateID,
+        quantity: room.quantity,
+        adults: room.adults,
+        children: room.children,
+      }));
+
       const response = await fetch("/api/cloudbeds/reservation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          roomTypeId,
-          rateId,
+          rooms,
           checkin,
           checkout,
           guestFirstName: firstName,
@@ -164,8 +186,6 @@ function CheckoutContent() {
           guestPhone: phone,
           guestCountry: country,
           specialRequests,
-          adults,
-          children,
           addons: selectedAddons.map(a => ({ id: a.id, quantity: a.quantity })),
           totalAmount: totalPrice,
         }),
@@ -178,7 +198,7 @@ function CheckoutContent() {
       }
 
       const paymentParams = new URLSearchParams({
-        bookingId: data.reservationId || `${roomTypeId}-${Date.now()}`,
+        bookingId: data.reservationId || `booking-${Date.now()}`,
         amount: String(totalPrice),
         nights: String(nights),
         guestName: `${firstName} ${lastName}`,
@@ -222,6 +242,46 @@ function CheckoutContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-xl p-6 shadow-sm"
+            >
+              <h2 className="font-serif text-xl text-[#333] mb-6 flex items-center gap-2">
+                <Bed className="w-5 h-5 text-[#1D3C45]" />
+                {currentLocale === 'mn' ? 'Сонгосон өрөөнүүд' : 'Selected Rooms'}
+              </h2>
+
+              {cartRooms.length === 0 ? (
+                <p className="text-[#333]/50">{currentLocale === 'mn' ? 'Өрөө сонгоогүй байна' : 'No rooms selected'}</p>
+              ) : (
+                <div className="space-y-4">
+                  {cartRooms.map((room, index) => (
+                    <div key={`${room.roomTypeID}-${index}`} className="border border-[#333]/10 rounded-lg p-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-medium text-[#333]">{room.roomTypeName}</h3>
+                          <p className="text-sm text-[#333]/60">
+                            {room.adults} {currentLocale === 'mn' ? 'насанд хүрэгч' : 'adult'}{room.adults > 1 ? 's' : ''}
+                            {room.children > 0 && `, ${room.children} ${currentLocale === 'mn' ? 'хүүхэд' : 'child'}${room.children > 1 ? 'ren' : ''}`}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-[#333]">
+                            {(room.pricePerNight * room.quantity * nights).toLocaleString()} {room.currency}
+                          </p>
+                          <p className="text-xs text-[#333]/50">
+                            {room.pricePerNight.toLocaleString()} × {nights} {currentLocale === 'mn' ? 'шөнө' : 'nights'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
               className="bg-white rounded-xl p-6 shadow-sm"
             >
               <h2 className="font-serif text-xl text-[#333] mb-6 flex items-center gap-2">
@@ -302,169 +362,109 @@ function CheckoutContent() {
                     <option value="AU">{currentLocale === 'mn' ? 'Австрали' : 'Australia'}</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-[#333]/70 text-sm mb-1">
-                    {t('guests')}
+                <div className="md:col-span-2">
+                  <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
+                    <MessageSquare className="w-4 h-4" />
+                    {t('specialRequests')}
                   </label>
-                  <div className="flex gap-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-[#333]/60">{t('adults')}</span>
-                      <button
-                        onClick={() => setAdults(Math.max(1, adults - 1))}
-                        className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-6 text-center">{adults}</span>
-                      <button
-                        onClick={() => setAdults(Math.min(10, adults + 1))}
-                        className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-[#333]/60">{t('children')}</span>
-                      <button
-                        onClick={() => setChildren(Math.max(0, children - 1))}
-                        className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-6 text-center">{children}</span>
-                      <button
-                        onClick={() => setChildren(Math.min(10, children + 1))}
-                        className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
+                  <textarea
+                    value={specialRequests}
+                    onChange={(e) => setSpecialRequests(e.target.value)}
+                    placeholder={t('specialRequestsPlaceholder')}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors resize-none"
+                  />
                 </div>
-              </div>
-
-              <div className="mt-4">
-                <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
-                  <MessageSquare className="w-4 h-4" />
-                  {t('specialRequests')}
-                </label>
-                <textarea
-                  value={specialRequests}
-                  onChange={(e) => setSpecialRequests(e.target.value)}
-                  placeholder={t('specialRequestsPlaceholder')}
-                  rows={3}
-                  className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors resize-none"
-                />
               </div>
             </motion.div>
 
-            {(addons.length > 0 || loadingAddons) && (
+            {addons.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="bg-white rounded-xl shadow-sm overflow-hidden"
+                transition={{ delay: 0.2 }}
+                className="bg-white rounded-xl p-6 shadow-sm"
               >
                 <button
                   onClick={() => setAddonsExpanded(!addonsExpanded)}
-                  className="w-full p-6 flex items-center justify-between text-left"
+                  className="w-full flex items-center justify-between mb-4"
                 >
                   <h2 className="font-serif text-xl text-[#333] flex items-center gap-2">
                     <Plus className="w-5 h-5 text-[#1D3C45]" />
                     {t('addons')}
-                    {selectedAddons.length > 0 && (
-                      <span className="ml-2 text-sm font-sans bg-[#1D3C45] text-white px-2 py-0.5 rounded-full">
-                        {selectedAddons.length}
-                      </span>
-                    )}
                   </h2>
-                  {addonsExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-[#333]/50" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-[#333]/50" />
-                  )}
+                  {addonsExpanded ? <ChevronUp className="w-5 h-5 text-[#333]/50" /> : <ChevronDown className="w-5 h-5 text-[#333]/50" />}
                 </button>
 
                 {addonsExpanded && (
-                  <div className="px-6 pb-6">
+                  <div className="space-y-3">
                     {loadingAddons ? (
-                      <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-6 h-6 animate-spin text-[#1D3C45]" />
-                        <span className="ml-2 text-[#333]/60">{t('loadingAddons')}</span>
-                      </div>
-                    ) : addons.length > 0 ? (
-                      <div className="space-y-3">
-                        {addons.map((addon) => {
-                          const isSelected = selectedAddons.some(a => a.id === addon.id);
-                          const selectedAddon = selectedAddons.find(a => a.id === addon.id);
-                          return (
-                            <div
-                              key={addon.id}
-                              className={`border rounded-lg p-4 transition-all ${
-                                isSelected ? 'border-[#1D3C45] bg-[#1D3C45]/5' : 'border-[#333]/10 hover:border-[#333]/30'
-                              }`}
-                            >
-                              <div className="flex items-start justify-between">
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-2">
-                                    <button
-                                      onClick={() => toggleAddon(addon)}
-                                      className={`w-5 h-5 rounded border flex items-center justify-center ${
-                                        isSelected ? 'bg-[#1D3C45] border-[#1D3C45]' : 'border-[#333]/30'
-                                      }`}
-                                    >
-                                      {isSelected && <Check className="w-3 h-3 text-white" />}
-                                    </button>
-                                    <h3 className="font-medium text-[#333]">{addon.name}</h3>
-                                  </div>
-                                  {addon.description && (
-                                    <p className="text-sm text-[#333]/60 mt-1 ml-7">{addon.description}</p>
-                                  )}
-                                </div>
-                                <div className="text-right">
-                                  <p className="font-serif text-[#1D3C45]">
-                                    {addon.price.toLocaleString()} {addon.currency}
-                                  </p>
-                                  <p className="text-xs text-[#333]/50">
-                                    {addon.priceType === 'per_night' ? t('perNight') : t('perStay')}
-                                  </p>
-                                </div>
-                              </div>
-                              {isSelected && selectedAddon && (
-                                <div className="mt-3 ml-7 flex items-center gap-3">
-                                  <span className="text-sm text-[#333]/60">{t('quantity')}:</span>
-                                  <button
-                                    onClick={() => updateAddonQuantity(addon.id, -1)}
-                                    className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                                  >
-                                    <Minus className="w-4 h-4" />
-                                  </button>
-                                  <span className="w-6 text-center">{selectedAddon.quantity}</span>
-                                  <button
-                                    onClick={() => updateAddonQuantity(addon.id, 1)}
-                                    className="w-8 h-8 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
-                                  >
-                                    <Plus className="w-4 h-4" />
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                      <div className="flex items-center gap-2 text-[#333]/50">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {tCommon('loading')}
                       </div>
                     ) : (
-                      <p className="text-center text-[#333]/50 py-4">{t('noAddons')}</p>
+                      addons.map((addon) => {
+                        const isSelected = selectedAddons.some(a => a.id === addon.id);
+                        const selectedAddon = selectedAddons.find(a => a.id === addon.id);
+
+                        return (
+                          <div
+                            key={addon.id}
+                            className={`border rounded-lg p-4 transition-colors cursor-pointer ${
+                              isSelected ? 'border-[#1D3C45] bg-[#1D3C45]/5' : 'border-[#333]/10 hover:border-[#333]/30'
+                            }`}
+                            onClick={() => toggleAddon(addon)}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <div className={`w-5 h-5 rounded border flex items-center justify-center ${
+                                    isSelected ? 'bg-[#1D3C45] border-[#1D3C45]' : 'border-[#333]/30'
+                                  }`}>
+                                    {isSelected && <Check className="w-3 h-3 text-white" />}
+                                  </div>
+                                  <h4 className="font-medium text-[#333]">{addon.name}</h4>
+                                </div>
+                                {addon.description && (
+                                  <p className="text-sm text-[#333]/60 mt-1 ml-7">{addon.description}</p>
+                                )}
+                              </div>
+                              <div className="text-right">
+                                <p className="font-semibold text-[#333]">
+                                  {addon.price.toLocaleString()} {addon.currency}
+                                </p>
+                                <p className="text-xs text-[#333]/50">
+                                  {addon.priceType === "per_night" ? t('perNight') : t('oneTime')}
+                                </p>
+                              </div>
+                            </div>
+
+                            {isSelected && selectedAddon && (
+                              <div className="mt-3 ml-7 flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                                <span className="text-sm text-[#333]/70">{t('quantity')}:</span>
+                                <button
+                                  onClick={() => updateAddonQuantity(addon.id, -1)}
+                                  className="w-7 h-7 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span className="w-6 text-center">{selectedAddon.quantity}</span>
+                                <button
+                                  onClick={() => updateAddonQuantity(addon.id, 1)}
+                                  className="w-7 h-7 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })
                     )}
                   </div>
                 )}
               </motion.div>
-            )}
-
-            {error && (
-              <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-red-700 text-sm">{error}</p>
-              </div>
             )}
           </div>
 
@@ -472,70 +472,80 @@ function CheckoutContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.3 }}
               className="bg-white rounded-xl p-6 shadow-sm sticky top-24"
             >
-              <h2 className="font-serif text-xl text-[#333] mb-4">{t('bookingSummary')}</h2>
+              <h2 className="font-serif text-xl text-[#333] mb-4">
+                {t('summary')}
+              </h2>
 
-              <div className="space-y-3 pb-4 border-b border-[#333]/10">
+              <div className="space-y-3 text-sm">
                 <div>
-                  <p className="text-xs text-[#333]/50 uppercase tracking-wider">{t('accommodation')}</p>
-                  <p className="font-medium text-[#333]">{roomName || "Room"}</p>
+                  <p className="text-[#333]/50 text-xs uppercase">{currentLocale === 'mn' ? 'Огноо' : 'Dates'}</p>
+                  <p className="text-[#333]">{formatDate(checkin)} - {formatDate(checkout)}</p>
+                  <p className="text-[#333]/60">{nights} {nights === 1 ? t('night') : t('nights')}</p>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#333]/60">{t('checkIn')}</span>
-                  <span className="text-[#333]">{formatDate(checkin)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#333]/60">{t('checkOut')}</span>
-                  <span className="text-[#333]">{formatDate(checkout)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#333]/60">{t('duration')}</span>
-                  <span className="text-[#333]">{nights} {nights === 1 ? t('night') : t('nights')}</span>
-                </div>
-              </div>
 
-              <div className="py-4 border-b border-[#333]/10 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#333]/60">{t('roomRate')}</span>
-                  <span className="text-[#333]">{basePrice.toLocaleString()} {currency}</span>
-                </div>
-                {selectedAddons.map((addon) => {
-                  let addonTotal = addon.price * addon.quantity;
-                  if (addon.priceType === "per_night") addonTotal *= nights;
-                  return (
-                    <div key={addon.id} className="flex justify-between text-sm">
-                      <span className="text-[#333]/60">
-                        {addon.name} {addon.quantity > 1 && `x${addon.quantity}`}
-                      </span>
-                      <span className="text-[#333]">{addonTotal.toLocaleString()} {currency}</span>
+                <div className="border-t border-[#333]/10 pt-3">
+                  <p className="text-[#333]/50 text-xs uppercase mb-2">{currentLocale === 'mn' ? 'Өрөөнүүд' : 'Rooms'}</p>
+                  {cartRooms.map((room, index) => (
+                    <div key={`summary-${room.roomTypeID}-${index}`} className="flex justify-between mb-1">
+                      <span className="text-[#333]">{room.roomTypeName}</span>
+                      <span className="text-[#333]">{(room.pricePerNight * room.quantity * nights).toLocaleString()} {room.currency}</span>
                     </div>
-                  );
-                })}
-              </div>
-
-              <div className="pt-4">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="font-serif text-lg text-[#333]">{t('total')}</span>
-                  <span className="font-serif text-2xl text-[#1D3C45]">
-                    {totalPrice.toLocaleString()} {currency}
-                  </span>
+                  ))}
                 </div>
 
-                <div className="flex items-start gap-3 mb-4 p-3 bg-[#F5F5F0] rounded-lg">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    checked={termsAccepted}
-                    onChange={(e) => setTermsAccepted(e.target.checked)}
-                    className="w-5 h-5 mt-0.5 rounded border-[#333]/30 text-[#1D3C45] focus:ring-[#1D3C45] cursor-pointer accent-[#1D3C45]"
-                  />
-                  <label htmlFor="terms" className="text-[#333]/80 text-xs cursor-pointer leading-relaxed">
-                    {currentLocale === 'mn' 
-                      ? <>Би <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> болон <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>-г зөвшөөрч байна.</>
-                      : <>I agree to the <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> and <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>.</>
-                    }
+                {selectedAddons.length > 0 && (
+                  <div className="border-t border-[#333]/10 pt-3">
+                    <p className="text-[#333]/50 text-xs uppercase mb-2">{t('addons')}</p>
+                    {selectedAddons.map((addon) => {
+                      let addonTotal = addon.price * addon.quantity;
+                      if (addon.priceType === "per_night") {
+                        addonTotal *= nights;
+                      }
+                      return (
+                        <div key={addon.id} className="flex justify-between mb-1">
+                          <span className="text-[#333]">
+                            {addon.name} {addon.quantity > 1 && `×${addon.quantity}`}
+                          </span>
+                          <span className="text-[#333]">{addonTotal.toLocaleString()} {addon.currency}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <div className="border-t border-[#333]/10 pt-3">
+                  <div className="flex justify-between font-serif text-lg text-[#333]">
+                    <span>{t('total')}</span>
+                    <span className="font-bold">{totalPrice.toLocaleString()} {currency}</span>
+                  </div>
+                </div>
+              </div>
+
+              {error && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <p className="text-red-700 text-sm">{error}</p>
+                </div>
+              )}
+
+              <div className="mt-6">
+                <div className="mb-4">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={termsAccepted}
+                      onChange={(e) => setTermsAccepted(e.target.checked)}
+                      className="mt-1 w-4 h-4 text-[#1D3C45] border-[#333]/30 rounded focus:ring-[#1D3C45]"
+                    />
+                    <span className="text-sm text-[#333]/70">
+                      {t('agreeToTerms')}{' '}
+                      <a href="#" className="text-[#1D3C45] underline">{t('termsLink')}</a>
+                      {' '}{currentLocale === 'mn' ? 'болон' : 'and'}{' '}
+                      <a href="#" className="text-[#1D3C45] underline">{t('cancellationLink')}</a>.
+                    </span>
                   </label>
                 </div>
 
