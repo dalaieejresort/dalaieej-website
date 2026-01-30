@@ -52,9 +52,6 @@ export async function POST(request: NextRequest) {
 
     const roomList = rooms as RoomBooking[];
 
-    const totalAdults = roomList.reduce((sum, room) => sum + (parseInt(String(room.adults)) || 1), 0);
-    const totalChildren = roomList.reduce((sum, room) => sum + (parseInt(String(room.children)) || 0), 0);
-
     const payloadObj: Record<string, unknown> = {
       propertyID: propertyId,
       startDate: checkin,
@@ -65,15 +62,13 @@ export async function POST(request: NextRequest) {
       source: "Website",
       status: "not_confirmed",
       paymentMethod: "bank_transfer",
-      adults: totalAdults,
-      children: totalChildren,
       rooms: roomList.map((room) => ({
         roomTypeID: room.roomTypeID,
         ...(room.roomRateID && { roomRateID: room.roomRateID }),
         quantity: room.quantity || 1,
-        adults: parseInt(String(room.adults)) || 1,
-        children: parseInt(String(room.children)) || 0,
       })),
+      adults: roomList.map((room) => parseInt(String(room.adults)) || 1),
+      children: roomList.map((room) => parseInt(String(room.children)) || 0),
     };
 
     if (guestPhone) payloadObj.guestPhone = guestPhone;
