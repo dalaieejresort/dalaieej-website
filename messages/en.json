@@ -3,9 +3,11 @@
     "home": "Home",
     "rooms": "Rooms",
     "amenities": "Amenities",
+    "accommodations": "Accommodations",
     "about": "About Us",
     "book": "Book Now",
-    "offers": "Special Offers"
+    "offers": "Special Offers",
+    "contact": "Contact"
   },
   "about": {
     "hero": {
