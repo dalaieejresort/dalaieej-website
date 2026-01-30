@@ -1,0 +1,149 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useTranslations, useLocale } from "next-intl";
+import { Plane, Car, MapPin, Phone, Mail, Clock } from "lucide-react";
+
+export default function LocationPage() {
+  const t = useTranslations();
+  const locale = useLocale();
+  const localePrefix = locale === 'mn' ? '/mn' : '';
+
+  const directions = [
+    {
+      icon: Plane,
+      title: locale === 'mn' ? "Нисэх онгоцоор" : "By Air",
+      steps: locale === 'mn' 
+        ? ["Улаанбаатар → Мөрөн хот (1 цаг 15 минут)", "Мөрөн → Далай Ээж Resort (3 цаг машинаар)"]
+        : ["Fly from Ulaanbaatar to Murun (1h 15m)", "Resort transfer from Murun Airport (3 hours)"]
+    },
+    {
+      icon: Car,
+      title: locale === 'mn' ? "Автомашинаар" : "By Road",
+      steps: locale === 'mn'
+        ? ["Улаанбаатар → Мөрөн (10-12 цаг)", "Мөрөн → Хатгал → Далай Ээж Resort (3 цаг)"]
+        : ["Drive from Ulaanbaatar to Murun (10-12 hours)", "Continue to Khatgal and the resort (3 hours)"]
+    },
+  ];
+
+  return (
+    <main className="min-h-screen bg-white pt-24 md:pt-16">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-forest-green">
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="font-serif text-5xl md:text-7xl text-cream mb-6"
+          >
+            {locale === 'mn' ? "Бидэнд хэрхэн хүрэх вэ" : "How to Reach Us"}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-body text-cream/90 text-lg md:text-xl max-w-2xl mx-auto"
+          >
+            {locale === 'mn' 
+              ? "Хөвсгөл нуурын баруун эргийн Далай Ээж Resort-д тавтай морил"
+              : "Your journey to Lake Khuvsgul begins here"}
+          </motion.p>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-cream">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center mb-12">
+            <div className="text-center">
+              <MapPin className="w-16 h-16 text-forest-green/40 mx-auto mb-4" />
+              <p className="font-body text-forest-green/60">
+                {locale === 'mn' ? "Google газрын зураг энд байрлана" : "Google Map Placeholder"}
+              </p>
+              <p className="font-body text-forest-green/40 text-sm mt-2">
+                51.0833° N, 100.4667° E
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {directions.map((direction, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white p-8 rounded-lg shadow-sm"
+              >
+                <direction.icon className="w-12 h-12 text-forest-green mb-4" />
+                <h3 className="font-serif text-2xl text-forest-green mb-4">{direction.title}</h3>
+                <ul className="space-y-3">
+                  {direction.steps.map((step, stepIndex) => (
+                    <li key={stepIndex} className="flex items-start gap-3 font-body text-forest-green/70">
+                      <span className="bg-forest-green text-cream w-6 h-6 rounded-full flex items-center justify-center text-sm flex-shrink-0">
+                        {stepIndex + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="font-serif text-3xl text-forest-green text-center mb-12">
+            {locale === 'mn' ? "Холбоо барих" : "Contact Information"}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <Phone className="w-10 h-10 text-forest-green mx-auto mb-4" />
+              <h4 className="font-serif text-lg text-forest-green mb-2">
+                {locale === 'mn' ? "Утас" : "Phone"}
+              </h4>
+              <p className="font-body text-forest-green/70">+976 7011 1234</p>
+            </div>
+            <div className="text-center">
+              <Mail className="w-10 h-10 text-forest-green mx-auto mb-4" />
+              <h4 className="font-serif text-lg text-forest-green mb-2">
+                {locale === 'mn' ? "Имэйл" : "Email"}
+              </h4>
+              <p className="font-body text-forest-green/70">info@dalaieej.mn</p>
+            </div>
+            <div className="text-center">
+              <Clock className="w-10 h-10 text-forest-green mx-auto mb-4" />
+              <h4 className="font-serif text-lg text-forest-green mb-2">
+                {locale === 'mn' ? "Улирал" : "Season"}
+              </h4>
+              <p className="font-body text-forest-green/70">
+                {locale === 'mn' ? "5-р сар - 10-р сар" : "May - October"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-forest-green">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-serif text-3xl md:text-4xl text-cream mb-6">
+            {locale === 'mn' ? "Тээврийн үйлчилгээ" : "Transfer Services"}
+          </h2>
+          <p className="font-body text-cream/70 mb-8">
+            {locale === 'mn' 
+              ? "Бид Мөрөн хотоос resort хүртэлх тээврийн үйлчилгээ үзүүлдэг"
+              : "We offer complimentary transfers from Murun Airport for bookings of 3+ nights"}
+          </p>
+          <a
+            href={`${localePrefix}/booking`}
+            className="inline-block px-8 py-4 bg-cream text-forest-green font-body text-lg hover:bg-white transition-colors rounded"
+          >
+            {locale === 'mn' ? "Захиалга хийх" : "Book Your Stay"}
+          </a>
+        </div>
+      </section>
+    </main>
+  );
+}
