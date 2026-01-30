@@ -67,8 +67,14 @@ export async function POST(request: NextRequest) {
         ...(room.roomRateID && { roomRateID: room.roomRateID }),
         quantity: room.quantity || 1,
       })),
-      adults: roomList.map((room) => parseInt(String(room.adults)) || 1),
-      children: roomList.map((room) => parseInt(String(room.children)) || 0),
+      adults: roomList.map((room) => ({
+        roomTypeID: room.roomTypeID,
+        quantity: parseInt(String(room.adults)) || 1,
+      })),
+      children: roomList.map((room) => ({
+        roomTypeID: room.roomTypeID,
+        quantity: parseInt(String(room.children)) || 0,
+      })),
     };
 
     if (guestPhone) payloadObj.guestPhone = guestPhone;
