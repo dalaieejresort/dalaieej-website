@@ -73,8 +73,8 @@ export async function POST(request: NextRequest) {
         reservationParams.append(`rooms[${index}][roomRateID]`, room.roomRateID);
       }
       reservationParams.append(`rooms[${index}][quantity]`, String(room.quantity || 1));
-      reservationParams.append(`adults[${index}]`, String(parseInt(String(room.adults)) || 1));
-      reservationParams.append(`children[${index}]`, String(parseInt(String(room.children)) || 0));
+      reservationParams.append(`adults[${index}][roomTypeID]`, String(parseInt(String(room.adults)) || 1));
+      reservationParams.append(`children[${index}][roomTypeID]`, String(parseInt(String(room.children)) || 0));
     });
 
     reservationParams.set("source", "Website");
