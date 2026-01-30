@@ -12,11 +12,19 @@
   --forest-green: #1A3C34;
   --cream: #F5F5DC;
   --white: #FFFFFF;
+  --lake-blue: #1D3C45;
+  --pine-green: #2C3E30;
+  --warm-beige: #F5F5F0;
+  --charcoal: #333333;
 }
 
 @theme inline {
   --color-forest-green: var(--forest-green);
   --color-cream: var(--cream);
+  --color-lake-blue: var(--lake-blue);
+  --color-pine-green: var(--pine-green);
+  --color-warm-beige: var(--warm-beige);
+  --color-charcoal: var(--charcoal);
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 }

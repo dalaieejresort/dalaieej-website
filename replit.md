@@ -127,6 +127,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Complete navigation redesign - New Mega Menu with 6 pillars (Stay, Nourish, Wellness, Discover, Journeys, About)
+- **2026-01-30**: Added mobile hamburger menu with accordion-style sub-menus
+- **2026-01-30**: Complete About Us page redesign with 5 editorial modules (Hero with parallax, The Setting, The Peninsula with mask reveal, The Legacy with Before/After slider, The Ethos values grid)
+- **2026-01-30**: New color palette - Deep Lake Blue (#1D3C45), Pine Green (#2C3E30), Warm Beige (#F5F5F0), Charcoal (#333333)
 - **2026-01-30**: Added "The Journey to Khuvsgul" video placeholder on /location page
 - **2026-01-30**: Added illustrated neighborhood map placeholder on /about page
 - **2026-01-30**: Removed "Home" text from navbar (logo still links to homepage)

@@ -24,27 +24,27 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-2">
-      <Globe className="w-4 h-4 text-[#F5F5DC]/70" />
+      <Globe className="w-4 h-4 text-warm-beige/70" />
       <div className="flex items-center gap-1 text-sm font-sans">
         <Link
           href={pathWithoutLocale}
           locale="en"
           className={`px-2 py-1 rounded transition-colors ${
             currentLocale === 'en' 
-              ? 'bg-[#F5F5DC] text-[#1A3C34] font-semibold' 
-              : 'text-[#F5F5DC]/70 hover:text-[#F5F5DC]'
+              ? 'bg-warm-beige text-lake-blue font-semibold' 
+              : 'text-warm-beige/70 hover:text-warm-beige'
           }`}
         >
           EN
         </Link>
-        <span className="text-[#F5F5DC]/30">|</span>
+        <span className="text-warm-beige/30">|</span>
         <Link
           href={pathWithoutLocale}
           locale="mn"
           className={`px-2 py-1 rounded transition-colors ${
             currentLocale === 'mn' 
-              ? 'bg-[#F5F5DC] text-[#1A3C34] font-semibold' 
-              : 'text-[#F5F5DC]/70 hover:text-[#F5F5DC]'
+              ? 'bg-warm-beige text-lake-blue font-semibold' 
+              : 'text-warm-beige/70 hover:text-warm-beige'
           }`}
         >
           MN

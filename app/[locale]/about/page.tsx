@@ -1,75 +1,244 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
-import { ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { Compass, Flag, Flame, Link2 } from "lucide-react";
 
 export default function AboutPage() {
   const t = useTranslations();
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
+  
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  const heroTextY = useTransform(heroProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
+
+  const peninsulaRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: peninsulaProgress } = useScroll({
+    target: peninsulaRef,
+    offset: ["start end", "center center"]
+  });
+  const maskWidth = useTransform(peninsulaProgress, [0, 1], ["30%", "100%"]);
+
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
+  const handleSliderMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = (x / rect.width) * 100;
+    setSliderPosition(Math.min(Math.max(percentage, 5), 95));
+  };
+
+  const valuesData = [
+    {
+      icon: Compass,
+      title: locale === 'mn' ? "Өв уламжлал & Шинэчлэл" : "Heritage & Innovation",
+      description: locale === 'mn' 
+        ? "Уламжлалт Монгол зочломтгой байдлыг орчин үеийн тав тухтай байдалтай хослуулах"
+        : "Blending traditional Mongolian hospitality with modern comfort"
+    },
+    {
+      icon: Flag,
+      title: locale === 'mn' ? "Хойд нутгийн стандарт" : "The Standard of the North",
+      description: locale === 'mn'
+        ? "Хөвсгөлийн тэргүүлэгч зочломтгой газар болох"
+        : "Setting the benchmark for Khuvsgul hospitality"
+    },
+    {
+      icon: Flame,
+      title: locale === 'mn' ? "Байгалийн ид шид" : "The Magic of Nature",
+      description: locale === 'mn'
+        ? "Thoreau-гийн 'Зэрлэг байгалийн эмчилгээ' - нь бидний удирдамж юм"
+        : "Thoreau's 'Tonic of Wildness' guides our philosophy"
+    },
+    {
+      icon: Link2,
+      title: locale === 'mn' ? "Хатгалын холбоо" : "The Khatgal Connection",
+      description: locale === 'mn'
+        ? "Орон нутгийнхаа хамт олонд үндэслэсэн"
+        : "Rooted in our community"
+    }
+  ];
 
   return (
-    <main className="min-h-screen bg-white pt-24 md:pt-16">
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+    <main className="min-h-screen bg-warm-beige">
+      <section 
+        ref={heroRef}
+        className="relative h-screen flex items-center justify-center overflow-hidden"
+      >
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&auto=format&fit=crop&q=80"
-            alt="Khuvsgul Lake"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&auto=format&fit=crop&q=80"
+            alt="Lake Khuvsgul"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-forest-green/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-lake-blue/40 via-lake-blue/30 to-lake-blue/60" />
         </div>
+        
         <motion.div
-          className="relative z-10 text-center px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          style={{ y: heroTextY, opacity: heroOpacity }}
+          className="relative z-10 text-center px-6 max-w-5xl mx-auto"
         >
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white mb-6">
-            {t('about.hero.title')}
-          </h1>
-          <p className="font-body text-cream/90 text-lg md:text-xl max-w-2xl mx-auto">
-            {t('about.hero.subtitle')}
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="font-body text-warm-beige/80 text-sm tracking-[0.3em] uppercase mb-8"
+          >
+            {locale === 'mn' ? "Далай Ээж Resort" : "Dalai Eej Resort"}
+          </motion.p>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight"
+          >
+            {locale === 'mn' ? "Зэрлэг байгалийн эмчилгээ" : "The Tonic of Wildness"}
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="font-body text-warm-beige/90 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed"
+          >
+            {locale === 'mn' 
+              ? "Түүх модны бүх давхаргад суусан... Нэгэн цагт эзэн хаадын сонгосон, одоо чимээгүй байдлыг хайгчдад хадгалагдсан газар нутаг."
+              : "History sits in every timber... A landscape once chosen by royalty, now preserved for the seeker of silence."}
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <div className="w-6 h-10 border-2 border-warm-beige/50 rounded-full flex justify-center pt-2">
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 bg-warm-beige rounded-full"
+            />
+          </div>
         </motion.div>
       </section>
 
-      <section className="py-20 px-4 bg-cream/30">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="font-heading text-3xl md:text-4xl text-forest-green mb-8">
-              {t('about.story.title')}
-            </h2>
-            <p className="font-body text-forest-green/80 text-lg leading-relaxed">
-              {t('about.story.content')}
-            </p>
-          </motion.div>
+      <section className="py-24 md:py-32 px-6 bg-warm-beige">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-2xl">
+                <img
+                  src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&auto=format&fit=crop&q=80"
+                  alt="The Lodge"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-pine-green/20 rounded-lg -z-10" />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:pl-8"
+            >
+              <p className="font-body text-pine-green text-sm tracking-[0.2em] uppercase mb-4">
+                {locale === 'mn' ? "Архитектур" : "Architecture"}
+              </p>
+              <h2 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
+                {locale === 'mn' ? "Хөндийн нугас" : "The Fold of the Valley"}
+              </h2>
+              <div className="w-16 h-0.5 bg-pine-green mb-8" />
+              <p className="font-body text-charcoal/70 text-lg leading-relaxed mb-6">
+                {locale === 'mn'
+                  ? "Хатгалын хил хязгаараас өнгөрөхөд та мэддэг ертөнцийг орхидог..."
+                  : "Once past the edge of Khatgal, you leave the known world..."}
+              </p>
+              <p className="font-body text-charcoal/70 text-lg leading-relaxed">
+                {locale === 'mn'
+                  ? "Байшин нь зочид буудал биш харин түүхэн ариун газар болж харагддаг."
+                  : "The lodge reveals itself not as a hotel, but as a historic sanctuary."}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      <section className="py-20 px-4">
-        <div className="max-w-5xl mx-auto">
+      <section ref={peninsulaRef} className="py-24 md:py-32 px-6 bg-lake-blue overflow-hidden">
+        <div className="max-w-6xl mx-auto">
           <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="font-body text-warm-beige/60 text-sm tracking-[0.2em] uppercase mb-4">
+              {locale === 'mn' ? "Нууцлал" : "Privacy"}
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-warm-beige mb-6">
+              {locale === 'mn' ? "Усны захад амьдрал" : "Life on the Water's Edge"}
+            </h2>
+          </motion.div>
+          
+          <motion.div
+            style={{ width: maskWidth }}
+            className="mx-auto overflow-hidden rounded-lg shadow-2xl"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1600&auto=format&fit=crop&q=80"
+              alt="The Peninsula"
+              className="w-full h-[50vh] md:h-[60vh] object-cover"
+            />
+          </motion.div>
+          
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ delay: 0.3 }}
+            className="font-body text-warm-beige/80 text-lg md:text-xl text-center max-w-3xl mx-auto mt-12 leading-relaxed"
           >
-            <h2 className="font-heading text-3xl md:text-4xl text-forest-green mb-4">
-              {locale === 'mn' ? "Манай орчин" : "Our Neighborhood"}
+            {locale === 'mn'
+              ? "Гурван талаараа нуурт хүрээлэгдсэн... Хамгийн ховор тансаг: тасралтгүй хүрээ."
+              : "Surrounded on three sides by the lake... The rarest luxury of all: unbroken horizons."}
+          </motion.p>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 px-6 bg-warm-beige">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="font-body text-pine-green text-sm tracking-[0.2em] uppercase mb-4">
+              {locale === 'mn' ? "Түүх" : "History"}
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-charcoal mb-6">
+              {locale === 'mn' ? "Удирдагчдын чимээгүй сонголт" : "The Quiet Choice of Leaders"}
             </h2>
-            <p className="font-body text-forest-green/70 max-w-2xl mx-auto">
-              {locale === 'mn' 
-                ? "Хөвсгөл нуурын баруун эргийн гайхамшигт байгаль"
-                : "Discover the enchanting surroundings of Lake Khuvsgul"}
+            <p className="font-body text-charcoal/70 text-lg max-w-2xl mx-auto">
+              {locale === 'mn'
+                ? "Хойморь нь удаан хугацаанд итгэмжит хоргодох газар байсан. Кувейтийн Шейхээс Монголын Ерөнхийлөгч нар хүртэл бид амар амгаланг хайгчдын айлчлалыг хамгаалдаг."
+                : "The peninsula has long been a trusted refuge. From the Sheikh of Kuwait to Mongolia's Presidents, we shield the visits of those who seek peace."}
             </p>
           </motion.div>
           
@@ -77,121 +246,93 @@ export default function AboutPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
+            className="relative aspect-[16/9] rounded-lg overflow-hidden shadow-2xl cursor-ew-resize select-none"
+            onMouseMove={handleSliderMove}
           >
-            <div className="bg-[#F9F3E8] rounded-2xl p-8 shadow-lg border-4 border-[#D4C4A8]">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D4C4A8] px-6 py-1 rounded-full">
-                <span className="font-serif text-sm text-forest-green tracking-wide">
-                  {locale === 'mn' ? "Гар зурсан газрын зураг" : "Illustrated Map"}
-                </span>
-              </div>
-              
-              <div className="aspect-[16/10] bg-gradient-to-br from-[#E8DFD0] to-[#D4C4A8]/50 rounded-xl flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20">
-                  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <pattern id="mapPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <circle cx="10" cy="10" r="1" fill="#1A3C34" opacity="0.3"/>
-                    </pattern>
-                    <rect width="100" height="100" fill="url(#mapPattern)"/>
-                  </svg>
-                </div>
-                
-                <div className="text-center z-10 p-8">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-forest-green/10 flex items-center justify-center">
-                    <svg className="w-10 h-10 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-                    </svg>
-                  </div>
-                  <p className="font-serif text-xl text-forest-green mb-2">
-                    {locale === 'mn' ? "Орчин тойрны газрын зураг" : "Neighborhood Map"}
-                  </p>
-                  <p className="font-body text-forest-green/60 text-sm max-w-md mx-auto">
-                    {locale === 'mn' 
-                      ? "Гар зурсан уран сайхны газрын зураг удахгүй нэмэгдэнэ"
-                      : "Hand-illustrated artistic map coming soon"}
-                  </p>
+            <img
+              src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200&auto=format&fit=crop&q=80"
+              alt="Current Lodge"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            
+            <div 
+              className="absolute inset-0 overflow-hidden"
+              style={{ width: `${sliderPosition}%` }}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?w=1200&auto=format&fit=crop&q=80&sat=-100"
+                alt="Historic Camp"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ width: `${10000 / sliderPosition}%` }}
+              />
+            </div>
+            
+            <div 
+              className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
+              style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+            >
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+                <div className="flex items-center gap-1">
+                  <div className="w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-charcoal" />
+                  <div className="w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-charcoal" />
                 </div>
               </div>
-              
-              <div className="mt-6 flex justify-center gap-8 text-sm font-body text-forest-green/60">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-forest-green/40"></div>
-                  <span>{locale === 'mn' ? "Resort" : "Resort"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-blue-400/60"></div>
-                  <span>{locale === 'mn' ? "Нуур" : "Lake"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-600/40"></div>
-                  <span>{locale === 'mn' ? "Ой" : "Forest"}</span>
-                </div>
-              </div>
+            </div>
+            
+            <div className="absolute bottom-4 left-4 bg-charcoal/80 text-warm-beige px-3 py-1.5 rounded text-sm font-body">
+              {locale === 'mn' ? "1960-аад он" : "1960s"}
+            </div>
+            <div className="absolute bottom-4 right-4 bg-warm-beige/90 text-charcoal px-3 py-1.5 rounded text-sm font-body">
+              {locale === 'mn' ? "Өнөөдөр" : "Today"}
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-24 px-4 bg-forest-green">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-xs uppercase tracking-[0.3em] text-cream/50 mb-6 font-sans">
-              {t('about.mission.label')}
-            </p>
-            <blockquote className="font-heading text-2xl md:text-4xl lg:text-5xl text-cream leading-relaxed mb-8">
-              "{t('about.mission.quote')}"
-            </blockquote>
-            <p className="font-body text-cream/70 text-lg max-w-2xl mx-auto">
-              {t('about.mission.content')}
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4">
+      <section id="history" className="py-24 md:py-32 px-6 bg-pine-green/5">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <h2 className="font-heading text-3xl md:text-4xl text-forest-green mb-4">
-              {t('about.experience.title')}
-            </h2>
-            <p className="font-body text-forest-green/70 max-w-2xl mx-auto">
-              {t('about.experience.subtitle')}
+            <p className="font-body text-pine-green text-sm tracking-[0.2em] uppercase mb-4">
+              {locale === 'mn' ? "Үнэт зүйлс" : "Values"}
             </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-charcoal">
+              {locale === 'mn' ? "Манай ёс зүй" : "The Ethos"}
+            </h2>
           </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['nature', 'culture', 'escape'].map((key, index) => (
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {valuesData.map((value, index) => (
               <motion.div
-                key={key}
-                className="text-center p-8"
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ delay: index * 0.1 }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className={`p-8 md:p-10 rounded-lg transition-all duration-300 cursor-default ${
+                  hoveredCard === index 
+                    ? 'bg-pine-green text-warm-beige shadow-xl scale-[1.02]' 
+                    : 'bg-white text-charcoal shadow-md'
+                }`}
               >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-forest-green/10 flex items-center justify-center">
-                  <span className="font-heading text-2xl text-forest-green">
-                    {index + 1}
-                  </span>
-                </div>
-                <h3 className="font-heading text-xl text-forest-green mb-3">
-                  {t(`about.experience.${key}.title`)}
+                <value.icon className={`w-10 h-10 mb-6 transition-colors duration-300 ${
+                  hoveredCard === index ? 'text-warm-beige' : 'text-pine-green'
+                }`} />
+                <h3 className={`font-serif text-2xl mb-4 transition-colors duration-300 ${
+                  hoveredCard === index ? 'text-warm-beige' : 'text-charcoal'
+                }`}>
+                  {value.title}
                 </h3>
-                <p className="font-body text-forest-green/70 text-sm">
-                  {t(`about.experience.${key}.desc`)}
+                <p className={`font-body leading-relaxed transition-colors duration-300 ${
+                  hoveredCard === index ? 'text-warm-beige/80' : 'text-charcoal/70'
+                }`}>
+                  {value.description}
                 </p>
               </motion.div>
             ))}
@@ -199,35 +340,36 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-[#F9F8F6]">
+      <section className="py-24 px-6 bg-lake-blue">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-3xl md:text-4xl text-forest-green mb-6">
-              {t('about.cta.title')}
+            <h2 className="font-serif text-3xl md:text-4xl text-warm-beige mb-6">
+              {locale === 'mn' ? "Өөрийн аялалаа эхлүүлээрэй" : "Begin Your Journey"}
             </h2>
-            <p className="font-body text-forest-green/70 mb-10 max-w-xl mx-auto">
-              {t('about.cta.subtitle')}
+            <p className="font-body text-warm-beige/70 mb-10 max-w-xl mx-auto">
+              {locale === 'mn'
+                ? "Хөвсгөл нуурын эргэнд тантай уулзахыг хүлээж байна"
+                : "We await your arrival on the shores of Lake Khuvsgul"}
             </p>
             <a
               href={`${localePrefix}/booking`}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-forest-green text-cream font-body font-medium rounded hover:bg-forest-green/90 transition-colors"
+              className="inline-block px-10 py-4 bg-warm-beige text-lake-blue font-body font-semibold tracking-wide hover:bg-white transition-colors rounded"
             >
-              <span>{t('about.cta.button')}</span>
-              <ArrowRight className="w-5 h-5" />
+              {locale === 'mn' ? "Захиалга хийх" : "Reserve Your Stay"}
             </a>
           </motion.div>
         </div>
       </section>
 
-      <footer className="bg-forest-green py-8 px-4">
+      <footer className="bg-charcoal py-12 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="font-body text-cream/50 text-sm">
-            &copy; {new Date().getFullYear()} {t('hero.title')}. {t('footer.rights')}
+          <p className="font-serif text-2xl text-warm-beige mb-4">Dalai Eej</p>
+          <p className="font-body text-warm-beige/50 text-sm">
+            &copy; {new Date().getFullYear()} Dalai Eej Resort. {locale === 'mn' ? "Бүх эрх хуулиар хамгаалагдсан." : "All rights reserved."}
           </p>
         </div>
       </footer>
