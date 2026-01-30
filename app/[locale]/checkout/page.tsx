@@ -451,29 +451,6 @@ function CheckoutContent() {
               </motion.div>
             )}
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-xl p-6 shadow-sm"
-            >
-              <div className="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  checked={termsAccepted}
-                  onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="w-5 h-5 mt-0.5 rounded border-[#333]/30 text-[#1D3C45] focus:ring-[#1D3C45] cursor-pointer accent-[#1D3C45]"
-                />
-                <label htmlFor="terms" className="text-[#333]/80 text-sm cursor-pointer leading-relaxed">
-                  {currentLocale === 'mn' 
-                    ? <>Би <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> болон <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>-г зөвшөөрч байна. Захиалга баталгаажсаны дараа буцаалт хийхгүй болохыг ойлгож байна.</>
-                    : <>I agree to the <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> and <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>. I understand that reservations are non-refundable once confirmed.</>
-                  }
-                </label>
-              </div>
-            </motion.div>
-
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
@@ -530,11 +507,27 @@ function CheckoutContent() {
               </div>
 
               <div className="pt-4">
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-4">
                   <span className="font-serif text-lg text-[#333]">{t('total')}</span>
                   <span className="font-serif text-2xl text-[#1D3C45]">
                     {totalPrice.toLocaleString()} {currency}
                   </span>
+                </div>
+
+                <div className="flex items-start gap-3 mb-4 p-3 bg-[#F5F5F0] rounded-lg">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="w-5 h-5 mt-0.5 rounded border-[#333]/30 text-[#1D3C45] focus:ring-[#1D3C45] cursor-pointer accent-[#1D3C45]"
+                  />
+                  <label htmlFor="terms" className="text-[#333]/80 text-xs cursor-pointer leading-relaxed">
+                    {currentLocale === 'mn' 
+                      ? <>Би <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> болон <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>-г зөвшөөрч байна.</>
+                      : <>I agree to the <a href={`${localePrefix}/terms`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('termsLink')}</a> and <a href={`${localePrefix}/cancellation`} className="text-[#1D3C45] underline hover:text-[#1D3C45]/80">{t('cancellationLink')}</a>.</>
+                    }
+                  </label>
                 </div>
 
                 <button
