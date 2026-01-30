@@ -127,6 +127,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Added "The Journey to Khuvsgul" video placeholder on /location page
+- **2026-01-30**: Added illustrated neighborhood map placeholder on /about page
+- **2026-01-30**: Removed "Home" text from navbar (logo still links to homepage)
+- **2026-01-30**: Added mandatory Terms & Conditions checkbox on payment page (button disabled until checked)
 - **2026-01-30**: Major content expansion - added 10 new pages (cabins, lodge, restaurant, experiences, wellness, celebrate, stories, location, the-family, the-lake)
 - **2026-01-30**: Created Gallery page with masonry grid and category filtering (All, Interiors, The Lake, Past Season Highlights)
 - **2026-01-30**: Updated Navbar with hover dropdowns for About Us and Accommodations
