@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import qs from "qs";
 
 const CLOUDBEDS_API_BASE = "https://hotels.cloudbeds.com/api/v1.2";
 
@@ -49,43 +50,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const reservationParams = new URLSearchParams();
-    reservationParams.set("propertyID", propertyId);
-    reservationParams.set("startDate", checkin);
-    reservationParams.set("endDate", checkout);
-    reservationParams.set("guestFirstName", guestFirstName);
-    reservationParams.set("guestLastName", guestLastName);
-    reservationParams.set("guestEmail", guestEmail);
-    if (guestPhone) reservationParams.set("guestPhone", guestPhone);
-    
-    if (guestCountry) {
-      const countryCode = guestCountry.length === 2 ? guestCountry : "MN";
-      reservationParams.set("guestCountry", countryCode);
-    }
-    
-    if (specialRequests) reservationParams.set("customNotes", specialRequests);
-
     const roomList = rooms as RoomBooking[];
-    
-    roomList.forEach((room, index) => {
-      reservationParams.append(`rooms[${index}][roomTypeID]`, room.roomTypeID);
-      if (room.roomRateID) {
-        reservationParams.append(`rooms[${index}][roomRateID]`, room.roomRateID);
-      }
-      reservationParams.append(`rooms[${index}][quantity]`, String(room.quantity || 1));
-      reservationParams.append(`rooms[${index}][adults]`, String(parseInt(String(room.adults)) || 1));
-      reservationParams.append(`rooms[${index}][children]`, String(parseInt(String(room.children)) || 0));
-    });
 
-    reservationParams.set("source", "Website");
-    reservationParams.set("status", "not_confirmed");
-    reservationParams.set("paymentMethod", "bank_transfer");
+    const payloadObj: Record<string, unknown> = {
+      propertyID: propertyId,
+      startDate: checkin,
+      endDate: checkout,
+      guestFirstName,
+      guestLastName,
+      guestEmail,
+      source: "Website",
+      status: "not_confirmed",
+      paymentMethod: "bank_transfer",
+      rooms: roomList.map((room) => ({
+        roomTypeID: room.roomTypeID,
+        ...(room.roomRateID && { roomRateID: room.roomRateID }),
+        quantity: room.quantity || 1,
+        adults: parseInt(String(room.adults)) || 1,
+        children: parseInt(String(room.children)) || 0,
+      })),
+    };
 
-    console.log("Creating Cloudbeds reservation with params:", Object.fromEntries(reservationParams));
+    if (guestPhone) payloadObj.guestPhone = guestPhone;
+    if (guestCountry) {
+      payloadObj.guestCountry = guestCountry.length === 2 ? guestCountry : "MN";
+    }
+    if (specialRequests) payloadObj.customNotes = specialRequests;
+
+    const formattedBody = qs.stringify(payloadObj, { arrayFormat: "indices" });
+
+    console.log("Final Cloudbeds Payload:", formattedBody);
 
     const response = await axios.post(
       `${CLOUDBEDS_API_BASE}/postReservation`,
-      reservationParams.toString(),
+      formattedBody,
       {
         headers: {
           "x-api-key": apiKey,
@@ -105,15 +103,16 @@ export async function POST(request: NextRequest) {
     if (addons && addons.length > 0 && reservationId) {
       for (const addon of addons) {
         try {
-          const chargeParams = new URLSearchParams();
-          chargeParams.set("propertyID", propertyId);
-          chargeParams.set("reservationID", reservationId);
-          chargeParams.set("itemID", addon.id);
-          chargeParams.set("quantity", String(addon.quantity || 1));
+          const chargePayload = {
+            propertyID: propertyId,
+            reservationID: reservationId,
+            itemID: addon.id,
+            quantity: addon.quantity || 1,
+          };
 
           await axios.post(
             `${CLOUDBEDS_API_BASE}/postCharge`,
-            chargeParams.toString(),
+            qs.stringify(chargePayload),
             {
               headers: {
                 "x-api-key": apiKey,
