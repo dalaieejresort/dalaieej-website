@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
 
     reservationParams.set("source", "Website");
     reservationParams.set("status", "not_confirmed");
+    reservationParams.set("paymentMethod", "bank_transfer");
 
     console.log("Creating Cloudbeds reservation with params:", Object.fromEntries(reservationParams));
 
