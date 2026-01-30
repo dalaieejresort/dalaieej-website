@@ -147,6 +147,7 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Refactored booking UI from cart sidebar to room selection metaphor with sticky footer and Select/Selected toggle buttons
 - **2026-01-30**: Refactored booking to multi-room cart model with total guests input, capacity validation, and automatic guest distribution
 - **2026-01-30**: Updated checkout to display room breakdown from cart, sends rooms array to Cloudbeds API
 - **2026-01-30**: Fixed reservation API to always use rooms array format with proper form-urlencoded serialization using URLSearchParams.append()
