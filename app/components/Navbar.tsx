@@ -13,6 +13,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: localePrefix || "/", label: t('nav.home') },
+    { href: `${localePrefix}/about`, label: t('nav.about') },
     { href: `${localePrefix}/amenities`, label: t('nav.amenities') },
     { href: `${localePrefix}/booking`, label: t('nav.book') },
   ];

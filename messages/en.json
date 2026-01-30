@@ -3,8 +3,45 @@
     "home": "Home",
     "rooms": "Rooms",
     "amenities": "Amenities",
+    "about": "About Us",
     "book": "Book Now",
     "offers": "Special Offers"
+  },
+  "about": {
+    "hero": {
+      "title": "Welcome to Dalai Eej Resort",
+      "subtitle": "A sanctuary of peace on the shores of Mongolia's Blue Pearl"
+    },
+    "story": {
+      "title": "Our Story",
+      "content": "Nestled on the pristine shores of Khuvsgul Lake National Park, Dalai Eej Resort is a homegrown destination born from a deep love for Mongolia's untouched wilderness. We are dedicated to elevating Mongolian hospitality standards while staying true to our authentic roots. Every detail of our resort reflects our commitment to showcasing the natural beauty and rich cultural heritage of this extraordinary region."
+    },
+    "mission": {
+      "label": "Our Mission",
+      "quote": "Our goal is to showcase the unique, pristine value of our national park to the world.",
+      "content": "We strive to be the leading hospitality destination in the Khuvsgul region, bridging the warmth of local traditions with the comfort of modern amenities. Our mission is to create unforgettable experiences that connect guests with the spirit of Mongolia."
+    },
+    "experience": {
+      "title": "The Experience",
+      "subtitle": "Discover what awaits you at Dalai Eej Resort",
+      "nature": {
+        "title": "Peaceful Nature",
+        "desc": "Wake up to crystal-clear waters, ancient forests, and pristine mountain landscapes untouched by time."
+      },
+      "culture": {
+        "title": "Authentic Culture",
+        "desc": "Immerse yourself in genuine Mongolian hospitality, traditions, and the timeless wisdom of nomadic life."
+      },
+      "escape": {
+        "title": "A True Escape",
+        "desc": "Step away from the busy world and reconnect with yourself in one of Earth's last great wildernesses."
+      }
+    },
+    "cta": {
+      "title": "Begin Your Journey",
+      "subtitle": "Experience the magic of Khuvsgul Lake and create memories that will last a lifetime.",
+      "button": "Experience Khuvsgul With Us"
+    }
   },
   "amenities": {
     "hero": {
