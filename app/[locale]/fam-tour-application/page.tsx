@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowLeft, CheckCircle, Calendar, Users, Building2 } from 'lucide-react';
-import Navbar from "../../components/Navbar";
+import { ArrowLeft, CheckCircle, Calendar, Building2 } from 'lucide-react';
 
 export default function FamTourApplicationPage() {
   const t = useTranslations();
@@ -32,10 +31,8 @@ export default function FamTourApplicationPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-
-      <section className="relative pt-24 pb-16 bg-forest-green">
+    <main className="min-h-screen bg-white pt-24 md:pt-16">
+      <section className="relative pt-8 pb-16 bg-forest-green">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <a
             href={`${localePrefix}/offers`}

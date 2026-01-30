@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslations, useLocale } from 'next-intl';
 import { ArrowLeft, Check, ChevronDown, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const amenityKeys = ['yurts', 'shoreline', 'restaurant', 'sauna', 'tours'];
 const inclusionKeys = ['breakfast', 'firewood', 'parking', 'security', 'concierge', 'wifi', 'water', 'luggage'];
@@ -27,11 +26,7 @@ export default function AmenitiesPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
-      <div className="fixed top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-
+    <main className="min-h-screen bg-white pt-24 md:pt-16">
       <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-sky-900 to-sky-700">
         <div className="absolute inset-0">
           <img 

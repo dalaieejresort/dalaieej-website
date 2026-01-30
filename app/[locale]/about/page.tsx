@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 import { ArrowRight } from "lucide-react";
-import Navbar from "../../components/Navbar";
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -11,9 +10,7 @@ export default function AboutPage() {
   const localePrefix = locale === 'mn' ? '/mn' : '';
 
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-
+    <main className="min-h-screen bg-white pt-24 md:pt-16">
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img

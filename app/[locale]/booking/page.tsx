@@ -5,7 +5,6 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { Users, Check, Tag, Loader2 } from "lucide-react";
 import { useTranslations } from 'next-intl';
-import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface Room {
   roomTypeID: string;
@@ -137,11 +136,7 @@ function BookingContent() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#F5F5DC]">
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-      
+    <main className="min-h-screen bg-[#F5F5DC] pt-24 md:pt-16">
       <div className="bg-[#1A3C34] py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl text-[#F5F5DC] mb-4">

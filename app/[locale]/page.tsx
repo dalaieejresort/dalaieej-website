@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import AvailabilityBar from "../components/AvailabilityBar";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 import DiscoverGrid from "../components/DiscoverGrid";
 import SpecialOffers from "../components/SpecialOffers";
 import InteractiveMap from "../components/InteractiveMap";
@@ -16,11 +15,7 @@ export default function Home() {
   const localePrefix = locale === 'mn' ? '/mn' : '';
 
   return (
-    <main className="relative min-h-screen">
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-
+    <main className="relative min-h-screen pt-24 md:pt-16">
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-forest-green">
           <video

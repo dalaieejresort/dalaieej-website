@@ -5,7 +5,6 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { Copy, Check, ChevronDown, ChevronUp, Smartphone, QrCode } from "lucide-react";
 import { useTranslations } from 'next-intl';
-import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface BankUrl {
   name: string;
@@ -145,11 +144,7 @@ function PaymentContent() {
   const tBooking = useTranslations('booking');
 
   return (
-    <main className="min-h-screen bg-[#1A3C34] py-8 px-4">
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-      
+    <main className="min-h-screen bg-[#1A3C34] pt-24 md:pt-16 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="font-serif text-3xl md:text-4xl text-[#F5F5DC] mb-3">

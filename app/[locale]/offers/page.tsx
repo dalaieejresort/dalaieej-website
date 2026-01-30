@@ -2,7 +2,6 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { ArrowLeft } from 'lucide-react';
-import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const offers = [
   {
@@ -69,11 +68,7 @@ export default function OffersPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-
+    <main className="min-h-screen bg-gradient-to-b from-sky-50 to-white pt-24 md:pt-16">
       <div className="bg-gradient-to-r from-sky-700 to-sky-900 py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <a
