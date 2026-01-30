@@ -98,12 +98,9 @@ const customMapStyle = [
   }
 ];
 
-interface LocationMapProps {
-  apiKey?: string;
-}
-
-export default function LocationMap({ apiKey }: LocationMapProps) {
+export default function LocationMap() {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   const onLoad = useCallback(() => {
     setMapLoaded(true);

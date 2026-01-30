@@ -119,6 +119,9 @@ NEXT_PUBLIC_BASE_URL=https://your-domain.com
 
 # Weather API
 OPENWEATHERMAP_API_KEY=your_api_key
+
+# Google Maps API (optional - displays styled placeholder if not set)
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 ```
 
 ### Running the Project
@@ -127,9 +130,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Added Module 6 - Location & Trust section with custom-styled Google Map and glassmorphism TrustBadge
 - **2026-01-30**: Complete navigation redesign - New Mega Menu with 6 pillars (Stay, Nourish, Wellness, Discover, Journeys, About)
 - **2026-01-30**: Added mobile hamburger menu with accordion-style sub-menus
-- **2026-01-30**: Complete About Us page redesign with 5 editorial modules (Hero with parallax, The Setting, The Peninsula with mask reveal, The Legacy with Before/After slider, The Ethos values grid)
+- **2026-01-30**: Complete About Us page redesign with 6 editorial modules (Hero with parallax, The Setting, The Peninsula with mask reveal, The Legacy with Before/After slider, The Ethos values grid, Location & Trust)
 - **2026-01-30**: New color palette - Deep Lake Blue (#1D3C45), Pine Green (#2C3E30), Warm Beige (#F5F5F0), Charcoal (#333333)
 - **2026-01-30**: Added "The Journey to Khuvsgul" video placeholder on /location page
 - **2026-01-30**: Added illustrated neighborhood map placeholder on /about page

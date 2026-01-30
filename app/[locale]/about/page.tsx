@@ -3,8 +3,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 import { useRef, useState } from "react";
-import { Compass, Flag, Flame, Link2, MapPin } from "lucide-react";
+import { Compass, Flag, Flame, Link2 } from "lucide-react";
 import TrustBadge from "@/app/components/TrustBadge";
+import LocationMap from "@/app/components/LocationMap";
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -343,37 +344,39 @@ export default function AboutPage() {
 
       {/* Module 6: Location & Trust */}
       <section className="relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center py-12 bg-warm-beige"
+        >
+          <p className="font-body text-pine-green text-sm tracking-[0.2em] uppercase mb-4">
+            {locale === 'mn' ? "Байршил" : "Location"}
+          </p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal">
+            {locale === 'mn' ? "Биднийг олоорой" : "Find Us"}
+          </h2>
+        </motion.div>
+        
         <div className="h-[60vh] md:h-[70vh] w-full relative">
-          <div className="absolute inset-0 bg-lake-blue">
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-pine-green/30 flex items-center justify-center">
-                  <MapPin className="w-10 h-10 text-warm-beige" />
-                </div>
-                <h3 className="font-serif text-3xl md:text-4xl text-warm-beige mb-4">
-                  {locale === 'mn' ? "Далай Ээж Resort" : "Dalai Eej Resort"}
-                </h3>
-                <p className="font-body text-warm-beige/70 text-lg mb-2">
-                  {locale === 'mn' ? "Хөвсгөл нуур, Монгол" : "Khuvsgul Lake, Mongolia"}
-                </p>
-                <p className="font-body text-warm-beige/50 text-sm">50.4431° N, 100.1667° E</p>
-                
-                <motion.a
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  href={`${localePrefix}/location`}
-                  className="inline-block mt-8 px-6 py-3 border border-warm-beige/30 text-warm-beige font-body text-sm tracking-wide hover:bg-warm-beige/10 transition-colors rounded"
-                >
-                  {locale === 'mn' ? "Чиглэлийг харах" : "View Directions"}
-                </motion.a>
-              </div>
-            </div>
-          </div>
+          <LocationMap />
           
-          {/* Trust Badge - Desktop: Top Right, Mobile: Below Map */}
+          {/* Trust Badge - Desktop: Top Right */}
           <div className="hidden md:block absolute top-8 right-8 z-10 w-72">
             <TrustBadge locale={locale} />
+          </div>
+          
+          {/* View Directions Button - Bottom Center */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+            <motion.a
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              href={`${localePrefix}/location`}
+              className="inline-block px-8 py-3 bg-warm-beige text-lake-blue font-body font-medium text-sm tracking-wide hover:bg-white transition-colors rounded shadow-lg"
+            >
+              {locale === 'mn' ? "Чиглэлийг харах" : "View Directions"}
+            </motion.a>
           </div>
         </div>
         
