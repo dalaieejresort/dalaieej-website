@@ -226,6 +226,47 @@
       "title": "The Big Family Reunion",
       "desc": "Traveling with friends or extended family? Book neighboring yurts to keep the group together.",
       "offer": "10% Off when booking 2+ Units"
+    },
+    "tourOperators": {
+      "label": "Industry Partners",
+      "title": "For Tour Operators & Agencies",
+      "desc": "Looking to partner with us? We invite eligible tour operators to experience Dalai Eej Resort firsthand.",
+      "button": "Request a FAM Trip"
+    }
+  },
+  "fam": {
+    "hero": {
+      "title": "Partner Familiarization (FAM) Tour",
+      "subtitle": "We believe in our product and want our partners to see it firsthand. Experience Dalai Eej Resort and discover why our guests keep coming back."
+    },
+    "benefits": {
+      "complimentary": {
+        "title": "100% Complimentary Stay",
+        "desc": "Eligible tour operators receive a fully complimentary stay to experience our resort."
+      },
+      "verification": {
+        "title": "Subject to Verification",
+        "desc": "All applications are reviewed to verify legitimate tour operator status and availability."
+      },
+      "blackout": {
+        "title": "Blackout Dates Apply",
+        "desc": "This offer is not valid during peak events, specifically the Naadam Festival period."
+      }
+    },
+    "form": {
+      "title": "Apply for a FAM Tour",
+      "subtitle": "Complete the form below and our partnerships team will review your application.",
+      "companyName": "Company Name",
+      "contactPerson": "Contact Person",
+      "website": "Website / Social Media Link",
+      "email": "Email Address",
+      "requestedDates": "Requested Dates",
+      "datesPlaceholder": "e.g., June 15-18, 2026",
+      "clientele": "Tell us about your clientele",
+      "clientelePlaceholder": "Describe your typical guests, markets you serve, and how you might promote Dalai Eej Resort...",
+      "submit": "Apply for Promo Code",
+      "submitted": "Thank you for your application! Our team will review and contact you within 5 business days.",
+      "disclaimer": "By submitting this form, you confirm that you represent a legitimate tour operator or travel agency."
     }
   },
   "booking": {
