@@ -67,15 +67,26 @@ export async function POST(request: NextRequest) {
 
     const roomList = rooms as RoomBooking[];
     
-    roomList.forEach((room, index) => {
-      reservationParams.append(`rooms[${index}][roomTypeID]`, room.roomTypeID);
+    if (roomList.length === 1) {
+      const room = roomList[0];
+      reservationParams.set("roomTypeID", room.roomTypeID);
       if (room.roomRateID) {
-        reservationParams.append(`rooms[${index}][roomRateID]`, room.roomRateID);
+        reservationParams.set("roomRateID", room.roomRateID);
       }
-      reservationParams.append(`rooms[${index}][quantity]`, String(room.quantity || 1));
-      reservationParams.append(`adults[${index}][roomTypeID]`, String(parseInt(String(room.adults)) || 1));
-      reservationParams.append(`children[${index}][roomTypeID]`, String(parseInt(String(room.children)) || 0));
-    });
+      reservationParams.set("quantity", "1");
+      reservationParams.set("adults", String(parseInt(String(room.adults)) || 1));
+      reservationParams.set("children", String(parseInt(String(room.children)) || 0));
+    } else {
+      roomList.forEach((room, index) => {
+        reservationParams.append(`rooms[${index}][roomTypeID]`, room.roomTypeID);
+        if (room.roomRateID) {
+          reservationParams.append(`rooms[${index}][roomRateID]`, room.roomRateID);
+        }
+        reservationParams.append(`rooms[${index}][quantity]`, String(room.quantity || 1));
+        reservationParams.append(`rooms[${index}][adults]`, String(parseInt(String(room.adults)) || 1));
+        reservationParams.append(`rooms[${index}][children]`, String(parseInt(String(room.children)) || 0));
+      });
+    }
 
     reservationParams.set("source", "Website");
     reservationParams.set("status", "not_confirmed");
