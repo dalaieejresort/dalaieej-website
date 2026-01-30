@@ -1,0 +1,38 @@
+Create three specific, high-fidelity components for the 'Dalai Eej' website using React, Tailwind CSS, and Framer Motion. The aesthetic is 'Quiet Luxury' (DÔEN style)—earth tones, serif typography, and plenty of whitespace.
+
+### COMPONENT 1: THE JOURNEY (Logistics & Expectations)
+**Design:** A split-screen layout. Left side is text/warning, Right side is the Map/Grid.
+**Content & Structure:**
+1.  **The 'Remote Reality' Warning (Left Column):**
+    -   **Headline:** "Comfort at the Edge of the World."
+    -   **Body Copy:** "To be this close to the Blue Pearl is a privilege, and it demands a slower pace. We offer a sanctuary that is simple by design. You will find modern touches here... but please leave your city expectations at the tarmac. Here, the wifi may drift like the clouds... We offer everything you need, and nothing that distracts from the view."
+2.  **The Map & Details (Right Column):**
+    -   **Map:** A custom-styled Google Map (Dark/Desaturated Theme).
+    -   **Info Grid (Below Map):** 3 Icons with text:
+        -   *By Air:* "UB to Murun (1.5 hrs). Daily flights."
+        -   *By Land:* "The northern route. 4x4 recommended."
+        -   *Trade & Partners:* "drivers & operators login" (Small, discreet link).
+
+### COMPONENT 2: THE JOURNAL ("People of the Lake")
+**Design:** An editorial interview grid. Not a standard blog list. Think 'Kinfolk Magazine' layout.
+**Headline:** "Our Village."
+**Subhead:** "People of the Lake."
+**The Grid:**
+1.  **Card 1 (The Matriarch):** Image of an older woman looking at the lake.
+    -   *Title:* "The Matriarch."
+    -   *Quote:* “Why I kept the camp’s spirit alive.”
+2.  **Card 2 (The Social Director):** Candid shot of a smiling host.
+    -   *Title:* "The Social Director."
+    -   *Quote:* “The perfect summer day at Dalai Eej.”
+3.  **Card 3 (The Boat Captain):** Weather-beaten face or boat detail.
+    -   *Title:* "The Captain."
+    -   *Quote:* “Secrets of the Blue Pearl.”
+
+### COMPONENT 3: HISTORY ("Happy Ghosts")
+**Design:** An Interactive 'Compare Slider' (Before/After).
+**Headline:** "A Legacy of Laughter."
+**Copy:** "For decades, this was a place where children learned to love nature. We preserved the site not as a museum, but as a living memory. The joy of those summers is still in the soil."
+**Interaction:**
+-   **Image Layer 1 (Background):** A vibrant, color photo of the current lodge.
+-   **Image Layer 2 (Foreground):** A black & white vintage photo of the Pioneer Camp.
+-   **The Slider:** A draggable handle in the center that reveals the B&W history over the modern reality.

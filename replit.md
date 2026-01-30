@@ -50,7 +50,12 @@ app/
 │   ├── SpecialOffers.tsx             # Carousel with 3 special offer packages
 │   ├── DiscoverGrid.tsx              # 4-card visual navigation grid
 │   ├── InteractiveMap.tsx            # Resort map with clickable hotspots
-│   └── WeatherWidget.tsx             # Weather display for Khuvsgul Lake
+│   ├── WeatherWidget.tsx             # Weather display for Khuvsgul Lake
+│   ├── LocationMap.tsx               # Custom-styled Google Map with fallback
+│   ├── TrustBadge.tsx                # Glassmorphism review badge (5.0 rating)
+│   ├── TheJourney.tsx                # Split-screen logistics & expectations section
+│   ├── TheJournal.tsx                # Editorial interview grid (People of the Lake)
+│   └── TheHistory.tsx                # Before/After slider (Happy Ghosts)
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
