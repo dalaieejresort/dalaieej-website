@@ -84,10 +84,13 @@ proxy.ts                              # Locale routing (Next.js 16 - renamed fro
 4. **Special Offers Carousel**: Shows only for Mongolian locale - 3 packages with promo codes
 5. **Gallery Page**: Masonry grid with category filtering (All, Interiors, The Lake, Past Season Highlights)
 6. **Interactive Map**: Resort map with 3 clickable hotspots
-7. **Custom Booking Flow**: 
-   - Room search via Cloudbeds API v1.2
-   - Checkout page with guest info, add-ons selection, mandatory T&C checkbox
-   - Creates reservation in Cloudbeds before payment
+7. **Multi-Room Booking Flow (Cart Model)**: 
+   - Search by date + total guests (adults/children)
+   - Add multiple rooms to cart with capacity validation
+   - Guest distribution across rooms automatically calculated
+   - Checkout displays room breakdown with per-room pricing
+   - Sends rooms array with per-room adults/children to Cloudbeds API
+   - Creates reservation in Cloudbeds before QPay payment
 8. **QPay Integration**: Payment API for Mongolian domestic payments
 
 ### API Endpoints
@@ -144,6 +147,11 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Refactored booking to multi-room cart model with total guests input, capacity validation, and automatic guest distribution
+- **2026-01-30**: Updated checkout to display room breakdown from cart, sends rooms array to Cloudbeds API
+- **2026-01-30**: Fixed reservation API to use rooms[N][roomTypeID], rooms[N][adults], rooms[N][children] format for Cloudbeds
+- **2026-01-30**: Fixed country dropdown to send 2-letter ISO codes (MN, US, etc.) instead of full names
+- **2026-01-30**: Fixed disabled button styling - now visible with grey background when T&C not checked
 - **2026-01-30**: Created hybrid checkout flow - guest info + Cloudbeds add-ons + mandatory T&C → Cloudbeds reservation → QPay payment
 - **2026-01-30**: Added checkout page with guest info form, add-ons selection, booking summary
 - **2026-01-30**: Created Cloudbeds reservation API route to create bookings with guest info
