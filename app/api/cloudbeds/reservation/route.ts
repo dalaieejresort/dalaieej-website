@@ -45,10 +45,28 @@ export async function POST(request: NextRequest) {
     reservationParams.set("guestLastName", guestLastName);
     reservationParams.set("guestEmail", guestEmail);
     if (guestPhone) reservationParams.set("guestPhone", guestPhone);
-    if (guestCountry) reservationParams.set("guestCountry", guestCountry);
+    if (guestCountry) {
+      const countryCodeMap: { [key: string]: string } = {
+        "Mongolia": "MN", "Монгол": "MN",
+        "United States": "US", "USA": "US",
+        "China": "CN", "Хятад": "CN",
+        "Russia": "RU", "Орос": "RU",
+        "Japan": "JP", "Япон": "JP",
+        "South Korea": "KR", "Солонгос": "KR",
+        "Germany": "DE", "Герман": "DE",
+        "France": "FR", "Франц": "FR",
+        "United Kingdom": "GB", "UK": "GB", "Англи": "GB",
+        "Australia": "AU", "Австрали": "AU",
+        "Canada": "CA", "Канад": "CA",
+      };
+      const countryCode = countryCodeMap[guestCountry] || guestCountry;
+      if (countryCode.length === 2) {
+        reservationParams.set("guestCountry", countryCode);
+      }
+    }
     if (specialRequests) reservationParams.set("customNotes", specialRequests);
     reservationParams.set("adults", String(adults || 1));
-    if (children) reservationParams.set("children", String(children));
+    reservationParams.set("children", String(children || 0));
     
     reservationParams.set("rooms[0][roomTypeID]", roomTypeId);
     if (rateId) reservationParams.set("rooms[0][roomRateID]", rateId);
