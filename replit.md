@@ -149,7 +149,7 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ## Recent Changes
 - **2026-01-30**: Refactored booking to multi-room cart model with total guests input, capacity validation, and automatic guest distribution
 - **2026-01-30**: Updated checkout to display room breakdown from cart, sends rooms array to Cloudbeds API
-- **2026-01-30**: Fixed reservation API to use rooms[N][roomTypeID], rooms[N][adults], rooms[N][children] format for Cloudbeds
+- **2026-01-30**: Fixed reservation API with conditional logic: single room uses top-level params (roomTypeID, adults, children), multi-room uses rooms array format
 - **2026-01-30**: Fixed country dropdown to send 2-letter ISO codes (MN, US, etc.) instead of full names
 - **2026-01-30**: Fixed disabled button styling - now visible with grey background when T&C not checked
 - **2026-01-30**: Created hybrid checkout flow - guest info + Cloudbeds add-ons + mandatory T&C → Cloudbeds reservation → QPay payment

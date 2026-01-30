@@ -65,15 +65,28 @@ export async function POST(request: NextRequest) {
     
     if (specialRequests) reservationParams.set("customNotes", specialRequests);
 
-    (rooms as RoomBooking[]).forEach((room, index) => {
-      reservationParams.set(`rooms[${index}][roomTypeID]`, room.roomTypeID);
+    const roomList = rooms as RoomBooking[];
+    
+    if (roomList.length === 1) {
+      const room = roomList[0];
+      reservationParams.set("roomTypeID", room.roomTypeID);
       if (room.roomRateID) {
-        reservationParams.set(`rooms[${index}][roomRateID]`, room.roomRateID);
+        reservationParams.set("roomRateID", room.roomRateID);
       }
-      reservationParams.set(`rooms[${index}][quantity]`, String(room.quantity || 1));
-      reservationParams.set(`rooms[${index}][adults]`, String(parseInt(String(room.adults)) || 1));
-      reservationParams.set(`rooms[${index}][children]`, String(parseInt(String(room.children)) || 0));
-    });
+      reservationParams.set("quantity", String(room.quantity || 1));
+      reservationParams.set("adults", String(parseInt(String(room.adults)) || 1));
+      reservationParams.set("children", String(parseInt(String(room.children)) || 0));
+    } else {
+      roomList.forEach((room, index) => {
+        reservationParams.set(`rooms[${index}][roomTypeID]`, room.roomTypeID);
+        if (room.roomRateID) {
+          reservationParams.set(`rooms[${index}][roomRateID]`, room.roomRateID);
+        }
+        reservationParams.set(`rooms[${index}][quantity]`, String(room.quantity || 1));
+        reservationParams.set(`rooms[${index}][adults]`, String(parseInt(String(room.adults)) || 1));
+        reservationParams.set(`rooms[${index}][children]`, String(parseInt(String(room.children)) || 0));
+      });
+    }
 
     reservationParams.set("source", "Website");
     reservationParams.set("status", "not_confirmed");
