@@ -65,8 +65,8 @@ export async function POST(request: NextRequest) {
       }
     }
     if (specialRequests) reservationParams.set("customNotes", specialRequests);
-    reservationParams.set("adults", String(parseInt(adults) || 1));
-    reservationParams.set("children", String(parseInt(children) || 0));
+    reservationParams.set("adults[0]", String(parseInt(adults) || 1));
+    reservationParams.set("children[0]", String(parseInt(children) || 0));
     
     reservationParams.set("rooms[0][roomTypeID]", roomTypeId);
     if (rateId) reservationParams.set("rooms[0][roomRateID]", rateId);
