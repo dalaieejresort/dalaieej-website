@@ -34,18 +34,23 @@ function PaymentContent() {
   const [copied, setCopied] = useState(false);
   const [manualExpanded, setManualExpanded] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [guestName, setGuestName] = useState("");
+  const [fromCheckout, setFromCheckout] = useState(false);
 
   useEffect(() => {
     const urlBookingId = searchParams.get("bookingId");
     const urlAmount = searchParams.get("amount");
     const urlNights = searchParams.get("nights");
+    const urlGuestName = searchParams.get("guestName");
     
     if (urlBookingId) setBookingId(urlBookingId);
     if (urlAmount) setAmount(urlAmount);
     if (urlNights) setNights(urlNights);
-
-    if (urlBookingId && urlAmount) {
-      generateQRAutomatic(urlBookingId, urlAmount);
+    if (urlGuestName) setGuestName(urlGuestName);
+    
+    if (urlBookingId && urlAmount && urlGuestName) {
+      setFromCheckout(true);
+      setTermsAccepted(true);
     }
   }, [searchParams]);
 
@@ -158,67 +163,109 @@ function PaymentContent() {
 
         {!qrCode && !loading ? (
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-[#F5F5DC]/20">
-            <div className="space-y-5">
-              <div>
-                <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
-                  {t('bookingRef')}
-                </label>
-                <input
-                  type="text"
-                  value={bookingId}
-                  onChange={(e) => setBookingId(e.target.value)}
-                  placeholder={t('enterBookingId')}
-                  className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
-                  {t('amount')}
-                </label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder={t('enterAmount')}
-                  className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
-                />
-              </div>
-
-              {error && (
-                <div className="text-red-400 text-sm text-center py-2">
-                  {error}
+            {fromCheckout ? (
+              <div className="space-y-5">
+                <div className="bg-[#F5F5DC]/10 rounded-xl p-4 space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-[#F5F5DC]/60 text-sm">{t('bookingRef')}</span>
+                    <span className="text-[#F5F5DC] font-medium">{bookingId}</span>
+                  </div>
+                  {guestName && (
+                    <div className="flex justify-between">
+                      <span className="text-[#F5F5DC]/60 text-sm">{currentLocale === 'mn' ? 'Зочны нэр' : 'Guest Name'}</span>
+                      <span className="text-[#F5F5DC] font-medium">{guestName}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-[#F5F5DC]/60 text-sm">{nights} {parseInt(nights) !== 1 ? tBooking('nights') : tBooking('night')}</span>
+                    <span className="text-[#F5F5DC] font-serif text-xl">{formattedAmount} MNT</span>
+                  </div>
                 </div>
-              )}
-
-              <div className="flex items-start gap-3 py-2">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  checked={termsAccepted}
-                  onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="w-5 h-5 mt-0.5 rounded border-[#F5F5DC]/50 bg-transparent text-[#F5F5DC] focus:ring-[#F5F5DC] focus:ring-offset-0 cursor-pointer accent-[#F5F5DC]"
-                />
-                <label htmlFor="terms" className="text-[#F5F5DC]/80 text-sm font-sans cursor-pointer leading-relaxed">
+                
+                <p className="text-[#F5F5DC]/60 text-sm text-center">
                   {currentLocale === 'mn' 
-                    ? <>Би <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Үйлчилгээний нөхцөл</a> болон <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Цуцлалтын бодлого</a>-г зөвшөөрч байна</>
-                    : <>I agree to the <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Terms & Conditions</a> and <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Cancellation Policy</a></>
+                    ? 'Та үйлчилгээний нөхцөл болон цуцлалтын бодлогыг зөвшөөрсөн байна.'
+                    : 'You have agreed to the Terms & Conditions and Cancellation Policy.'
                   }
-                </label>
-              </div>
+                </p>
 
-              <button
-                onClick={generateQR}
-                disabled={loading || !termsAccepted}
-                className={`w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold ${
-                  termsAccepted 
-                    ? 'bg-[#F5F5DC] text-[#1A3C34] hover:bg-white cursor-pointer' 
-                    : 'bg-[#F5F5DC]/30 text-[#1A3C34]/50 cursor-not-allowed'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-              >
-                {loading ? t('generating') : t('generatePayment')}
-              </button>
-            </div>
+                {error && (
+                  <div className="text-red-400 text-sm text-center py-2">
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  onClick={generateQR}
+                  disabled={loading}
+                  className="w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold bg-[#F5F5DC] text-[#1A3C34] hover:bg-white cursor-pointer disabled:opacity-50"
+                >
+                  {loading ? t('generating') : t('generatePayment')}
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
+                    {t('bookingRef')}
+                  </label>
+                  <input
+                    type="text"
+                    value={bookingId}
+                    onChange={(e) => setBookingId(e.target.value)}
+                    placeholder={t('enterBookingId')}
+                    className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[#F5F5DC]/70 text-sm uppercase tracking-wider mb-2 font-sans">
+                    {t('amount')}
+                  </label>
+                  <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder={t('enterAmount')}
+                    className="w-full px-4 py-3 bg-transparent border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30"
+                  />
+                </div>
+
+                {error && (
+                  <div className="text-red-400 text-sm text-center py-2">
+                    {error}
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3 py-2">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="w-5 h-5 mt-0.5 rounded border-[#F5F5DC]/50 bg-transparent text-[#F5F5DC] focus:ring-[#F5F5DC] focus:ring-offset-0 cursor-pointer accent-[#F5F5DC]"
+                  />
+                  <label htmlFor="terms" className="text-[#F5F5DC]/80 text-sm font-sans cursor-pointer leading-relaxed">
+                    {currentLocale === 'mn' 
+                      ? <>Би <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Үйлчилгээний нөхцөл</a> болон <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Цуцлалтын бодлого</a>-г зөвшөөрч байна</>
+                      : <>I agree to the <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Terms & Conditions</a> and <a href={`${localePrefix}/terms`} className="underline hover:text-white transition-colors">Cancellation Policy</a></>
+                    }
+                  </label>
+                </div>
+
+                <button
+                  onClick={generateQR}
+                  disabled={loading || !termsAccepted}
+                  className={`w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold ${
+                    termsAccepted 
+                      ? 'bg-[#F5F5DC] text-[#1A3C34] hover:bg-white cursor-pointer' 
+                      : 'bg-[#F5F5DC]/30 text-[#1A3C34]/50 cursor-not-allowed'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {loading ? t('generating') : t('generatePayment')}
+                </button>
+              </div>
+            )}
           </div>
         ) : loading ? (
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-[#F5F5DC]/20 text-center">

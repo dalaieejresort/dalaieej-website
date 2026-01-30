@@ -38,6 +38,7 @@ app/
 │   ├── gallery/page.tsx              # Masonry photo gallery with category filtering
 │   ├── amenities/page.tsx            # Amenities & Guest Experience page
 │   ├── booking/page.tsx              # Custom booking page with room search
+│   ├── checkout/page.tsx             # Checkout page with guest info, add-ons, T&C
 │   ├── offers/page.tsx               # Special Offers page (Mongolian only)
 │   ├── fam-tour-application/page.tsx # FAM Tour application form
 │   └── payment/page.tsx              # QPay payment terminal
@@ -59,16 +60,18 @@ app/
 ├── lib/
 │   └── cloudbeds.ts                  # Cloudbeds API client (x-api-key auth)
 ├── api/
-│   ├── cloudbeds/availability/route.ts
+│   ├── cloudbeds/availability/route.ts  # Get available rooms
+│   ├── cloudbeds/addons/route.ts        # Get available add-ons
+│   ├── cloudbeds/reservation/route.ts   # Create reservation in Cloudbeds
 │   ├── qpay/create-invoice/route.ts
 │   ├── qpay/webhook/route.ts
-│   └── weather/route.ts              # OpenWeatherMap API route
+│   └── weather/route.ts                 # OpenWeatherMap API route
 messages/
 ├── en.json                           # English translations
 ├── mn.json                           # Mongolian translations
 i18n/
 └── request.ts                        # next-intl configuration
-middleware.ts                         # Locale routing middleware
+proxy.ts                              # Locale routing (Next.js 16 - renamed from middleware.ts)
 ```
 
 ### Key Features
@@ -81,11 +84,16 @@ middleware.ts                         # Locale routing middleware
 4. **Special Offers Carousel**: Shows only for Mongolian locale - 3 packages with promo codes
 5. **Gallery Page**: Masonry grid with category filtering (All, Interiors, The Lake, Past Season Highlights)
 6. **Interactive Map**: Resort map with 3 clickable hotspots
-7. **Custom Booking Flow**: Cloudbeds API v1.2 integration
-8. **QPay Integration**: Payment API for Mongolian payments
+7. **Custom Booking Flow**: 
+   - Room search via Cloudbeds API v1.2
+   - Checkout page with guest info, add-ons selection, mandatory T&C checkbox
+   - Creates reservation in Cloudbeds before payment
+8. **QPay Integration**: Payment API for Mongolian domestic payments
 
 ### API Endpoints
 - `GET /api/cloudbeds/availability?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD` - Get available rooms
+- `GET /api/cloudbeds/addons?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&roomTypeId=X` - Get available add-ons
+- `POST /api/cloudbeds/reservation` - Create reservation with guest info and add-ons
 - `POST /api/qpay/create-invoice` - Create QPay payment invoice
 - `GET /api/weather` - Get current weather for Khuvsgul Lake
 
@@ -106,6 +114,7 @@ middleware.ts                         # Locale routing middleware
 - `/gallery` - Photo gallery with filtering
 - `/amenities` - Amenities & Guest Experience page
 - `/booking` - Room search and booking
+- `/checkout` - Guest info, add-ons, T&C acceptance
 - `/mn/offers` - Special Offers page (Mongolian only)
 - `/fam-tour-application` - FAM Tour application form
 - `/payment` - QPay payment terminal
@@ -135,6 +144,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Created hybrid checkout flow - guest info + Cloudbeds add-ons + mandatory T&C → Cloudbeds reservation → QPay payment
+- **2026-01-30**: Added checkout page with guest info form, add-ons selection, booking summary
+- **2026-01-30**: Created Cloudbeds reservation API route to create bookings with guest info
+- **2026-01-30**: Fixed Next.js 16 routing - renamed middleware.ts to proxy.ts
 - **2026-01-30**: Added Module 6 - Location & Trust section with custom-styled Google Map and glassmorphism TrustBadge
 - **2026-01-30**: Complete navigation redesign - New Mega Menu with 6 pillars (Stay, Nourish, Wellness, Discover, Journeys, About)
 - **2026-01-30**: Added mobile hamburger menu with accordion-style sub-menus

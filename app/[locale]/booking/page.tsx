@@ -122,9 +122,21 @@ function BookingContent() {
     setPromoLoading(false);
   };
 
-  const handleBookWithQPay = (room: Room, totalPrice: number) => {
-    const paymentUrl = `${localePrefix}/payment?bookingId=${room.roomTypeID}-${Date.now()}&amount=${totalPrice}&nights=${numberOfNights}`;
-    window.location.href = paymentUrl;
+  const handleBookRoom = (room: Room, totalPrice: number) => {
+    const checkoutParams = new URLSearchParams({
+      roomTypeId: room.roomTypeID,
+      rateId: room.rateID || '',
+      roomName: room.roomTypeName,
+      checkin: checkin,
+      checkout: checkout,
+      nights: String(numberOfNights),
+      price: String(totalPrice),
+      currency: room.currency || 'MNT',
+    });
+    if (appliedPromo) {
+      checkoutParams.set('promo', appliedPromo);
+    }
+    window.location.href = `${localePrefix}/checkout?${checkoutParams.toString()}`;
   };
 
   const minDate = new Date().toISOString().split("T")[0];
@@ -311,7 +323,7 @@ function BookingContent() {
                             </p>
                           </div>
                           <button
-                            onClick={() => handleBookWithQPay(room, totalPrice)}
+                            onClick={() => handleBookRoom(room, totalPrice)}
                             className="w-full px-6 py-3 bg-[#1A3C34] text-[#F5F5DC] font-serif uppercase text-sm tracking-wider hover:bg-[#1A3C34]/90 transition-colors rounded-lg"
                           >
                             {t('bookWithQPay')}
