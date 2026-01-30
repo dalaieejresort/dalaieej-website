@@ -12,8 +12,9 @@ A luxury hotel landing page for Dalai Eej Resort built with Next.js 16 (App Rout
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **HTTP Client**: Axios (for Cloudbeds & QPay APIs)
+- **Payments**: Stripe (international cards), QPay (Mongolian domestic)
 - **i18n**: next-intl for English/Mongolian support
-- **Utilities**: clsx, tailwind-merge, uuid
+- **Utilities**: clsx, tailwind-merge, uuid, qs
 
 ### File Structure
 ```
@@ -65,6 +66,7 @@ app/
 │   ├── cloudbeds/reservation/route.ts   # Create reservation in Cloudbeds
 │   ├── qpay/create-invoice/route.ts
 │   ├── qpay/webhook/route.ts
+│   ├── stripe/payment-intent/route.ts   # Stripe PaymentIntent for international cards
 │   └── weather/route.ts                 # OpenWeatherMap API route
 messages/
 ├── en.json                           # English translations
@@ -91,13 +93,17 @@ proxy.ts                              # Locale routing (Next.js 16 - renamed fro
    - Checkout displays room breakdown with per-room pricing
    - Sends rooms array with per-room adults/children to Cloudbeds API
    - Creates reservation in Cloudbeds before QPay payment
-8. **QPay Integration**: Payment API for Mongolian domestic payments
+8. **Split Payment Strategy**: 
+   - Mongolian locale (mn): QPay QR code auto-generates on page load
+   - English locale (en): Stripe PaymentElement for international card payments
+   - MNT to EUR conversion at 1:3700 rate for Stripe
 
 ### API Endpoints
 - `GET /api/cloudbeds/availability?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD` - Get available rooms
 - `GET /api/cloudbeds/addons?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&roomTypeId=X` - Get available add-ons
 - `POST /api/cloudbeds/reservation` - Create reservation with guest info and add-ons
 - `POST /api/qpay/create-invoice` - Create QPay payment invoice
+- `POST /api/stripe/payment-intent` - Create Stripe PaymentIntent (converts MNT to EUR)
 - `GET /api/weather` - Get current weather for Khuvsgul Lake
 
 ### Routes
@@ -120,7 +126,7 @@ proxy.ts                              # Locale routing (Next.js 16 - renamed fro
 - `/checkout` - Guest info, add-ons, T&C acceptance
 - `/mn/offers` - Special Offers page (Mongolian only)
 - `/fam-tour-application` - FAM Tour application form
-- `/payment` - QPay payment terminal
+- `/payment` - Payment terminal (QPay for mn, Stripe for en)
 
 ### Environment Variables Required
 ```
@@ -139,6 +145,10 @@ OPENWEATHERMAP_API_KEY=your_api_key
 
 # Google Maps API (optional - displays styled placeholder if not set)
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+
+# Stripe API
+STRIPE_SECRET_KEY=your_stripe_secret_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 ```
 
 ### Running the Project
@@ -147,6 +157,10 @@ npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
 ## Recent Changes
+- **2026-01-30**: Implemented Split Payment Strategy - QPay for Mongolian locale, Stripe for English locale
+- **2026-01-30**: Added Stripe payment-intent API with MNT to EUR conversion
+- **2026-01-30**: Payment page auto-generates QR/payment on load (no manual button for checkout flow)
+- **2026-01-30**: Fixed Cloudbeds reservation API to use parallel object arrays for adults/children
 - **2026-01-30**: Refactored booking UI from cart sidebar to room selection metaphor with sticky footer and Select/Selected toggle buttons
 - **2026-01-30**: Refactored booking to multi-room cart model with total guests input, capacity validation, and automatic guest distribution
 - **2026-01-30**: Updated checkout to display room breakdown from cart, sends rooms array to Cloudbeds API
