@@ -301,7 +301,98 @@
   },
   "rooms": {
     "title": "Our Accommodations",
-    "subtitle": "Choose from our carefully curated selection of rooms"
+    "subtitle": "Choose from our carefully curated selection of rooms",
+    "grandSuite": {
+      "title": "Grand Peninsula Suite",
+      "subtitle": "The resort's premier residence",
+      "capacity": "Sleeps up to 5",
+      "bedding": "2 Double Beds + 1 Single Bed",
+      "description": "Designed for families or groups seeking a shared sanctuary, this suite offers the resort's most commanding vantage point. Spacious residences feature panoramic windows framing the lake, ensuring the view is never more than a glance away.",
+      "features": [
+        "Panoramic Lake Views",
+        "Private in-room toilet & washbasin",
+        "Heated by traditional wood-burning stove",
+        "Flat-screen TV",
+        "Access to shared hot showers nearby"
+      ]
+    },
+    "familyCabin": {
+      "title": "Family Ensuite Cabin",
+      "subtitle": "Generous space for groups",
+      "capacity": "Sleeps up to 4",
+      "bedding": "2 Double Beds",
+      "description": "A generous cabin designed for groups who value shared space. Offers the convenience of two large beds in a single private setting with a private veranda.",
+      "features": [
+        "Private in-room toilet & washbasin",
+        "Choice of wood stove or electric heating",
+        "Private veranda with seating",
+        "Access to shared hot showers nearby"
+      ]
+    },
+    "comfortCabin": {
+      "title": "Comfort Ensuite Cabin",
+      "subtitle": "Rustic charm with modern privacy",
+      "capacity": "Sleeps up to 3",
+      "bedding": "1 Double Bed + 1 Single Bed",
+      "description": "A secluded retreat balancing rustic charm with essential privacy. Perfect for couples or small families who value their own space.",
+      "features": [
+        "Private in-room toilet & washbasin",
+        "Choice of wood stove or electric heating",
+        "Private veranda with seating",
+        "Access to shared hot showers nearby"
+      ]
+    },
+    "standardCabin": {
+      "title": "Standard Lakeside Cabin",
+      "subtitle": "Our heritage experience",
+      "capacity": "Max 2 Adults",
+      "bedding": "2 Double Beds",
+      "description": "Ideally positioned in the heart of the resort, these authentic wood-fired cabins offer a classic Khuvsgul stay. Located on level ground just steps from the dining lodge.",
+      "features": [
+        "Authentic wood-burning stove (staff-tended)",
+        "Central location near dining lodge",
+        "Access to shared toilets and hot showers"
+      ]
+    },
+    "lodgeRoom": {
+      "title": "The Lodge Room",
+      "subtitle": "Accessible and carefree",
+      "capacity": "Max 2 Adults",
+      "bedding": "Double or Twin Configuration",
+      "description": "Situated within the main lodge, these rooms offer a temperate, maintenance-free refuge without the need for a wood stove. Ideal for those prioritizing convenience.",
+      "features": [
+        "Central heating (No wood stove required)",
+        "Located on 2nd floor of lodge",
+        "Access to shared toilets and hot showers"
+      ]
+    },
+    "camping": {
+      "title": "Peninsula Camping",
+      "subtitle": "Secure private grounds",
+      "capacity": "Verified upon arrival",
+      "bedding": "Dedicated sites for Tents or Vehicles",
+      "description": "Pitch your tent or park your vehicle on our manicured shoreline grounds. Enjoy the resort lifestyle while sleeping under the stars.",
+      "features": [
+        "Secure, private peninsula grounds",
+        "Unlimited access to hot showers & fresh water",
+        "Full access to restaurant and bar"
+      ]
+    }
+  },
+  "dining": {
+    "breakfast": "Daily breakfast is included in your room rate.",
+    "lunchDinner": "Available at our lakefront restaurant. Choose from our Chef's Daily Special or A La Carte selection."
+  },
+  "included": {
+    "title": "Included Experiences",
+    "subtitle": "Your rate includes one complimentary session of:",
+    "items": [
+      "Sauna session",
+      "Kayak rental",
+      "Morning yoga session",
+      "Guided peninsula hike",
+      "Wi-Fi in restaurant lodge"
+    ]
   },
   "payment": {
     "title": "Complete Your Reservation",
