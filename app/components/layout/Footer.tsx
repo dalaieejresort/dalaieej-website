@@ -27,6 +27,8 @@ export default function Footer() {
     <footer className="bg-lake-blue text-warm-beige">
       <div className="max-w-7xl mx-auto px-6 pt-16 md:pt-20 pb-32 md:pb-36">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+
+          {/* Column 1: Brand & Weather */}
           <div className="lg:col-span-1">
             <Link href={localePrefix || "/"} className="font-serif text-3xl text-warm-beige hover:text-white transition-colors">
               Dalai Eej
@@ -42,6 +44,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Column 2: Experience */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
               {locale === 'mn' ? "Туршлага" : "Experience"}
@@ -60,6 +63,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Column 3: Resort */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
               {locale === 'mn' ? "Бүсгүй" : "Resort"}
@@ -78,6 +82,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Column 4: Contact */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
               {locale === 'mn' ? "Холбоо барих" : "Contact"}
@@ -114,18 +119,44 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* BOTTOM BAR: Copyright & Agency Credits */}
         <div className="mt-12 pt-8 border-t border-warm-beige/10 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-warm-beige/40">
           <p>
             &copy; 2026 Dalai Eej Resort. {locale === 'mn' ? "Бүх эрх хамгаалагдсан." : "All rights reserved."}
           </p>
-          <a 
-            href="https://matterofform.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors mt-4 md:mt-0"
-          >
-            Digital Experience: Matter Of Form
-          </a>
+
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mt-4 md:mt-0 text-center md:text-right">
+
+            {/* The London Flex */}
+            <div className="group">
+              <span className="opacity-50 mr-2">Digital:</span>
+              <a 
+                href="https://matterofform.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors font-semibold"
+              >
+                MOF London
+              </a>
+            </div>
+
+            {/* Divider */}
+            <span className="hidden md:inline opacity-30">|</span>
+
+            {/* The Mongolian Flex */}
+            <div className="group">
+              <span className="opacity-50 mr-2">Brand:</span>
+              <a 
+                href="https://brainstorm.agency" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors font-semibold"
+              >
+                Brainstorm
+              </a>
+            </div>
+
+          </div>
         </div>
       </div>
     </footer>

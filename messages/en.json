@@ -516,5 +516,11 @@
     "errorEmail": "Please enter your email address",
     "errorEmailInvalid": "Please enter a valid email address",
     "errorTerms": "Please accept the Terms & Conditions to continue"
+  },
+  "silo": {
+    "sanctuary": "THE SANCTUARY",
+    "hearth": "THE HEARTH",
+    "stillness": "THE STILLNESS",
+    "wilderness": "THE WILDERNESS"
   }
 }
