@@ -23,14 +23,14 @@ const navLinks = [
     id: "dining",
     href: "/dining",
     en: "DINING",
-    mn: "ХООЛНЫ",
+    mn: "ЗООГ",
     image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80"
   },
   { 
     id: "wellness",
     href: "/wellness",
     en: "WELLNESS",
-    mn: "СЭРГЭЭХ",
+    mn: "АМРАХУЙ",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&auto=format&fit=crop&q=80"
   },
   { 
@@ -44,7 +44,7 @@ const navLinks = [
     id: "offers",
     href: "/offers",
     en: "OFFERS",
-    mn: "САНАЛ",
+    mn: "УРАМШУУЛАЛ",
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&auto=format&fit=crop&q=80"
   },
   { 
@@ -58,7 +58,7 @@ const navLinks = [
     id: "visit",
     href: "/contact",
     en: "VISIT",
-    mn: "ХҮРЭХ",
+    mn: "ЗОЧЛОХ",
     image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&auto=format&fit=crop&q=80"
   },
 ];
