@@ -216,7 +216,7 @@ export default function InteractiveMap() {
                     }`}
                   >
                     {isArrowMarker(location.id) ? (
-                      <ArrowUpRight className="w-5 h-5" />
+                      <ArrowUpRight className="w-5 h-5 rotate-180" />
                     ) : (
                       <span className="text-2xl font-light">+</span>
                     )}
