@@ -196,7 +196,7 @@ export default function InteractiveMap() {
               {filteredLocations.map((location) => (
                 <div
                   key={location.id}
-                  className="absolute"
+                  className="absolute -translate-x-1/2"
                   style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
