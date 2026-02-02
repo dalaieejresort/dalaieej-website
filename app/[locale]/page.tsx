@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 import VideoHero from "../components/home/VideoHero";
 import EditorialIntro from "../components/home/EditorialIntro";
 import SiloGrid from "../components/home/SiloGrid";
-import SpecialOffers from "../components/home/SpecialOffers";
+import OffersCarousel from "../components/home/OffersCarousel";
 import JourneysTabs from "../components/home/JourneysTabs";
 import InteractiveMap from "../components/InteractiveMap";
 import AvailabilityBar from "../components/AvailabilityBar";
@@ -22,7 +22,7 @@ export default function Home() {
       
       <SiloGrid />
       
-      <SpecialOffers />
+      <OffersCarousel />
       
       <JourneysTabs />
       
