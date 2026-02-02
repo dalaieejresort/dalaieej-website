@@ -6,25 +6,25 @@ const jsonLd = {
   name: 'Dalai Eej Resort',
   image: 'https://dalaieej.mn/images/hero.jpg',
   telephone: '+976-7011-1234',
-  email: 'info@dalaieej.mn',
+  email: 'hello@dalaieej.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Khuvsgul Lake National Park',
     addressLocality: 'Khatgal',
     addressRegion: 'Khuvsgul',
-    postalCode: '67120',
+    postalCode: '67143',
     addressCountry: 'MN'
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: '51.0833',
-    longitude: '100.4667'
+    latitude: '50.48479874018978',
+    longitude: '100.18977589128245'
   },
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+976-7011-1234',
     contactType: 'reservations',
-    areaServed: 'MN',
+    'areaServed': ['MN', 'US', 'KR', 'DE', 'GB', 'JP', 'CN', 'RU', 'FR'],
     availableLanguage: ['English', 'Mongolian']
   },
   amenityFeature: [
@@ -35,7 +35,7 @@ const jsonLd = {
     }
   ],
   url: 'https://dalaieej.mn',
-  priceRange: '$$'
+  priceRange: '$$$'
 };
 
 export const metadata: Metadata = {

@@ -45,6 +45,8 @@ app/
 │   ├── fam-tour-application/page.tsx # FAM Tour application form
 │   └── payment/page.tsx              # QPay payment terminal
 ├── components/
+│   ├── gallery/
+│   │   └── GalleryGrid.tsx           # Client component for gallery with filters + lightbox
 │   ├── Navbar.tsx                    # Navigation with hover dropdowns + Gallery icon
 │   ├── NavbarWrapper.tsx             # Server-side wrapper for Navbar
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button

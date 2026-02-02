@@ -87,7 +87,7 @@ export default function LocationPage() {
                 {locale === 'mn' ? "Google газрын зураг энд байрлана" : "Google Map Placeholder"}
               </p>
               <p className="font-body text-forest-green/40 text-sm mt-2">
-                51.0833° N, 100.4667° E
+                50.4847° N, 100.1897° E
               </p>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function LocationPage() {
               <h4 className="font-serif text-lg text-forest-green mb-2">
                 {locale === 'mn' ? "Имэйл" : "Email"}
               </h4>
-              <p className="font-body text-forest-green/70">info@dalaieej.mn</p>
+              <p className="font-body text-forest-green/70">hello@dalaieej.com</p>
             </div>
             <div className="text-center">
               <Clock className="w-10 h-10 text-forest-green mx-auto mb-4" />
