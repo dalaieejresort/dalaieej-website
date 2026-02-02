@@ -158,6 +158,10 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 npm run dev -- -p 5000 -H 0.0.0.0
 ```
 
+### SEO
+- JSON-LD Schema markup (type: Resort) in root layout for search engine rich results
+- Includes business info: name, address, geo coordinates, contact point, amenities
+
 ## Recent Changes
 - **2026-01-30**: Implemented Split Payment Strategy - QPay for Mongolian locale, Stripe for English locale
 - **2026-01-30**: Added Stripe payment-intent API with MNT to EUR conversion
