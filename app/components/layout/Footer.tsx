@@ -3,24 +3,23 @@
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
+import WeatherWidget from "../WeatherWidget";
 
 export default function Footer() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
-  const currentYear = new Date().getFullYear();
 
   const navigation = {
     experience: [
-      { en: "Accommodation", mn: "Байр", href: "/accommodation" },
+      { en: "Stay", mn: "Байр", href: "/accommodation" },
       { en: "Dining", mn: "Хоол", href: "/dining" },
       { en: "Wellness", mn: "Спа", href: "/wellness" },
-      { en: "Experiences", mn: "Туршлага", href: "/experiences" },
+      { en: "Adventures", mn: "Адал явдал", href: "/experiences" },
     ],
     resort: [
-      { en: "About Us", mn: "Бидний тухай", href: "/about" },
+      { en: "About", mn: "Бидний тухай", href: "/about" },
       { en: "Gallery", mn: "Галерей", href: "/gallery" },
-      { en: "Contact", mn: "Холбоо барих", href: "/contact" },
-      { en: "Careers", mn: "Ажлын байр", href: "/careers" },
+      { en: "FAQ", mn: "Түгээмэл асуулт", href: "/faq" },
     ],
   };
 
@@ -34,10 +33,13 @@ export default function Footer() {
             </Link>
             <p className="mt-4 font-body text-sm text-warm-beige/70 leading-relaxed max-w-xs">
               {locale === 'mn' 
-                ? "Хөвсгөл нуурын эрэг дээрх тансаг зочид буудал. Байгалийн үзэсгэлэнт газарт амралт, тайван байдлыг мэдрээрэй."
-                : "A luxury resort on the shores of Lake Khuvsgul. Experience tranquility and natural beauty in the heart of Mongolia."
+                ? "Дэлхийн захад байрлах хоргодох газар. Хөвсгөл нуурын эрэг дээр."
+                : "A refuge at the edge of the world. On the shores of Lake Khuvsgul."
               }
             </p>
+            <div className="mt-6">
+              <WeatherWidget />
+            </div>
           </div>
 
           <div>
@@ -92,11 +94,11 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="tel:+97670001234" 
+                  href="tel:+97670111234" 
                   className="flex items-center gap-3 font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                 >
                   <Phone className="w-4 h-4 text-warm-beige/50 flex-shrink-0" />
-                  +976 7000 1234
+                  +976 7011 1234
                 </a>
               </li>
               <li>
@@ -112,20 +114,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-warm-beige/10">
-          <div className="flex flex-col items-center gap-4">
-            <p className="font-body text-xs text-warm-beige/40 text-center">
-              © {currentYear} Dalai Eej Resort. {locale === 'mn' ? "Бүх эрх хуулиар хамгаалагдсан." : "All rights reserved."}
-            </p>
-            <a
-              href="https://matterofform.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[10px] uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors duration-300"
-            >
-              DIGITAL EXPERIENCE: MATTER OF FORM
-            </a>
-          </div>
+        <div className="mt-12 pt-8 border-t border-warm-beige/10 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-warm-beige/40">
+          <p>
+            &copy; 2026 Dalai Eej Resort. {locale === 'mn' ? "Бүх эрх хамгаалагдсан." : "All rights reserved."}
+          </p>
+          <a 
+            href="https://matterofform.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors mt-4 md:mt-0"
+          >
+            Digital Experience: Matter Of Form
+          </a>
         </div>
       </div>
     </footer>
