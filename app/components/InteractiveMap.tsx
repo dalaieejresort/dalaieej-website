@@ -17,29 +17,29 @@ interface Hotspot {
 const buildingsAccommodation: Hotspot[] = [
   {
     id: "reception",
-    top: 50,
-    left: 50,
+    top: 150,
+    left: 150,
     title: "Reception & Restaurant",
     description: "The main lodge featuring our lakefront dining hall and lounge bar."
   },
   {
     id: "annex",
-    top: 50,
-    left: 50,
+    top: 510,
+    left: 510,
     title: "The Lodge Annex",
     description: "Separate building housing the Lodge Rooms, adjacent to the restaurant."
   },
   {
     id: "ensuite",
-    top: 50,
-    left: 50,
+    top: 200,
+    left: 200,
     title: "Ensuite Cabins (Quiet Zone)",
     description: "Private cabins featuring indoor facilities, set back from the shoreline for privacy."
   },
   {
     id: "heritage",
-    top: 50,
-    left: 50,
+    top: 540,
+    left: 540,
     title: "Heritage Cabins (Lakeside Zone)",
     description: "Classic, wood-fired cabins positioned centrally along the water's edge."
   },
