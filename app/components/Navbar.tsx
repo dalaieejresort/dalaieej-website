@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 import NavigationOverlay from "./layout/NavigationOverlay";
@@ -41,9 +41,19 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-20">
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="text-warm-beige hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-warm-beige/50 rounded-lg p-2"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              aria-controls="navigation-overlay"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+
             <Link 
               href={localePrefix || "/"}
-              className="font-serif text-2xl md:text-3xl text-warm-beige hover:text-white transition-colors"
+              className="absolute left-1/2 -translate-x-1/2 font-serif text-2xl md:text-3xl text-warm-beige hover:text-white transition-colors"
             >
               Dalai Eej
             </Link>
@@ -53,23 +63,10 @@ export default function Navbar() {
               
               <Link
                 href={`${localePrefix}/booking`}
-                className="hidden sm:inline-block px-5 py-2.5 bg-warm-beige text-lake-blue font-body text-xs font-semibold tracking-[0.1em] uppercase hover:bg-white transition-colors rounded"
+                className="px-5 py-2.5 bg-warm-beige text-lake-blue font-body text-xs font-semibold tracking-[0.1em] uppercase hover:bg-white transition-colors rounded"
               >
                 {locale === 'mn' ? "Захиалах" : "Book"}
               </Link>
-              
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="flex items-center gap-2 text-warm-beige hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-warm-beige/50 rounded-lg px-2 py-1"
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={menuOpen}
-                aria-controls="navigation-overlay"
-              >
-                <span className="hidden sm:inline font-body text-xs tracking-[0.1em] uppercase">
-                  {locale === 'mn' ? "Цэс" : "Menu"}
-                </span>
-                {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
             </div>
           </div>
         </div>
