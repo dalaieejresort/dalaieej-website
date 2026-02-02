@@ -6,31 +6,31 @@ import Link from "next/link";
 
 const silos = [
   {
-    id: "sanctuary",
+    id: "stay",
     href: "/accommodation",
-    en: { title: "The Sanctuary", subtitle: "Rest among the pines" },
-    mn: { title: "Амралтын газар", subtitle: "Шинэсэн ойд амрах" },
+    en: "STAY",
+    mn: "БАЙРЛАХ",
     image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&auto=format&fit=crop&q=80"
   },
   {
-    id: "hearth",
+    id: "dining",
     href: "/dining",
-    en: { title: "The Hearth", subtitle: "Taste of the north" },
-    mn: { title: "Гал голомт", subtitle: "Хойд нутгийн амт" },
+    en: "DINING",
+    mn: "ЗООГ",
     image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80"
   },
   {
-    id: "stillness",
+    id: "wellness",
     href: "/wellness",
-    en: { title: "The Stillness", subtitle: "Restore your rhythm" },
-    mn: { title: "Намуухан", subtitle: "Өөрийгөө сэргээ" },
+    en: "WELLNESS",
+    mn: "АМРАХУЙ",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&auto=format&fit=crop&q=80"
   },
   {
-    id: "wilderness",
+    id: "adventure",
     href: "/experiences",
-    en: { title: "The Wilderness", subtitle: "Roam the wilds" },
-    mn: { title: "Зэрлэг байгаль", subtitle: "Байгалиар аялах" },
+    en: "ADVENTURE",
+    mn: "АДАЛ ЯВДАЛ",
     image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&auto=format&fit=crop&q=80"
   }
 ];
@@ -42,7 +42,7 @@ export default function SiloGrid() {
   return (
     <section className="py-16 md:py-24 px-4 md:px-8 bg-warm-beige">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {silos.map((silo, index) => (
             <motion.div
               key={silo.id}
@@ -53,24 +53,21 @@ export default function SiloGrid() {
             >
               <Link
                 href={`${localePrefix}${silo.href}`}
-                className="group block relative aspect-[3/4] overflow-hidden rounded-lg"
+                className="group block relative aspect-[4/3] md:aspect-[3/2] overflow-hidden rounded-lg"
               >
                 <img
                   src={silo.image}
-                  alt={locale === 'mn' ? silo.mn.title : silo.en.title}
+                  alt={locale === 'mn' ? silo.mn : silo.en}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
                   <h3 
-                    className="text-2xl md:text-3xl text-white mb-2"
+                    className="text-4xl md:text-5xl lg:text-6xl text-white tracking-wide"
                     style={{ fontFamily: "'Sloops', 'Playfair Display', serif" }}
                   >
-                    {locale === 'mn' ? silo.mn.title : silo.en.title}
+                    {locale === 'mn' ? silo.mn : silo.en}
                   </h3>
-                  <p className="font-body text-sm text-white/70 tracking-wide">
-                    {locale === 'mn' ? silo.mn.subtitle : silo.en.subtitle}
-                  </p>
                 </div>
               </Link>
             </motion.div>
