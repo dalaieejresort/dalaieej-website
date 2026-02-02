@@ -7,7 +7,14 @@
     "about": "Бидний тухай",
     "book": "Захиалга өгөх",
     "offers": "Тусгай Саналууд",
-    "contact": "Холбоо барих"
+    "contact": "Холбоо барих",
+    "accommodation": "БАЙРЛАХ",
+    "dining": "ЗООГ",
+    "wellness": "АМРАХУЙ",
+    "experiences": "АДАЛ ЯВДАЛ",
+    "escapes": "УРАМШУУЛАЛ",
+    "story": "БИДНИЙ ТУХАЙ",
+    "location": "ЗОЧЛОХ"
   },
   "about": {
     "hero": {

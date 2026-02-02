@@ -19,6 +19,7 @@ interface NavPillar {
 
 export default function Navbar() {
   const t = useTranslations();
+  const tNav = useTranslations('nav');
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -36,58 +37,63 @@ export default function Navbar() {
 
   const navPillars: NavPillar[] = [
     {
-      label: locale === 'mn' ? "БАЙРЛАХ" : "STAY",
+      label: tNav('accommodation'),
       dropdown: [
         { href: `${localePrefix}/cabins`, label: locale === 'mn' ? "Модон байшингууд" : "Cabins", description: locale === 'mn' ? "Ойн дунд" : "Nestled in the forest" },
         { href: `${localePrefix}/lodge`, label: locale === 'mn' ? "Гол байшин" : "The Lodge", description: locale === 'mn' ? "Нуурын эрэг дээр" : "On the lakeshore" },
         { href: `${localePrefix}/amenities`, label: locale === 'mn' ? "Үйлчилгээ" : "Amenities", description: locale === 'mn' ? "Зочны туршлага" : "Guest experience" },
-        { href: `${localePrefix}/offers`, label: locale === 'mn' ? "Тусгай багцууд" : "Special Packages", description: locale === 'mn' ? "Онцгой санал" : "Exclusive offers" },
       ]
     },
     {
-      label: locale === 'mn' ? "ХООЛЛОХ" : "NOURISH",
+      label: tNav('dining'),
       dropdown: [
         { href: `${localePrefix}/restaurant`, label: locale === 'mn' ? "Рестуран" : "The Restaurant", description: locale === 'mn' ? "Орон нутгийн хоол" : "Local cuisine" },
         { href: `${localePrefix}/restaurant#private`, label: locale === 'mn' ? "Хувийн зоог" : "Private Dining", description: locale === 'mn' ? "Онцгой үдэшлэг" : "Intimate experiences" },
       ]
     },
     {
-      label: locale === 'mn' ? "СЭРГЭЭХ" : "WELLNESS",
+      label: tNav('wellness'),
       dropdown: [
         { href: `${localePrefix}/wellness`, label: locale === 'mn' ? "Спа & Сэргээх" : "Spa & Wellness", description: locale === 'mn' ? "Амралт ба сэргэлт" : "Rest and restoration" },
         { href: `${localePrefix}/wellness#treatments`, label: locale === 'mn' ? "Эмчилгээ" : "Treatments", description: locale === 'mn' ? "Уламжлалт аргууд" : "Traditional methods" },
       ]
     },
     {
-      label: locale === 'mn' ? "НЭЭХ" : "DISCOVER",
+      label: tNav('experiences'),
       dropdown: [
         { href: `${localePrefix}/about/the-lake`, label: locale === 'mn' ? "Нуур" : "The Lake", description: locale === 'mn' ? "Байгаль" : "Nature" },
         { href: `${localePrefix}/about`, label: locale === 'mn' ? "Хойморь" : "The Peninsula", description: locale === 'mn' ? "Байршил" : "Location" },
         { href: `${localePrefix}/stories`, label: locale === 'mn' ? "Өгүүллэг" : "The Journal", description: locale === 'mn' ? "Блог" : "Stories" },
-        { href: `${localePrefix}/location`, label: locale === 'mn' ? "Аялал" : "The Journey", description: locale === 'mn' ? "Бидэнд хүрэх" : "Getting here" },
+        ...(locale === 'mn' ? [
+          { href: `${localePrefix}/journeys/families`, label: "Ураг Төрөл", description: "Өргөтгөсөн гэр бүлд" },
+          { href: `${localePrefix}/journeys/friends`, label: "Найз Нөхөд", description: "Хамтдаа" },
+          { href: `${localePrefix}/journeys/couples`, label: "Хосууд", description: "Романтик амралт" },
+          { href: `${localePrefix}/journeys/companies`, label: "Байгууллага", description: "Корпорэйт уулзалт" },
+        ] : [
+          { href: `${localePrefix}/journeys/road-trippers`, label: "Road Trippers", description: "Adventure seekers" },
+          { href: `${localePrefix}/journeys/solo`, label: "The Solo Seeker", description: "Personal retreat" },
+          { href: `${localePrefix}/journeys/lovers`, label: "Khuvsgul Lovers", description: "Return visitors" },
+          { href: `${localePrefix}/journeys/operators`, label: "Tour Operators", description: "Partner with us" },
+        ])
       ]
     },
     {
-      label: locale === 'mn' ? "АЯЛАЛ" : "JOURNEYS",
-      dropdown: locale === 'mn' ? [
-        { href: `${localePrefix}/journeys/families`, label: "Ураг Төрөл", description: "Өргөтгөсөн гэр бүлд" },
-        { href: `${localePrefix}/journeys/friends`, label: "Найз Нөхөд", description: "Хамтдаа" },
-        { href: `${localePrefix}/journeys/couples`, label: "Хосууд", description: "Романтик амралт" },
-        { href: `${localePrefix}/journeys/companies`, label: "Байгууллага", description: "Корпорэйт уулзалт" },
-      ] : [
-        { href: `${localePrefix}/journeys/road-trippers`, label: "Road Trippers", description: "Adventure seekers" },
-        { href: `${localePrefix}/journeys/solo`, label: "The Solo Seeker", description: "Personal retreat" },
-        { href: `${localePrefix}/journeys/lovers`, label: "Khuvsgul Lovers", description: "Return visitors" },
-        { href: `${localePrefix}/journeys/operators`, label: "Tour Operators", description: "Partner with us" },
+      label: tNav('escapes'),
+      dropdown: [
+        { href: `${localePrefix}/offers`, label: locale === 'mn' ? "Тусгай багцууд" : "Special Packages", description: locale === 'mn' ? "Онцгой санал" : "Exclusive offers" },
       ]
     },
     {
-      label: locale === 'mn' ? "БИДНИЙ ТУХАЙ" : "ABOUT",
+      label: tNav('story'),
       dropdown: [
         { href: `${localePrefix}/about`, label: locale === 'mn' ? "Бидний түүх" : "Our Story", description: locale === 'mn' ? "Далай Ээж" : "Dalai Eej" },
         { href: `${localePrefix}/about/the-family`, label: locale === 'mn' ? "Гэр бүл" : "The Family", description: locale === 'mn' ? "Манай хамт олон" : "Our team" },
         { href: `${localePrefix}/about#history`, label: locale === 'mn' ? "Түүх" : "History", description: locale === 'mn' ? "Өв уламжлал" : "Heritage" },
       ]
+    },
+    {
+      label: tNav('location'),
+      href: `${localePrefix}/location`
     },
   ];
 

@@ -7,7 +7,14 @@
     "about": "About Us",
     "book": "Book Now",
     "offers": "Special Offers",
-    "contact": "Contact"
+    "contact": "Contact",
+    "accommodation": "STAY",
+    "dining": "NOURISH",
+    "wellness": "RESTORE",
+    "experiences": "ROAM",
+    "escapes": "ESCAPES",
+    "story": "STORY",
+    "location": "VISIT"
   },
   "about": {
     "hero": {
