@@ -50,7 +50,9 @@ app/
 │   ├── layout/
 │   │   └── NavigationOverlay.tsx     # Full-screen curtain navigation with animated links
 │   ├── home/
-│   │   ├── HeroGrid.tsx              # Bento grid hero with 4 quadrants
+│   │   ├── VideoHero.tsx             # Full-screen video hero with title and bouncing arrow
+│   │   ├── SiloGrid.tsx              # 4-quadrant grid (stacks mobile, 4-cols desktop)
+│   │   ├── HeroGrid.tsx              # Bento grid hero with 4 quadrants (legacy)
 │   │   ├── EditorialIntro.tsx        # Intro text section
 │   │   ├── OffersCarousel.tsx        # Horizontal scroll offers cards
 │   │   └── JourneysTabs.tsx          # Tabbed journey experiences
@@ -88,7 +90,7 @@ proxy.ts                              # Locale routing (Next.js 16 - renamed fro
 ```
 
 ### Key Features
-1. **Hero Section**: Full-screen video background with fade-in title animations
+1. **Video Hero**: Full-screen video/image background with "Dalai Eej" title, subtitle, and bouncing scroll arrow
 2. **Navigation Bar**: 
    - Hover dropdowns for About Us (The Family, The Lake) and Accommodations (Cabins, Lodge)
    - All links visible (no hamburger menu) - horizontal scroll on mobile
@@ -172,7 +174,21 @@ npm run dev -- -p 5000 -H 0.0.0.0
 - JSON-LD Schema markup (type: Resort) in root layout for search engine rich results
 - Includes business info: name, address, geo coordinates, contact point, amenities
 
+### Homepage Structure (Luxury Editorial)
+1. Navbar (fixed top, via layout)
+2. NavigationOverlay (curtain menu with STAY/DINING/WELLNESS/ADVENTURE/OFFERS/ABOUT/VISIT)
+3. VideoHero (full-screen with title + bouncing arrow)
+4. EditorialIntro
+5. SiloGrid (4 quadrants: Sanctuary/Hearth/Stillness/Wilderness)
+6. OffersCarousel
+7. JourneysTabs (For Two/The Tribe/Solitude)
+8. InteractiveMap
+9. Footer
+10. AvailabilityBar (fixed bottom)
+
 ## Recent Changes
+- **2026-02-02**: Refactored homepage to "Luxury Editorial" with VideoHero + SiloGrid (stacks on mobile)
+- **2026-02-02**: Updated NavigationOverlay with original titles (STAY, DINING, WELLNESS, ADVENTURE, OFFERS, ABOUT, VISIT)
 - **2026-01-30**: Implemented Split Payment Strategy - QPay for Mongolian locale, Stripe for English locale
 - **2026-01-30**: Added Stripe payment-intent API with MNT to EUR conversion
 - **2026-01-30**: Payment page auto-generates QR/payment on load (no manual button for checkout flow)

@@ -1,8 +1,9 @@
 "use client";
 
 import { useLocale } from 'next-intl';
-import HeroGrid from "../components/home/HeroGrid";
+import VideoHero from "../components/home/VideoHero";
 import EditorialIntro from "../components/home/EditorialIntro";
+import SiloGrid from "../components/home/SiloGrid";
 import OffersCarousel from "../components/home/OffersCarousel";
 import JourneysTabs from "../components/home/JourneysTabs";
 import InteractiveMap from "../components/InteractiveMap";
@@ -15,9 +16,11 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
-      <HeroGrid />
+      <VideoHero />
       
       <EditorialIntro />
+      
+      <SiloGrid />
       
       <OffersCarousel />
       

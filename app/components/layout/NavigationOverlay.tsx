@@ -20,23 +20,23 @@ const navLinks = [
     image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&auto=format&fit=crop&q=80"
   },
   { 
-    id: "nourish",
+    id: "dining",
     href: "/dining",
-    en: "NOURISH",
+    en: "DINING",
     mn: "ХООЛНЫ",
     image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80"
   },
   { 
-    id: "restore",
+    id: "wellness",
     href: "/wellness",
-    en: "RESTORE",
+    en: "WELLNESS",
     mn: "СЭРГЭЭХ",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&auto=format&fit=crop&q=80"
   },
   { 
-    id: "roam",
+    id: "adventure",
     href: "/experiences",
-    en: "ROAM",
+    en: "ADVENTURE",
     mn: "АДАЛ ЯВДАЛ",
     image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&auto=format&fit=crop&q=80"
   },

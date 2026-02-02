@@ -1,0 +1,53 @@
+I need to execute a complete "Luxury Editorial" refactor of the Homepage (`app/[locale]/page.tsx`).
+
+Please follow this strict 5-Part Plan:
+
+PART 1: PRESERVE THE VIDEO HERO
+In `app/[locale]/page.tsx`, you must KEEP the current `<section>` with the video background.
+- **CRITICAL:** Do NOT remove the "Dalai Eej" title or the `animate-bounce` SVG arrow at the bottom.
+- **CRITICAL:** Keep the existing video source and overlay gradients.
+
+PART 2: REFACTOR NAVBAR & ADD OVERLAY MENU
+1. Update `components/layout/Navbar.tsx`:
+   - **Remove:** All central text links (Stay, Dining, etc.) from the bar itself.
+   - **Left:** Keep "Dalai Eej" Logo.
+   - **Right:** Language Switcher + "BOOK" Button + "MENU" (Hamburger) Icon.
+   - **Style:** Transparent over the video, becoming solid/glass on scroll.
+2. Create `components/layout/NavigationOverlay.tsx`:
+   - A full-screen overlay (z-50) triggered by the Menu button.
+   - **Background:** Dark Forest Green.
+   - **Links:** Use my ORIGINAL titles: STAY, DINING, WELLNESS, ADVENTURE, OFFERS, ABOUT, VISIT.
+   - **Interaction:** Hovering a link changes the background image.
+
+PART 3: CREATE THE "SILO GRID" (STACKS ON MOBILE)
+Create `components/home/SiloGrid.tsx` to sit below the Intro.
+- **Layout:** Use CSS Grid.
+  - Mobile: `grid-cols-1` (Stacked vertical images).
+  - Desktop: `md:grid-cols-2 lg:grid-cols-4` (The 4-Quadrant look).
+- **Typography:** Use the `Sloops` font for the titles (e.g., `font-family: 'Sloops', serif`).
+- **Content:**
+  1. **"The Sanctuary"** (Image: Ger Interior -> Links to /stay)
+  2. **"The Hearth"** (Image: Dining/Fire -> Links to /dining)
+  3. **"The Stillness"** (Image: Sauna/Lake -> Links to /wellness)
+  4. **"The Wilderness"** (Image: Horse/Nature -> Links to /adventure)
+
+PART 4: CREATE SUPPORTING COMPONENTS
+1. `components/home/EditorialIntro.tsx`:
+   - Simple centered text: "A refuge at the edge of the world..." + Link to About.
+2. `components/home/OffersCarousel.tsx`:
+   - Horizontal scroll of cards (Stay 4 Pay 3, Honeymoon, etc.).
+3. `components/home/JourneysTabs.tsx`:
+   - Tabbed interface: "For Two", "The Tribe", "Solitude".
+
+PART 5: ASSEMBLE THE PAGE
+Rewrite `app/[locale]/page.tsx` in this EXACT order:
+1. `<Navbar />` (Fixed Top)
+2. `<NavigationOverlay />`
+3. **EXISTING VIDEO HERO** (With the bouncing arrow)
+4. `<EditorialIntro />`
+5. `<SiloGrid />` (The 4 Quadrants)
+6. `<OffersCarousel />`
+7. `<JourneysTabs />`
+8. `<InteractiveMap />`
+9. `<Footer />`
+10. `<AvailabilityBar />` (Fixed Bottom)
