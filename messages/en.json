@@ -173,17 +173,61 @@
     "title": "Explore Our Resort",
     "subtitle": "Click on the hotspots to discover what awaits you",
     "hint": "Click the + icons to learn more about each area",
+    "tabs": {
+      "accommodation": "Buildings & Accommodation",
+      "activities": "Facilities & Activities"
+    },
     "reception": {
-      "title": "Reception & Dining",
-      "desc": "Our main lodge features a warm reception, gourmet restaurant, and lounge bar with panoramic views."
+      "title": "Reception & Restaurant",
+      "desc": "The main lodge featuring our lakefront dining hall and lounge bar."
     },
-    "lakefront": {
-      "title": "Lakefront Gers",
-      "desc": "Traditional Mongolian gers positioned along the pristine lakefront, offering stunning sunrise views."
+    "annex": {
+      "title": "The Lodge Annex",
+      "desc": "Separate building housing the Lodge Rooms, adjacent to the restaurant."
     },
-    "forest": {
-      "title": "Forest Cabins",
-      "desc": "Secluded wooden cabins nestled in the forest, perfect for those seeking tranquility and privacy."
+    "ensuite": {
+      "title": "Ensuite Cabins (Quiet Zone)",
+      "desc": "Private cabins featuring indoor facilities, set back from the shoreline for privacy."
+    },
+    "heritage": {
+      "title": "Heritage Cabins (Lakeside Zone)",
+      "desc": "Classic, wood-fired cabins positioned centrally along the water's edge."
+    },
+    "grand": {
+      "title": "Grand Peninsula Suite",
+      "desc": "Premier residence commanding the tip of the peninsula."
+    },
+    "bathhouse": {
+      "title": "The Bathhouse",
+      "desc": "Central facility with shared hot showers and restrooms."
+    },
+    "sauna": {
+      "title": "Lakeside Sauna",
+      "desc": "Private wellness cabin located by the water."
+    },
+    "pier": {
+      "title": "The Pier",
+      "desc": "Main boat landing, transfer point, and kayak launch."
+    },
+    "basketball": {
+      "title": "Basketball Court",
+      "desc": "Sports court and location for morning yoga."
+    },
+    "volleyball": {
+      "title": "Volleyball Court",
+      "desc": "Natural-surface court for recreation."
+    },
+    "entrance": {
+      "title": "Grounds Entrance",
+      "desc": "Main gate to the peninsula."
+    },
+    "overland": {
+      "title": "To Overland Grounds",
+      "desc": "Secure camping for tents and vehicles."
+    },
+    "parking": {
+      "title": "To Guest Parking",
+      "desc": "Secure parking area."
     }
   },
   "discover": {

@@ -8,117 +8,24 @@ import { useTranslations } from "next-intl";
 interface Location {
   id: string;
   category: "accommodation" | "activities";
-  title: string;
-  description: string;
   left: number;
   top: number;
 }
 
 const locations: Location[] = [
-  {
-    id: 'reception',
-    category: 'accommodation',
-    title: 'Reception & Restaurant',
-    description: 'The main lodge featuring our lakefront dining hall and lounge bar.',
-    left: 66.27,
-    top: 66.2
-  },
-  {
-    id: 'annex',
-    category: 'accommodation',
-    title: 'The Lodge Annex',
-    description: 'Separate building housing the Lodge Rooms, adjacent to the restaurant.',
-    left: 54.44,
-    top: 63.5
-  },
-  {
-    id: 'ensuite',
-    category: 'accommodation',
-    title: 'Ensuite Cabins (Quiet Zone)',
-    description: 'Private cabins featuring indoor facilities, set back from the shoreline for privacy.',
-    left: 28.32,
-    top: 79.5
-  },
-  {
-    id: 'heritage',
-    category: 'accommodation',
-    title: 'Heritage Cabins (Lakeside Zone)',
-    description: 'Classic, wood-fired cabins positioned centrally along the water\'s edge.',
-    left: 47.88,
-    top: 63.43
-  },
-  {
-    id: 'grand',
-    category: 'accommodation',
-    title: 'Grand Peninsula Suite',
-    description: 'Premier residence commanding the tip of the peninsula.',
-    left: 41.23,
-    top: 71.4
-  },
-  {
-    id: 'bathhouse',
-    category: 'accommodation',
-    title: 'The Bathhouse',
-    description: 'Central facility with shared hot showers and restrooms.',
-    left: 69.01,
-    top: 71.3
-  },
-  {
-    id: 'sauna',
-    category: 'activities',
-    title: 'Lakeside Sauna',
-    description: 'Private wellness cabin located by the water.',
-    left: 95.43,
-    top: 75.53
-  },
-  {
-    id: 'pier',
-    category: 'activities',
-    title: 'The Pier',
-    description: 'Main boat landing, transfer point, and kayak launch.',
-    left: 93.37,
-    top: 66.03
-  },
-  {
-    id: 'basketball',
-    category: 'activities',
-    title: 'Basketball Court',
-    description: 'Sports court and location for morning yoga.',
-    left: 77.55,
-    top: 63.6
-  },
-  {
-    id: 'volleyball',
-    category: 'activities',
-    title: 'Volleyball Court',
-    description: 'Natural-surface court for recreation.',
-    left: 71.22,
-    top: 62.87
-  },
-  {
-    id: 'entrance',
-    category: 'activities',
-    title: 'Grounds Entrance',
-    description: 'Main gate to the peninsula.',
-    left: 34.1,
-    top: 51.3
-  },
-  {
-    id: 'overland',
-    category: 'activities',
-    title: 'To Overland Grounds',
-    description: 'Secure camping for tents and vehicles.',
-    left: 19.43,
-    top: 99.7
-  },
-  {
-    id: 'parking',
-    category: 'activities',
-    title: 'To Guest Parking',
-    description: 'Secure parking area.',
-    left: 0.03,
-    top: 58.1
-  }
+  { id: 'reception', category: 'accommodation', left: 66.27, top: 66.2 },
+  { id: 'annex', category: 'accommodation', left: 54.44, top: 63.5 },
+  { id: 'ensuite', category: 'accommodation', left: 28.32, top: 79.5 },
+  { id: 'heritage', category: 'accommodation', left: 47.88, top: 63.43 },
+  { id: 'grand', category: 'accommodation', left: 41.23, top: 71.4 },
+  { id: 'bathhouse', category: 'accommodation', left: 69.01, top: 71.3 },
+  { id: 'sauna', category: 'activities', left: 95.43, top: 75.53 },
+  { id: 'pier', category: 'activities', left: 93.37, top: 66.03 },
+  { id: 'basketball', category: 'activities', left: 77.55, top: 63.6 },
+  { id: 'volleyball', category: 'activities', left: 71.22, top: 62.87 },
+  { id: 'entrance', category: 'activities', left: 34.1, top: 51.3 },
+  { id: 'overland', category: 'activities', left: 19.43, top: 99.7 },
+  { id: 'parking', category: 'activities', left: 0.03, top: 58.1 }
 ];
 
 type TabType = "accommodation" | "activities";
@@ -162,7 +69,7 @@ export default function InteractiveMap() {
                   : "text-forest-green hover:bg-forest-green/10"
               }`}
             >
-              Buildings & Accommodation
+              {t('map.tabs.accommodation')}
             </button>
             <button
               onClick={() => handleTabChange("activities")}
@@ -172,7 +79,7 @@ export default function InteractiveMap() {
                   : "text-forest-green hover:bg-forest-green/10"
               }`}
             >
-              Facilities & Activities
+              {t('map.tabs.activities')}
             </button>
           </div>
         </div>
@@ -241,10 +148,10 @@ export default function InteractiveMap() {
                           <X className="w-4 h-4" />
                         </button>
                         <h3 className="font-heading text-lg text-forest-green mb-2">
-                          {location.title}
+                          {t(`map.${location.id}.title`)}
                         </h3>
                         <p className="font-body text-sm text-forest-green/70">
-                          {location.description}
+                          {t(`map.${location.id}.desc`)}
                         </p>
                       </motion.div>
                     )}
