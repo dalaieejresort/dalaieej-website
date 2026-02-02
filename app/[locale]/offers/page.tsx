@@ -79,7 +79,7 @@ export default function OffersPage() {
             <span className="font-body text-sm">{t('nav.home')}</span>
           </a>
           <h1 className="font-heading text-4xl md:text-6xl text-white">
-            {t('offers.title')}
+            {locale === 'mn' ? "Тусгай Багцууд" : "Curated Escapes"}
           </h1>
           <p className="font-body text-white/80 text-lg mt-4 max-w-2xl">
             {t('offers.subtitle')}

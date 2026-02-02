@@ -25,22 +25,23 @@ app/
 │   ├── layout.tsx                    # Locale layout with NextIntlClientProvider + NavbarWrapper
 │   ├── page.tsx                      # Main landing page with hero, discover grid, map
 │   ├── about/
-│   │   ├── page.tsx                  # About Us main page
+│   │   ├── page.tsx                  # About Us / Story page (The Legend of Dalai Eej)
 │   │   ├── the-family/page.tsx       # The Family subpage
 │   │   └── the-lake/page.tsx         # The Lake subpage
-│   ├── cabins/page.tsx               # Forest Cabins accommodation page
-│   ├── lodge/page.tsx                # Main Lodge accommodation page
-│   ├── restaurant/page.tsx           # Restaurant & dining page
-│   ├── experiences/page.tsx          # Activities & adventures page
-│   ├── wellness/page.tsx             # Spa & wellness page
-│   ├── celebrate/page.tsx            # Meet & Celebrate events page
-│   ├── stories/page.tsx              # Blog/Stories page (Dalai Eej Stories)
-│   ├── location/page.tsx             # How to Reach Us with map placeholder
+│   ├── accommodation/page.tsx        # Main STAY landing page (links to Lodge/Cabins)
+│   ├── cabins/page.tsx               # Forest Cabins (sub-page of Stay)
+│   ├── lodge/page.tsx                # Main Lodge (sub-page of Stay)
+│   ├── dining/page.tsx               # Restaurant & dining page (A Taste of the North)
+│   ├── experiences/page.tsx          # Activities & adventures page (Roam the Wilds)
+│   ├── wellness/page.tsx             # Spa & wellness page (Restore Your Rhythm)
+│   ├── groups/page.tsx               # Events & Retreats (was celebrate)
+│   ├── journal/page.tsx              # Blog/Stories page (was stories)
+│   ├── contact/page.tsx              # How to Reach Us / Visit (was location)
 │   ├── gallery/page.tsx              # Masonry photo gallery with category filtering
 │   ├── amenities/page.tsx            # Amenities & Guest Experience page
 │   ├── booking/page.tsx              # Custom booking page with room search
 │   ├── checkout/page.tsx             # Checkout page with guest info, add-ons, T&C
-│   ├── offers/page.tsx               # Special Offers page (Mongolian only)
+│   ├── offers/page.tsx               # Special Offers page (Curated Escapes)
 │   ├── fam-tour-application/page.tsx # FAM Tour application form
 │   └── payment/page.tsx              # QPay payment terminal
 ├── components/
@@ -109,22 +110,23 @@ proxy.ts                              # Locale routing (Next.js 16 - renamed fro
 ### Routes
 - `/` or `/en` - English landing page
 - `/mn` - Mongolian landing page
-- `/about` - About Us main page
+- `/about` - Story page (The Legend of Dalai Eej)
 - `/about/the-family` - The Family story page
 - `/about/the-lake` - Lake Khuvsgul information
-- `/cabins` - Forest Cabins accommodation
-- `/lodge` - Main Lodge accommodation
-- `/restaurant` - Restaurant & dining
-- `/experiences` - Activities & adventures
-- `/wellness` - Spa & wellness
-- `/celebrate` - Meet & Celebrate events
-- `/stories` - Blog (Dalai Eej Stories)
-- `/location` - How to Reach Us with directions
+- `/accommodation` - Main Stay landing page
+- `/cabins` - Forest Cabins (sub-page of Stay)
+- `/lodge` - Main Lodge (sub-page of Stay)
+- `/dining` - Restaurant & dining (A Taste of the North)
+- `/experiences` - Activities & adventures (Roam the Wilds)
+- `/wellness` - Spa & wellness (Restore Your Rhythm)
+- `/groups` - Events & Retreats (was celebrate)
+- `/journal` - Blog/Stories page (was stories)
+- `/contact` - How to Reach Us / Visit (was location)
 - `/gallery` - Photo gallery with filtering
 - `/amenities` - Amenities & Guest Experience page
 - `/booking` - Room search and booking
 - `/checkout` - Guest info, add-ons, T&C acceptance
-- `/mn/offers` - Special Offers page (Mongolian only)
+- `/offers` - Special Offers page (Curated Escapes)
 - `/fam-tour-application` - FAM Tour application form
 - `/payment` - Payment terminal (QPay for mn, Stripe for en)
 

@@ -1,0 +1,87 @@
+I need to clean up my file structure to match my new SEO and Navigation strategy. 
+
+Please perform the following File System Refactoring actions first, then update the site configuration.
+
+STEP 1: FOLDER RENAMING & CLEANUP
+- RENAME `app/[locale]/restaurant` -> to `app/[locale]/dining` (matches "NOURISH")
+- RENAME `app/[locale]/location` -> to `app/[locale]/contact` (matches "VISIT")
+- RENAME `app/[locale]/stories` -> to `app/[locale]/journal` (Matches the "Guide" concept)
+- RENAME `app/[locale]/celebrate` -> to `app/[locale]/groups` (Matches "Events/Retreats")
+- DELETE `app/[locale]/amenities` (Redundant, covered in Wellness/About)
+- CREATE `app/[locale]/accommodation` (This is missing! It will be the main "STAY" landing page that links to Lodge/Cabins).
+
+STEP 2: MAP THE CONTENT
+Here is the Master Config object. Please use this to generate the Metadata (title/description) and H1 Headers for the pages we just renamed.
+
+const siteConfig = {
+  // 1. STAY (The Hub Page)
+  stay: {
+    path: "app/[locale]/accommodation/page.tsx", 
+    slug: "/accommodation",
+    navLabel: { en: "STAY", mn: "БАЙРЛАХ" },
+    h1: { en: "Find Your Sanctuary", mn: "Тухтай Амрах" },
+    metaTitle: { en: "Accommodation in Khuvsgul | Gers, Log Cabins & Lodge", mn: "Байрлах сонголтууд | Гэр, Байшин, Лодж" }
+  },
+
+  // 2. DINING (Renamed from /restaurant)
+  dining: {
+    path: "app/[locale]/dining/page.tsx",
+    slug: "/dining",
+    navLabel: { en: "NOURISH", mn: "ЗООГ" },
+    h1: { en: "A Taste of the North", mn: "Амтлаг Аялал" },
+    metaTitle: { en: "Restaurant & Dining | Authentic Mongolian Cuisine", mn: "Ресторан & Бар | Хөвсгөлийн хоолны үйлчилгээ" }
+  },
+
+  // 3. WELLNESS (Existing)
+  wellness: {
+    path: "app/[locale]/wellness/page.tsx",
+    slug: "/wellness",
+    navLabel: { en: "RESTORE", mn: "АМРАХУЙ" },
+    h1: { en: "Restore Your Rhythm", mn: "Байгальд Уусах" },
+    metaTitle: { en: "Wellness, Sauna & Spa Services | Khuvsgul Lake", mn: "Саун, Массаж & Иог | Хөвсгөл дэх алжаал тайлах төв" }
+  },
+
+  // 4. EXPERIENCES (Existing)
+  experiences: {
+    path: "app/[locale]/experiences/page.tsx",
+    slug: "/experiences",
+    navLabel: { en: "ROAM", mn: "АДАЛ ЯВДАЛ" },
+    h1: { en: "Roam the Wilds", mn: "Дурсамж Бүтээх" },
+    metaTitle: { en: "Things to Do in Khuvsgul | Horse Riding, Hiking & Tours", mn: "Аялал & Хөтөлбөр | Морин аялал, Завь, Явган аялал" }
+  },
+
+  // 5. OFFERS (Existing)
+  offers: {
+    path: "app/[locale]/offers/page.tsx",
+    slug: "/offers",
+    navLabel: { en: "ESCAPES", mn: "УРАМШУУЛАЛ" },
+    h1: { en: "Curated Escapes", mn: "Тусгай Багцууд" },
+    metaTitle: { en: "Resort Packages 2026 | Romantic & Family Deals", mn: "Урамшуулал & Багц 2026" }
+  },
+
+  // 6. ABOUT (Existing - Contains links to Journal)
+  about: {
+    path: "app/[locale]/about/page.tsx",
+    slug: "/about",
+    navLabel: { en: "STORY", mn: "БИДНИЙ ТУХАЙ" },
+    h1: { en: "The Legend of Dalai Eej", mn: "Бидний Түүх" },
+    metaTitle: { en: "About Us | Sustainable Eco-Resort in Mongolia", mn: "Бидний тухай | Хөвсгөл аймаг дахь эко жуулчны бааз" }
+  },
+
+  // 7. CONTACT (Renamed from /location)
+  contact: {
+    path: "app/[locale]/contact/page.tsx",
+    slug: "/contact",
+    navLabel: { en: "VISIT", mn: "ЗОЧЛОХ" },
+    h1: { en: "Plan Your Journey", mn: "Аялал Төлөвлөх" },
+    metaTitle: { en: "Location, Map & Contact | How to Get to Khuvsgul", mn: "Байршил, Утас & Хаяг | Хөвсгөл рүү явах зам" }
+  },
+  
+  // 8. SUB-PAGES (Keep these, but don't put in Main Nav)
+  subPages: [
+    { path: "app/[locale]/lodge/page.tsx", note: "Keep as sub-page of Stay" },
+    { path: "app/[locale]/cabins/page.tsx", note: "Keep as sub-page of Stay" },
+    { path: "app/[locale]/journal/page.tsx", note: "Renamed from stories. Link this from the About page." },
+    { path: "app/[locale]/groups/page.tsx", note: "Renamed from celebrate. Link this in Footer." }
+  ]
+};

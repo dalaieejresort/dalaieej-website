@@ -66,7 +66,7 @@ export default function ExperiencesPage() {
             transition={{ duration: 0.8 }}
             className="font-serif text-5xl md:text-7xl text-cream mb-6"
           >
-            {locale === 'mn' ? "Туршлагууд" : "Experiences"}
+            {locale === 'mn' ? "Дурсамж Бүтээх" : "Roam the Wilds"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

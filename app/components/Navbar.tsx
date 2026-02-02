@@ -47,8 +47,8 @@ export default function Navbar() {
     {
       label: tNav('dining'),
       dropdown: [
-        { href: `${localePrefix}/restaurant`, label: locale === 'mn' ? "Рестуран" : "The Restaurant", description: locale === 'mn' ? "Орон нутгийн хоол" : "Local cuisine" },
-        { href: `${localePrefix}/restaurant#private`, label: locale === 'mn' ? "Хувийн зоог" : "Private Dining", description: locale === 'mn' ? "Онцгой үдэшлэг" : "Intimate experiences" },
+        { href: `${localePrefix}/dining`, label: locale === 'mn' ? "Рестуран" : "The Restaurant", description: locale === 'mn' ? "Орон нутгийн хоол" : "Local cuisine" },
+        { href: `${localePrefix}/dining#private`, label: locale === 'mn' ? "Хувийн зоог" : "Private Dining", description: locale === 'mn' ? "Онцгой үдэшлэг" : "Intimate experiences" },
       ]
     },
     {
@@ -63,7 +63,7 @@ export default function Navbar() {
       dropdown: [
         { href: `${localePrefix}/about/the-lake`, label: locale === 'mn' ? "Нуур" : "The Lake", description: locale === 'mn' ? "Байгаль" : "Nature" },
         { href: `${localePrefix}/about`, label: locale === 'mn' ? "Хойморь" : "The Peninsula", description: locale === 'mn' ? "Байршил" : "Location" },
-        { href: `${localePrefix}/stories`, label: locale === 'mn' ? "Өгүүллэг" : "The Journal", description: locale === 'mn' ? "Блог" : "Stories" },
+        { href: `${localePrefix}/journal`, label: locale === 'mn' ? "Өгүүллэг" : "The Journal", description: locale === 'mn' ? "Блог" : "Stories" },
         ...(locale === 'mn' ? [
           { href: `${localePrefix}/journeys/families`, label: "Ураг Төрөл", description: "Өргөтгөсөн гэр бүлд" },
           { href: `${localePrefix}/journeys/friends`, label: "Найз Нөхөд", description: "Хамтдаа" },
@@ -93,7 +93,7 @@ export default function Navbar() {
     },
     {
       label: tNav('location'),
-      href: `${localePrefix}/location`
+      href: `${localePrefix}/contact`
     },
   ];
 

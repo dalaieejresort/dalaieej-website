@@ -102,7 +102,7 @@ export default function AboutPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight"
           >
-            {locale === 'mn' ? "Зэрлэг байгалийн эмчилгээ" : "The Tonic of Wildness"}
+            {locale === 'mn' ? "Бидний Түүх" : "The Legend of Dalai Eej"}
           </motion.h1>
           
           <motion.p
@@ -372,7 +372,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              href={`${localePrefix}/location`}
+              href={`${localePrefix}/contact`}
               className="inline-block px-8 py-3 bg-warm-beige text-lake-blue font-body font-medium text-sm tracking-wide hover:bg-white transition-colors rounded shadow-lg"
             >
               {locale === 'mn' ? "Чиглэлийг харах" : "View Directions"}

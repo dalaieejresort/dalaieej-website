@@ -36,7 +36,7 @@ export default function LocationPage() {
             transition={{ duration: 0.8 }}
             className="font-serif text-5xl md:text-7xl text-cream mb-6"
           >
-            {locale === 'mn' ? "Бидэнд хэрхэн хүрэх вэ" : "How to Reach Us"}
+            {locale === 'mn' ? "Аялал Төлөвлөх" : "Plan Your Journey"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
