@@ -5,7 +5,7 @@ import VideoHero from "../components/home/VideoHero";
 import EditorialIntro from "../components/home/EditorialIntro";
 import SiloGrid from "../components/home/SiloGrid";
 import OffersCarousel from "../components/home/OffersCarousel";
-import JourneysTabs from "../components/home/JourneysTabs";
+import PersonaSlider from "../components/home/PersonaSlider";
 import InteractiveMap from "../components/InteractiveMap";
 import AvailabilityBar from "../components/AvailabilityBar";
 import WeatherWidget from "../components/WeatherWidget";
@@ -24,7 +24,7 @@ export default function Home() {
       
       <OffersCarousel />
       
-      <JourneysTabs />
+      <PersonaSlider />
       
       <InteractiveMap />
 
