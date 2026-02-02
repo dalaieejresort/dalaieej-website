@@ -20,24 +20,24 @@ const locations: Location[] = [
     category: 'accommodation',
     title: 'Reception & Restaurant',
     description: 'The main lodge featuring our lakefront dining hall and lounge bar.',
-    left: 54.36,
-    top: 63.33
+    left: 66.27,
+    top: 66.2
   },
   {
     id: 'annex',
     category: 'accommodation',
     title: 'The Lodge Annex',
     description: 'Separate building housing the Lodge Rooms, adjacent to the restaurant.',
-    left: 70.88,
-    top: 70.97
+    left: 54.44,
+    top: 63.5
   },
   {
     id: 'ensuite',
     category: 'accommodation',
     title: 'Ensuite Cabins (Quiet Zone)',
     description: 'Private cabins featuring indoor facilities, set back from the shoreline for privacy.',
-    left: 31.3,
-    top: 74.17
+    left: 28.32,
+    top: 79.5
   },
   {
     id: 'heritage',
@@ -196,7 +196,7 @@ export default function InteractiveMap() {
               {filteredLocations.map((location) => (
                 <div
                   key={location.id}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
+                  className="absolute -translate-x-1/2 z-20"
                   style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
