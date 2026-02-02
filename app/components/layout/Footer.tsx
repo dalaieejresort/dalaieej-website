@@ -25,7 +25,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-lake-blue text-warm-beige">
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-6 pt-16 md:pt-20 pb-32 md:pb-36">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           <div className="lg:col-span-1">
             <Link href={localePrefix || "/"} className="font-serif text-3xl text-warm-beige hover:text-white transition-colors">
