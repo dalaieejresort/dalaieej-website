@@ -177,13 +177,13 @@ export default function InteractiveMap() {
           </div>
         </div>
 
-        <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden shadow-xl">
+        <div className="relative w-full aspect-[2.5/1] rounded-lg overflow-hidden shadow-xl bg-[#4a6741]">
           <img
             src="/images/resort-map.jpg"
             alt="Dalai Eej Resort Map"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
-          <div className="absolute inset-0 bg-forest-green/10" />
+          <div className="absolute inset-0 pointer-events-none" />
 
           <AnimatePresence mode="wait">
             <motion.div
