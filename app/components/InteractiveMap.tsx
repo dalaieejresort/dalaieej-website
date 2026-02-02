@@ -39,8 +39,13 @@ export default function InteractiveMap() {
   const filteredLocations = locations.filter(loc => loc.category === activeTab);
   const isArrowMarker = (id: string) => id === 'overland' || id === 'parking';
 
-  const handleHotspotClick = (id: string) => {
+  const handleHotspotClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
     setActiveHotspot(activeHotspot === id ? null : id);
+  };
+
+  const handleBackgroundClick = () => {
+    setActiveHotspot(null);
   };
 
   const handleTabChange = (tab: TabType) => {
@@ -85,7 +90,11 @@ export default function InteractiveMap() {
           </div>
         </div>
 
-        <div className="relative w-full overflow-visible z-10" style={{ aspectRatio: '6876 / 3000' }}>
+        <div 
+          className="relative w-full overflow-visible z-10 cursor-pointer" 
+          style={{ aspectRatio: '6876 / 3000' }}
+          onClick={handleBackgroundClick}
+        >
           <img
             src="/images/resort-map.jpg"
             alt="Dalai Eej Resort Map"
@@ -108,7 +117,7 @@ export default function InteractiveMap() {
                   style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
-                    onClick={() => handleHotspotClick(location.id)}
+                    onClick={(e) => handleHotspotClick(e, location.id)}
                     className={`relative flex items-center justify-center transition-all duration-300 ${
                       isArrowMarker(location.id)
                         ? `w-8 h-8 rounded-md ${
@@ -141,6 +150,7 @@ export default function InteractiveMap() {
                         exit={{ opacity: 0, y: 10, scale: 0.9 }}
                         transition={{ duration: 0.2 }}
                         className="absolute top-12 left-1/2 -translate-x-1/2 w-72 bg-white rounded-xl shadow-xl overflow-hidden z-50"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <button
                           onClick={() => setActiveHotspot(null)}
