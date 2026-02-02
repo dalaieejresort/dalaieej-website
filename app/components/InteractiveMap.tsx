@@ -5,122 +5,131 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-interface Hotspot {
+interface Location {
   id: string;
-  top: number;
-  left: number;
+  category: "accommodation" | "activities";
   title: string;
   description: string;
-  isArrow?: boolean;
+  left: number;
+  top: number;
 }
 
-const buildingsAccommodation: Hotspot[] = [
+const locations: Location[] = [
   {
-    id: "reception",
-    top: 150,
-    left: 150,
-    title: "Reception & Restaurant",
-    description: "The main lodge featuring our lakefront dining hall and lounge bar."
+    id: 'reception',
+    category: 'accommodation',
+    title: 'Reception & Restaurant',
+    description: 'The main lodge featuring our lakefront dining hall and lounge bar.',
+    left: 54.36,
+    top: 63.33
   },
   {
-    id: "annex",
-    top: 510,
-    left: 510,
-    title: "The Lodge Annex",
-    description: "Separate building housing the Lodge Rooms, adjacent to the restaurant."
+    id: 'annex',
+    category: 'accommodation',
+    title: 'The Lodge Annex',
+    description: 'Separate building housing the Lodge Rooms, adjacent to the restaurant.',
+    left: 70.88,
+    top: 70.97
   },
   {
-    id: "ensuite",
-    top: 200,
-    left: 200,
-    title: "Ensuite Cabins (Quiet Zone)",
-    description: "Private cabins featuring indoor facilities, set back from the shoreline for privacy."
+    id: 'ensuite',
+    category: 'accommodation',
+    title: 'Ensuite Cabins (Quiet Zone)',
+    description: 'Private cabins featuring indoor facilities, set back from the shoreline for privacy.',
+    left: 34.79,
+    top: 74.7
   },
   {
-    id: "heritage",
-    top: 540,
-    left: 540,
-    title: "Heritage Cabins (Lakeside Zone)",
-    description: "Classic, wood-fired cabins positioned centrally along the water's edge."
+    id: 'heritage',
+    category: 'accommodation',
+    title: 'Heritage Cabins (Lakeside Zone)',
+    description: 'Classic, wood-fired cabins positioned centrally along the water\'s edge.',
+    left: 47.88,
+    top: 64.57
   },
   {
-    id: "grand",
-    top: 50,
-    left: 50,
-    title: "Grand Peninsula Suite",
-    description: "Premier residence commanding the tip of the peninsula."
+    id: 'grand',
+    category: 'accommodation',
+    title: 'Grand Peninsula Suite',
+    description: 'Premier residence commanding the tip of the peninsula.',
+    left: 92.0,
+    top: 72.0
   },
   {
-    id: "bathhouse",
-    top: 50,
-    left: 50,
-    title: "The Bathhouse",
-    description: "Central facility with shared hot showers and restrooms."
+    id: 'bathhouse',
+    category: 'accommodation',
+    title: 'The Bathhouse',
+    description: 'Central facility with shared hot showers and restrooms.',
+    left: 68.79,
+    top: 72.57
+  },
+  {
+    id: 'sauna',
+    category: 'activities',
+    title: 'Lakeside Sauna',
+    description: 'Private wellness cabin located by the water.',
+    left: 95.7,
+    top: 77.1
+  },
+  {
+    id: 'pier',
+    category: 'activities',
+    title: 'The Pier',
+    description: 'Main boat landing, transfer point, and kayak launch.',
+    left: 93.6,
+    top: 66.77
+  },
+  {
+    id: 'basketball',
+    category: 'activities',
+    title: 'Basketball Court',
+    description: 'Sports court and location for morning yoga.',
+    left: 77.73,
+    top: 64.0
+  },
+  {
+    id: 'volleyball',
+    category: 'activities',
+    title: 'Volleyball Court',
+    description: 'Natural-surface court for recreation.',
+    left: 71.31,
+    top: 64.54
+  },
+  {
+    id: 'entrance',
+    category: 'activities',
+    title: 'Grounds Entrance',
+    description: 'Main gate to the peninsula.',
+    left: 34.13,
+    top: 53.1
+  },
+  {
+    id: 'overland',
+    category: 'activities',
+    title: 'To Overland Grounds',
+    description: 'Secure camping for tents and vehicles.',
+    left: 10.0,
+    top: 55.0
+  },
+  {
+    id: 'parking',
+    category: 'activities',
+    title: 'To Guest Parking',
+    description: 'Secure parking area.',
+    left: 0.03,
+    top: 58.1
   }
 ];
 
-const facilitiesActivities: Hotspot[] = [
-  {
-    id: "sauna",
-    top: 50,
-    left: 50,
-    title: "Lakeside Sauna",
-    description: "Private wellness cabin located by the water."
-  },
-  {
-    id: "pier",
-    top: 50,
-    left: 50,
-    title: "The Pier",
-    description: "Main boat landing, transfer point, and kayak launch."
-  },
-  {
-    id: "basketball",
-    top: 50,
-    left: 50,
-    title: "Basketball Court",
-    description: "Sports court and location for morning yoga."
-  },
-  {
-    id: "volleyball",
-    top: 50,
-    left: 50,
-    title: "Volleyball Court",
-    description: "Natural-surface court for recreation."
-  },
-  {
-    id: "entrance",
-    top: 50,
-    left: 50,
-    title: "Grounds Entrance",
-    description: "Main gate to the peninsula."
-  },
-  {
-    id: "overland",
-    top: 50,
-    left: 50,
-    title: "To Overland Grounds",
-    description: "Secure camping for tents and vehicles.",
-    isArrow: true
-  },
-  {
-    id: "parking",
-    top: 50,
-    left: 50,
-    title: "To Guest Parking",
-    description: "Secure parking area.",
-    isArrow: true
-  }
-];
-
-type TabType = "buildings" | "facilities";
+type TabType = "accommodation" | "activities";
 
 export default function InteractiveMap() {
   const t = useTranslations();
-  const [activeTab, setActiveTab] = useState<TabType>("buildings");
+  const [activeTab, setActiveTab] = useState<TabType>("accommodation");
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
 
-  const hotspots = activeTab === "buildings" ? buildingsAccommodation : facilitiesActivities;
+  const filteredLocations = locations.filter(loc => loc.category === activeTab);
+  const isArrowMarker = (id: string) => id === 'overland' || id === 'parking';
 
   const handleHotspotClick = (id: string) => {
     setActiveHotspot(activeHotspot === id ? null : id);
@@ -146,9 +155,9 @@ export default function InteractiveMap() {
         <div className="flex justify-center mb-6">
           <div className="inline-flex bg-forest-green/10 rounded-full p-1">
             <button
-              onClick={() => handleTabChange("buildings")}
+              onClick={() => handleTabChange("accommodation")}
               className={`px-4 py-2 rounded-full text-sm font-body transition-all duration-300 ${
-                activeTab === "buildings"
+                activeTab === "accommodation"
                   ? "bg-forest-green text-cream shadow-md"
                   : "text-forest-green hover:bg-forest-green/10"
               }`}
@@ -156,9 +165,9 @@ export default function InteractiveMap() {
               Buildings & Accommodation
             </button>
             <button
-              onClick={() => handleTabChange("facilities")}
+              onClick={() => handleTabChange("activities")}
               className={`px-4 py-2 rounded-full text-sm font-body transition-all duration-300 ${
-                activeTab === "facilities"
+                activeTab === "activities"
                   ? "bg-forest-green text-cream shadow-md"
                   : "text-forest-green hover:bg-forest-green/10"
               }`}
@@ -184,40 +193,40 @@ export default function InteractiveMap() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              {hotspots.map((hotspot) => (
+              {filteredLocations.map((location) => (
                 <div
-                  key={hotspot.id}
+                  key={location.id}
                   className="absolute"
-                  style={{ top: `${hotspot.top}%`, left: `${hotspot.left}%` }}
+                  style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
-                    onClick={() => handleHotspotClick(hotspot.id)}
+                    onClick={() => handleHotspotClick(location.id)}
                     className={`relative flex items-center justify-center transition-all duration-300 ${
-                      hotspot.isArrow
+                      isArrowMarker(location.id)
                         ? `w-8 h-8 rounded-md ${
-                            activeHotspot === hotspot.id
+                            activeHotspot === location.id
                               ? "bg-cream text-forest-green scale-110"
                               : "bg-forest-green/80 text-cream hover:bg-forest-green hover:scale-110"
                           }`
                         : `w-10 h-10 rounded-full ${
-                            activeHotspot === hotspot.id
+                            activeHotspot === location.id
                               ? "bg-cream text-forest-green scale-110"
                               : "bg-forest-green/80 text-cream hover:bg-forest-green hover:scale-110"
                           }`
                     }`}
                   >
-                    {hotspot.isArrow ? (
+                    {isArrowMarker(location.id) ? (
                       <ArrowUpRight className="w-5 h-5" />
                     ) : (
                       <span className="text-2xl font-light">+</span>
                     )}
-                    {!hotspot.isArrow && (
+                    {!isArrowMarker(location.id) && (
                       <span className="absolute w-full h-full rounded-full bg-forest-green/30 animate-ping" />
                     )}
                   </button>
 
                   <AnimatePresence>
-                    {activeHotspot === hotspot.id && (
+                    {activeHotspot === location.id && (
                       <motion.div
                         initial={{ opacity: 0, y: 10, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -232,10 +241,10 @@ export default function InteractiveMap() {
                           <X className="w-4 h-4" />
                         </button>
                         <h3 className="font-heading text-lg text-forest-green mb-2">
-                          {hotspot.title}
+                          {location.title}
                         </h3>
                         <p className="font-body text-sm text-forest-green/70">
-                          {hotspot.description}
+                          {location.description}
                         </p>
                       </motion.div>
                     )}
