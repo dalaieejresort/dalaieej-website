@@ -7,29 +7,29 @@ const silos = [
   {
     id: "stay",
     href: "/accommodation",
-    en: "STAY",
-    mn: "БАЙРЛАХ",
+    en: "Sanctuary",
+    mn: "Өргөө",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&auto=format&fit=crop&q=80"
   },
   {
     id: "dining",
     href: "/dining",
-    en: "DINING",
-    mn: "ЗООГ",
+    en: "Hearth",
+    mn: "Гал голомт",
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=80"
   },
   {
     id: "wellness",
     href: "/wellness",
-    en: "WELLNESS",
-    mn: "АМРАХУЙ",
+    en: "Stillness",
+    mn: "Анир",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&auto=format&fit=crop&q=80"
   },
   {
     id: "adventure",
     href: "/experiences",
-    en: "ADVENTURE",
-    mn: "АДАЛ ЯВДАЛ",
+    en: "Wilderness",
+    mn: "Хөвч",
     image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&auto=format&fit=crop&q=80"
   }
 ];
