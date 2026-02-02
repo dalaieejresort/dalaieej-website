@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/request';
 import "../globals.css";
 import NavbarWrapper from "../components/NavbarWrapper";
+import Footer from "../components/layout/Footer";
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -44,7 +45,8 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className={`${playfair.variable} ${lato.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <NavbarWrapper />
-          {children}
+          <main>{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
