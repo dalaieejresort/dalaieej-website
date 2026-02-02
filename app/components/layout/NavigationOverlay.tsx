@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "next-intl";
-import { X, Instagram, Facebook } from "lucide-react";
+import { X, Instagram, Facebook, Phone, MapPin, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 
 interface NavigationOverlayProps {
@@ -141,6 +141,46 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     </motion.div>
                   ))}
                 </nav>
+
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="flex gap-4 mt-10"
+                >
+                  <a
+                    href="tel:+97670111234"
+                    className="flex items-center gap-2 px-4 py-3 min-h-[48px] text-warm-beige/60 hover:text-white transition-colors"
+                    onClick={onClose}
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span className="font-body text-xs tracking-[0.15em] uppercase">
+                      {locale === 'mn' ? "Залгах" : "Call"}
+                    </span>
+                  </a>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=51.0833,100.4667"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-3 min-h-[48px] text-warm-beige/60 hover:text-white transition-colors"
+                    onClick={onClose}
+                  >
+                    <MapPin className="w-5 h-5" />
+                    <span className="font-body text-xs tracking-[0.15em] uppercase">
+                      {locale === 'mn' ? "Газрын зураг" : "Map"}
+                    </span>
+                  </a>
+                  <Link
+                    href={`${localePrefix}/gallery`}
+                    className="flex items-center gap-2 px-4 py-3 min-h-[48px] text-warm-beige/60 hover:text-white transition-colors"
+                    onClick={onClose}
+                  >
+                    <LayoutGrid className="w-5 h-5" />
+                    <span className="font-body text-xs tracking-[0.15em] uppercase">
+                      {locale === 'mn' ? "Зургийн сан" : "Gallery"}
+                    </span>
+                  </Link>
+                </motion.div>
               </div>
 
               <div className="hidden md:flex flex-1 items-center justify-center p-8">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
-import { Menu, X, Phone, MapPin, LayoutGrid } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 import NavigationOverlay from "./layout/NavigationOverlay";
@@ -48,33 +48,7 @@ export default function Navbar() {
               Dalai Eej
             </Link>
 
-            <div className="flex items-center gap-3 md:gap-4">
-              <a
-                href="tel:+97670111234"
-                className="text-warm-beige/70 hover:text-white transition-colors p-1"
-                aria-label={locale === 'mn' ? "Залгах" : "Call"}
-              >
-                <Phone className="w-5 h-5" />
-              </a>
-              
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=51.0833,100.4667"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-warm-beige/70 hover:text-white transition-colors p-1"
-                aria-label={locale === 'mn' ? "Газрын зураг" : "Map"}
-              >
-                <MapPin className="w-5 h-5" />
-              </a>
-              
-              <Link
-                href={`${localePrefix}/gallery`}
-                className="text-warm-beige/70 hover:text-white transition-colors p-1"
-                aria-label={locale === 'mn' ? "Зургийн сан" : "Gallery"}
-              >
-                <LayoutGrid className="w-5 h-5" />
-              </Link>
-
+            <div className="flex items-center gap-4 md:gap-6">
               <LanguageSwitcher />
               
               <Link
