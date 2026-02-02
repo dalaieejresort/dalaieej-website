@@ -232,7 +232,7 @@ export default function InteractiveMap() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.9 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-12 left-1/2 -translate-x-1/2 w-64 bg-white rounded-lg shadow-2xl p-4 z-30"
+                        className="absolute top-12 left-1/2 -translate-x-1/2 w-64 bg-white rounded-lg shadow-2xl p-4 z-50"
                       >
                         <button
                           onClick={() => setActiveHotspot(null)}
