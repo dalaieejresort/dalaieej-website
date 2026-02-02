@@ -47,7 +47,14 @@ app/
 ├── components/
 │   ├── gallery/
 │   │   └── GalleryGrid.tsx           # Client component for gallery with filters + lightbox
-│   ├── Navbar.tsx                    # Navigation with hover dropdowns + Gallery icon
+│   ├── layout/
+│   │   └── NavigationOverlay.tsx     # Full-screen curtain navigation with animated links
+│   ├── home/
+│   │   ├── HeroGrid.tsx              # Bento grid hero with 4 quadrants
+│   │   ├── EditorialIntro.tsx        # Intro text section
+│   │   ├── OffersCarousel.tsx        # Horizontal scroll offers cards
+│   │   └── JourneysTabs.tsx          # Tabbed journey experiences
+│   ├── Navbar.tsx                    # Simplified navbar with menu button
 │   ├── NavbarWrapper.tsx             # Server-side wrapper for Navbar
 │   ├── MobileActionBar.tsx           # Fixed bottom bar for mobile (Call, Map, Gallery)
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button
