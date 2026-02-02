@@ -1,27 +1,28 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { Phone, Mail, MapPin } from "lucide-react";
 import WeatherWidget from "../WeatherWidget";
 
 export default function Footer() {
   const locale = useLocale();
+  const t = useTranslations("footer");
   const localePrefix = locale === 'mn' ? '/mn' : '';
 
-  const navigation = {
-    experience: [
-      { en: "Stay", mn: "Байр", href: "/accommodation" },
-      { en: "Dining", mn: "Хоол", href: "/dining" },
-      { en: "Wellness", mn: "Спа", href: "/wellness" },
-      { en: "Adventures", mn: "Адал явдал", href: "/experiences" },
-    ],
-    resort: [
-      { en: "About", mn: "Бидний тухай", href: "/about" },
-      { en: "Gallery", mn: "Галерей", href: "/gallery" },
-      { en: "FAQ", mn: "Түгээмэл асуулт", href: "/faq" },
-    ],
-  };
+  const experienceLinks = [
+    { key: "stay", href: "/accommodation" },
+    { key: "dining", href: "/dining" },
+    { key: "wellness", href: "/wellness" },
+    { key: "adventures", href: "/experiences" },
+  ];
+
+  const resortLinks = [
+    { key: "about", href: "/about" },
+    { key: "gallery", href: "/gallery" },
+    { key: "faq", href: "/faq" },
+  ];
 
   return (
     <footer className="bg-lake-blue text-warm-beige">
@@ -34,10 +35,7 @@ export default function Footer() {
               Dalai Eej
             </Link>
             <p className="mt-4 font-body text-sm text-warm-beige/70 leading-relaxed max-w-xs">
-              {locale === 'mn' 
-                ? "Дэлхийн захад байрлах хоргодох газар. Хөвсгөл нуурын эрэг дээр."
-                : "A refuge at the edge of the world. On the shores of Lake Khuvsgul."
-              }
+              {t("bio")}
             </p>
             <div className="mt-6">
               <WeatherWidget />
@@ -47,16 +45,16 @@ export default function Footer() {
           {/* Column 2: Experience */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
-              {locale === 'mn' ? "Туршлага" : "Experience"}
+              {t("experience")}
             </h4>
             <ul className="space-y-3">
-              {navigation.experience.map((item) => (
+              {experienceLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={`${localePrefix}${item.href}`}
                     className="font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                   >
-                    {locale === 'mn' ? item.mn : item.en}
+                    {t(item.key)}
                   </Link>
                 </li>
               ))}
@@ -66,16 +64,16 @@ export default function Footer() {
           {/* Column 3: Resort */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
-              {locale === 'mn' ? "Бүсгүй" : "Resort"}
+              {t("resort")}
             </h4>
             <ul className="space-y-3">
-              {navigation.resort.map((item) => (
+              {resortLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={`${localePrefix}${item.href}`}
                     className="font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                   >
-                    {locale === 'mn' ? item.mn : item.en}
+                    {t(item.key)}
                   </Link>
                 </li>
               ))}
@@ -85,16 +83,13 @@ export default function Footer() {
           {/* Column 4: Contact */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase text-warm-beige/50 mb-6">
-              {locale === 'mn' ? "Холбоо барих" : "Contact"}
+              {t("contact")}
             </h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-warm-beige/50 mt-0.5 flex-shrink-0" />
                 <span className="font-body text-sm text-warm-beige/80">
-                  {locale === 'mn' 
-                    ? "Хөвсгөл аймаг, Хатгал тосгон, Монгол"
-                    : "Khatgal Village, Khuvsgul Province, Mongolia"
-                  }
+                  {t("address")}
                 </span>
               </li>
               <li>
@@ -122,14 +117,14 @@ export default function Footer() {
         {/* BOTTOM BAR: Copyright & Agency Credits */}
         <div className="mt-12 pt-8 border-t border-warm-beige/10 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-warm-beige/40">
           <p>
-            &copy; 2026 Dalai Eej Resort. {locale === 'mn' ? "Бүх эрх хамгаалагдсан." : "All rights reserved."}
+            &copy; 2026 Dalai Eej Resort. {t("rights")}
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mt-4 md:mt-0 text-center md:text-right">
 
             {/* The London Flex */}
             <div className="group">
-              <span className="opacity-50 mr-2">Digital:</span>
+              <span className="opacity-50 mr-2">{t("digital")}:</span>
               <a 
                 href="https://matterofform.com" 
                 target="_blank" 
@@ -145,7 +140,7 @@ export default function Footer() {
 
             {/* The Mongolian Flex */}
             <div className="group">
-              <span className="opacity-50 mr-2">Brand:</span>
+              <span className="opacity-50 mr-2">{t("brand")}:</span>
               <a 
                 href="https://brainstorm.agency" 
                 target="_blank" 

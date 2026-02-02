@@ -161,14 +161,21 @@
     }
   },
   "footer": {
-    "contact_title": "Contact",
-    "location_title": "Location",
-    "address": "Khuvsgul Province, Mongolia",
-    "links_title": "Quick Links",
-    "legal_title": "Legal",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "rights": "All rights reserved."
+    "bio": "A refuge at the edge of the world. On the shores of Lake Khuvsgul.",
+    "experience": "Experience",
+    "stay": "Stay",
+    "dining": "Dining",
+    "wellness": "Wellness",
+    "adventures": "Adventures",
+    "resort": "Resort",
+    "about": "About",
+    "gallery": "Gallery",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "address": "Khatgal Village, Khuvsgul Province, Mongolia",
+    "rights": "All rights reserved.",
+    "digital": "Digital",
+    "brand": "Brand"
   },
   "cta": {
     "title": "Ready to Experience Paradise?",
