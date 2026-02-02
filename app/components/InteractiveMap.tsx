@@ -36,8 +36,8 @@ const locations: Location[] = [
     category: 'accommodation',
     title: 'Ensuite Cabins (Quiet Zone)',
     description: 'Private cabins featuring indoor facilities, set back from the shoreline for privacy.',
-    left: 34.79,
-    top: 74.7
+    left: 31.3,
+    top: 74.17
   },
   {
     id: 'heritage',
@@ -45,71 +45,71 @@ const locations: Location[] = [
     title: 'Heritage Cabins (Lakeside Zone)',
     description: 'Classic, wood-fired cabins positioned centrally along the water\'s edge.',
     left: 47.88,
-    top: 64.57
+    top: 63.43
   },
   {
     id: 'grand',
     category: 'accommodation',
     title: 'Grand Peninsula Suite',
     description: 'Premier residence commanding the tip of the peninsula.',
-    left: 92.0,
-    top: 72.0
+    left: 41.23,
+    top: 71.4
   },
   {
     id: 'bathhouse',
     category: 'accommodation',
     title: 'The Bathhouse',
     description: 'Central facility with shared hot showers and restrooms.',
-    left: 68.79,
-    top: 72.57
+    left: 69.01,
+    top: 71.3
   },
   {
     id: 'sauna',
     category: 'activities',
     title: 'Lakeside Sauna',
     description: 'Private wellness cabin located by the water.',
-    left: 95.7,
-    top: 77.1
+    left: 95.43,
+    top: 75.53
   },
   {
     id: 'pier',
     category: 'activities',
     title: 'The Pier',
     description: 'Main boat landing, transfer point, and kayak launch.',
-    left: 93.6,
-    top: 66.77
+    left: 93.37,
+    top: 66.03
   },
   {
     id: 'basketball',
     category: 'activities',
     title: 'Basketball Court',
     description: 'Sports court and location for morning yoga.',
-    left: 77.73,
-    top: 64.0
+    left: 77.55,
+    top: 63.6
   },
   {
     id: 'volleyball',
     category: 'activities',
     title: 'Volleyball Court',
     description: 'Natural-surface court for recreation.',
-    left: 71.31,
-    top: 64.54
+    left: 71.22,
+    top: 62.87
   },
   {
     id: 'entrance',
     category: 'activities',
     title: 'Grounds Entrance',
     description: 'Main gate to the peninsula.',
-    left: 34.13,
-    top: 53.1
+    left: 34.1,
+    top: 51.3
   },
   {
     id: 'overland',
     category: 'activities',
     title: 'To Overland Grounds',
     description: 'Secure camping for tents and vehicles.',
-    left: 10.0,
-    top: 55.0
+    left: 19.43,
+    top: 99.7
   },
   {
     id: 'parking',
@@ -196,7 +196,7 @@ export default function InteractiveMap() {
               {filteredLocations.map((location) => (
                 <div
                   key={location.id}
-                  className="absolute -translate-x-1/2 z-20"
+                  className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
                   style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
