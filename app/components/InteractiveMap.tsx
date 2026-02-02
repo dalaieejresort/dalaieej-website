@@ -141,7 +141,7 @@ export default function InteractiveMap() {
   };
 
   return (
-    <section className="bg-cream py-20 px-4">
+    <section className="bg-cream py-20 px-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
@@ -177,11 +177,11 @@ export default function InteractiveMap() {
           </div>
         </div>
 
-        <div className="relative w-full rounded-lg overflow-hidden shadow-xl" style={{ aspectRatio: '6876 / 3000' }}>
+        <div className="relative w-full overflow-visible z-10" style={{ aspectRatio: '6876 / 3000' }}>
           <img
             src="/images/resort-map.jpg"
             alt="Dalai Eej Resort Map"
-            className="w-full h-full object-fill"
+            className="w-full h-full object-fill rounded-lg shadow-2xl"
           />
 
           <AnimatePresence mode="wait">
@@ -191,11 +191,12 @@ export default function InteractiveMap() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
+              className="absolute inset-0 z-20"
             >
               {filteredLocations.map((location) => (
                 <div
                   key={location.id}
-                  className="absolute -translate-x-1/2"
+                  className="absolute -translate-x-1/2 z-20"
                   style={{ top: `${location.top}%`, left: `${location.left}%` }}
                 >
                   <button
@@ -231,7 +232,7 @@ export default function InteractiveMap() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.9 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-12 left-1/2 -translate-x-1/2 w-64 bg-white rounded-lg shadow-2xl p-4 z-10"
+                        className="absolute top-12 left-1/2 -translate-x-1/2 w-64 bg-white rounded-lg shadow-2xl p-4 z-30"
                       >
                         <button
                           onClick={() => setActiveHotspot(null)}
