@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, LayoutGrid } from "lucide-react";
+import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 interface DropdownItem {
@@ -166,6 +167,13 @@ export default function Navbar() {
 
             <div className="flex items-center gap-4">
               <div className="hidden xl:flex items-center gap-4">
+                <Link
+                  href={`${localePrefix}/gallery`}
+                  aria-label="Gallery"
+                  className="text-warm-beige/70 hover:text-white transition-colors"
+                >
+                  <LayoutGrid className="w-5 h-5" />
+                </Link>
                 <LanguageSwitcher />
                 <a
                   href={`${localePrefix}/booking`}

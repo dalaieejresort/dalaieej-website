@@ -49,6 +49,7 @@ app/
 │   │   └── GalleryGrid.tsx           # Client component for gallery with filters + lightbox
 │   ├── Navbar.tsx                    # Navigation with hover dropdowns + Gallery icon
 │   ├── NavbarWrapper.tsx             # Server-side wrapper for Navbar
+│   ├── MobileActionBar.tsx           # Fixed bottom bar for mobile (Call, Map, Gallery)
 │   ├── LanguageSwitcher.tsx          # EN/MN toggle button
 │   ├── AvailabilityBar.tsx           # Fixed booking bar with date pickers
 │   ├── BookingButton.tsx             # Booking button component

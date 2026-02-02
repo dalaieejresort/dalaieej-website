@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/request';
 import "../globals.css";
 import NavbarWrapper from "../components/NavbarWrapper";
+import MobileActionBar from "../components/MobileActionBar";
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -45,6 +46,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <NavbarWrapper />
           {children}
+          <MobileActionBar />
         </NextIntlClientProvider>
       </body>
     </html>
