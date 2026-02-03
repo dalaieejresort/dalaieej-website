@@ -41,35 +41,40 @@ export default function SiloGrid() {
 
   return (
     <section className="bg-white">
-      {/* Mobile: Single column with sticky scroll */}
+      {/* Mobile: Single column with sticky scroll - using div as runway */}
       <div className="block md:hidden">
         {silos.map((silo) => (
-          <Link
+          <div
             key={silo.id}
-            href={`${localePrefix}${silo.href}`}
-            className="group block relative h-[300vh]"
+            className="relative h-[300vh]"
           >
-            {/* Image stays sticky at top, covering viewport */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
-              <img
-                src={silo.image}
-                alt={isMongolian ? silo.mn : silo.en}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/20" />
-              
-              {/* Text centered on the sticky image */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
-                  {isMongolian ? silo.mn : silo.en}
-                </h3>
+            {/* Sticky container - stays in viewport while scrolling through runway */}
+            <div className="sticky top-0 h-screen w-full">
+              {/* Link wraps entire clickable area */}
+              <Link
+                href={`${localePrefix}${silo.href}`}
+                className="block w-full h-full relative"
+              >
+                <img
+                  src={silo.image}
+                  alt={isMongolian ? silo.mn : silo.en}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20" />
                 
-                <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
-                  {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
-                </span>
-              </div>
+                {/* Text centered on the sticky image */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
+                    {isMongolian ? silo.mn : silo.en}
+                  </h3>
+                  
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
+                    {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
+                  </span>
+                </div>
+              </Link>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
 
