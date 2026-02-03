@@ -41,34 +41,31 @@ export default function SiloGrid() {
 
   return (
     <section className="bg-white">
-      {/* Mobile: Single column with sticky scroll - using div as runway */}
+      {/* Mobile: Full sticky scroll with runway */}
       <div className="block md:hidden">
         {silos.map((silo) => (
           <div
             key={silo.id}
-            className="relative h-[300vh]"
+            className="relative h-[250vh] w-full"
           >
-            {/* Sticky container - stays in viewport while scrolling through runway */}
-            <div className="sticky top-0 h-screen w-full">
-              {/* Link wraps entire clickable area */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden">
               <Link
                 href={`${localePrefix}${silo.href}`}
-                className="block w-full h-full relative"
+                className="relative block w-full h-full"
               >
                 <img
                   src={silo.image}
                   alt={isMongolian ? silo.mn : silo.en}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 bg-black/30" />
                 
-                {/* Text centered on the sticky image */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
+                  <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
                     {isMongolian ? silo.mn : silo.en}
                   </h3>
                   
-                  <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
+                  <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8">
                     {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
                   </span>
                 </div>
@@ -94,11 +91,11 @@ export default function SiloGrid() {
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
             
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-5xl lg:text-6xl text-white text-center tracking-wider`}>
+              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-5xl lg:text-8xl text-white text-center tracking-wider`}>
                 {isMongolian ? silo.mn : silo.en}
               </h3>
               
-              <span className="text-xs tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6 group-hover:border-white transition-colors duration-300">
+              <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8 group-hover:border-white transition-colors duration-300">
                 {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
               </span>
             </div>
