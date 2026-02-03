@@ -49,23 +49,25 @@ export default function SiloGrid() {
             href={`${localePrefix}${silo.href}`}
             className="group block relative h-[300vh]"
           >
-            <div className="absolute inset-0">
+            {/* Image stays sticky at top, covering viewport */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden">
               <img
                 src={silo.image}
                 alt={isMongolian ? silo.mn : silo.en}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/20" />
-            </div>
-            
-            <div className="sticky top-0 h-screen flex flex-col items-center justify-center pointer-events-none">
-              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
-                {isMongolian ? silo.mn : silo.en}
-              </h3>
               
-              <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
-                {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
-              </span>
+              {/* Text centered on the sticky image */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
+                  {isMongolian ? silo.mn : silo.en}
+                </h3>
+                
+                <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
+                  {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
+                </span>
+              </div>
             </div>
           </Link>
         ))}
