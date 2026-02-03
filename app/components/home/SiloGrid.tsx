@@ -47,7 +47,7 @@ export default function SiloGrid() {
           <Link
             key={silo.id}
             href={`${localePrefix}${silo.href}`}
-            className="group block relative h-[200vh]"
+            className="group block relative h-[300vh]"
           >
             <div className="absolute inset-0">
               <img
