@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "next-intl";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
@@ -19,7 +19,7 @@ const personas = [
       description: "Хоёулаа төгс цагийг өнгөрүүлэх. Хувийн оройн хоол, спа амралт, нуурын хөвөөнд нар жаргах үзэгдэл."
     },
     image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&auto=format&fit=crop&q=80",
-    href: "/experiences/couples"
+    href: "/offers"
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const personas = [
       description: "Гэр бүлийн дурсамж бүтээх. Морь унах, од харах шөнөөс бүх насныханд зориулсан үйл ажиллагаа."
     },
     image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200&auto=format&fit=crop&q=80",
-    href: "/experiences/families"
+    href: "/offers"
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const personas = [
       description: "Хамтдаа адал явдал. Бүлгийн хоол, гал дотуур шөнө, байгалийн үзэсгэлэнт газраар аялах."
     },
     image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&auto=format&fit=crop&q=80",
-    href: "/experiences/friends"
+    href: "/offers"
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ const personas = [
       description: "Багаа байгалийн дунд урамшуулаарай. Багийн уулзалт, тийм билдинг, үзэсгэлэнт хурлын танхим."
     },
     image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1200&auto=format&fit=crop&q=80",
-    href: "/experiences/organizations"
+    href: "/offers"
   }
 ];
 
@@ -81,16 +81,47 @@ export default function PersonaSlider() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
   const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const paginate = (newDirection: number) => {
-    const newIndex = activeIndex + newDirection;
-    if (newIndex < 0) {
-      setActiveIndex([personas.length - 1, newDirection]);
-    } else if (newIndex >= personas.length) {
-      setActiveIndex([0, newDirection]);
-    } else {
-      setActiveIndex([newIndex, newDirection]);
+  const paginate = useCallback((newDirection: number) => {
+    setActiveIndex(([currentIndex]) => {
+      const newIndex = currentIndex + newDirection;
+      if (newIndex < 0) {
+        return [personas.length - 1, newDirection];
+      } else if (newIndex >= personas.length) {
+        return [0, newDirection];
+      } else {
+        return [newIndex, newDirection];
+      }
+    });
+  }, []);
+
+  const resetTimer = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
+    intervalRef.current = setInterval(() => {
+      paginate(1);
+    }, 6000);
+  }, [paginate]);
+
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [resetTimer]);
+
+  const handlePaginate = (newDirection: number) => {
+    paginate(newDirection);
+    resetTimer();
+  };
+
+  const handleDotClick = (index: number) => {
+    setActiveIndex(([currentIndex]) => [index, index > currentIndex ? 1 : -1]);
+    resetTimer();
   };
 
   const currentPersona = personas[activeIndex];
@@ -131,14 +162,14 @@ export default function PersonaSlider() {
             </AnimatePresence>
 
             <button
-              onClick={() => paginate(-1)}
+              onClick={() => handlePaginate(-1)}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-warm-beige/20 hover:bg-warm-beige/40 backdrop-blur-sm rounded-full transition-colors"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6 text-white" />
             </button>
             <button
-              onClick={() => paginate(1)}
+              onClick={() => handlePaginate(1)}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-warm-beige/20 hover:bg-warm-beige/40 backdrop-blur-sm rounded-full transition-colors"
               aria-label="Next slide"
             >
@@ -182,7 +213,7 @@ export default function PersonaSlider() {
             {personas.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setActiveIndex([index, index > activeIndex ? 1 : -1])}
+                onClick={() => handleDotClick(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index === activeIndex 
                     ? "bg-warm-beige w-6" 

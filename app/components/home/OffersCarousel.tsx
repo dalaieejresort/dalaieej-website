@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "next-intl";
 import Link from "next/link";
@@ -55,20 +55,58 @@ export default function OffersCarousel() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startAutoPlay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % offers.length);
+    }, 7000);
+  }, []);
+
+  const stopAutoPlay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % offers.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!isPaused) {
+      startAutoPlay();
+    }
+    return () => stopAutoPlay();
+  }, [isPaused, startAutoPlay, stopAutoPlay]);
+
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+    stopAutoPlay();
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
+
+  const handleDotClick = (index: number) => {
+    setActiveIndex(index);
+    if (!isPaused) {
+      startAutoPlay();
+    }
+  };
 
   const currentOffer = offers[activeIndex];
   const content = locale === 'mn' ? currentOffer.mn : currentOffer.en;
 
   return (
     <section className="bg-[#F9F8F6] py-0">
-      <div className="max-w-7xl mx-auto">
+      <div 
+        className="max-w-7xl mx-auto"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px] lg:min-h-[600px]">
           <div className="relative h-[350px] lg:h-auto overflow-hidden">
             <AnimatePresence mode="wait">
@@ -119,7 +157,7 @@ export default function OffersCarousel() {
               {offers.map((offer, index) => (
                 <button
                   key={offer.id}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => handleDotClick(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === activeIndex 
                       ? "bg-[#3A4D3F]" 
