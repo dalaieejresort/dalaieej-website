@@ -41,37 +41,35 @@ export default function SiloGrid() {
 
   return (
     <section className="bg-white">
-      {/* Mobile: Full sticky scroll with runway */}
+      {/* Mobile: Layered sticky scroll - image stays, text floats away */}
       <div className="block md:hidden">
         {silos.map((silo) => (
-          <div
+          <Link
             key={silo.id}
-            className="relative h-[250vh] w-full"
+            href={`${localePrefix}${silo.href}`}
+            className="relative block h-[200vh]"
           >
+            {/* Image Layer - sticky, stays locked in viewport */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
-              <Link
-                href={`${localePrefix}${silo.href}`}
-                className="relative block w-full h-full"
-              >
-                <img
-                  src={silo.image}
-                  alt={isMongolian ? silo.mn : silo.en}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/30" />
-                
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
-                    {isMongolian ? silo.mn : silo.en}
-                  </h3>
-                  
-                  <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8">
-                    {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
-                  </span>
-                </div>
-              </Link>
+              <img
+                src={silo.image}
+                alt={isMongolian ? silo.mn : silo.en}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/30" />
             </div>
-          </div>
+            
+            {/* Text Layer - absolute to 200vh parent, scrolls up and away */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
+                {isMongolian ? silo.mn : silo.en}
+              </h3>
+              
+              <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8">
+                {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
+              </span>
+            </div>
+          </Link>
         ))}
       </div>
 
