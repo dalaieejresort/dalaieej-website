@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import { useLocale } from "next-intl";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 
 const silos = [
@@ -34,6 +36,55 @@ const silos = [
   }
 ];
 
+interface MobileSiloProps {
+  silo: typeof silos[0];
+  localePrefix: string;
+  isMongolian: boolean;
+}
+
+function MobileSilo({ silo, localePrefix, isMongolian }: MobileSiloProps) {
+  const containerRef = useRef<HTMLAnchorElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 400]);
+
+  return (
+    <Link
+      ref={containerRef}
+      href={`${localePrefix}${silo.href}`}
+      className="relative block h-[200vh]"
+    >
+      {/* Image Layer - sticky, stays locked in viewport */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <img
+          src={silo.image}
+          alt={isMongolian ? silo.mn : silo.en}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        
+        {/* Text Layer - moves down with scroll */}
+        <motion.div 
+          style={{ y: textY }}
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+        >
+          <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
+            {isMongolian ? silo.mn : silo.en}
+          </h3>
+          
+          <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8">
+            {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
+          </span>
+        </motion.div>
+      </div>
+    </Link>
+  );
+}
+
 export default function SiloGrid() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
@@ -41,35 +92,15 @@ export default function SiloGrid() {
 
   return (
     <section className="bg-white">
-      {/* Mobile: Layered sticky scroll - image stays, text floats away */}
+      {/* Mobile: Parallax scroll - image stays, text floats down */}
       <div className="block md:hidden">
         {silos.map((silo) => (
-          <Link
+          <MobileSilo
             key={silo.id}
-            href={`${localePrefix}${silo.href}`}
-            className="relative block h-[200vh]"
-          >
-            {/* Image Layer - sticky, stays locked in viewport */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
-              <img
-                src={silo.image}
-                alt={isMongolian ? silo.mn : silo.en}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/30" />
-            </div>
-            
-            {/* Text Layer - positioned at top viewport, scrolls up and away */}
-            <div className="absolute top-0 left-0 right-0 h-screen flex flex-col items-center justify-center pointer-events-none">
-              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
-                {isMongolian ? silo.mn : silo.en}
-              </h3>
-              
-              <span className="text-[10px] tracking-[0.4em] uppercase text-white/90 border-b border-white/40 pb-1 mt-8">
-                {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
-              </span>
-            </div>
-          </Link>
+            silo={silo}
+            localePrefix={localePrefix}
+            isMongolian={isMongolian}
+          />
         ))}
       </div>
 
