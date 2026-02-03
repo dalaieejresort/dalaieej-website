@@ -59,8 +59,8 @@ export default function SiloGrid() {
               <div className="absolute inset-0 bg-black/30" />
             </div>
             
-            {/* Text Layer - absolute to 200vh parent, scrolls up and away */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            {/* Text Layer - positioned at top viewport, scrolls up and away */}
+            <div className="absolute top-0 left-0 right-0 h-screen flex flex-col items-center justify-center pointer-events-none">
               <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-6xl text-white text-center tracking-wider`}>
                 {isMongolian ? silo.mn : silo.en}
               </h3>
