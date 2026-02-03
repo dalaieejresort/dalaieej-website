@@ -41,28 +41,57 @@ export default function SiloGrid() {
 
   return (
     <section className="bg-white">
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      {/* Mobile: Single column with sticky scroll */}
+      <div className="block md:hidden">
         {silos.map((silo) => (
           <Link
             key={silo.id}
             href={`${localePrefix}${silo.href}`}
-            className="group relative h-[200vh] md:h-[80vh] md:overflow-hidden"
+            className="group block relative h-[200vh]"
           >
             <div className="absolute inset-0">
               <img
                 src={silo.image}
                 alt={isMongolian ? silo.mn : silo.en}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-black/20" />
             </div>
             
-            <div className="sticky md:absolute top-0 md:inset-0 h-screen md:h-full flex flex-col items-center justify-center pointer-events-none">
-              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl md:text-5xl lg:text-6xl text-white text-center tracking-wider`}>
+            <div className="sticky top-0 h-screen flex flex-col items-center justify-center pointer-events-none">
+              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl text-white text-center tracking-wider`}>
                 {isMongolian ? silo.mn : silo.en}
               </h3>
               
-              <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6 group-hover:border-white transition-colors duration-300">
+              <span className="text-[10px] tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6">
+                {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Desktop: 2x2 grid, no sticky scroll */}
+      <div className="hidden md:grid grid-cols-2">
+        {silos.map((silo) => (
+          <Link
+            key={silo.id}
+            href={`${localePrefix}${silo.href}`}
+            className="group relative h-[80vh] overflow-hidden"
+          >
+            <img
+              src={silo.image}
+              alt={isMongolian ? silo.mn : silo.en}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
+            
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-5xl lg:text-6xl text-white text-center tracking-wider`}>
+                {isMongolian ? silo.mn : silo.en}
+              </h3>
+              
+              <span className="text-xs tracking-[0.3em] uppercase text-white/90 border-b border-white/40 pb-1 mt-6 group-hover:border-white transition-colors duration-300">
                 {isMongolian ? "ДЭЛГЭРЭНГҮЙ" : "DISCOVER"}
               </span>
             </div>
