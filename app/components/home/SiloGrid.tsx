@@ -46,9 +46,9 @@ export default function SiloGrid() {
           <Link
             key={silo.id}
             href={`${localePrefix}${silo.href}`}
-            className="group relative h-[150vh] md:h-[160vh]"
+            className="group relative h-[200vh] md:h-[80vh] md:overflow-hidden"
           >
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0">
               <img
                 src={silo.image}
                 alt={isMongolian ? silo.mn : silo.en}
@@ -57,7 +57,7 @@ export default function SiloGrid() {
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
             </div>
             
-            <div className="sticky top-0 h-screen flex flex-col items-center justify-center pointer-events-none">
+            <div className="sticky md:absolute top-0 md:inset-0 h-screen md:h-full flex flex-col items-center justify-center pointer-events-none">
               <h3 className={`${isMongolian ? 'font-serif' : 'font-sloops'} text-4xl md:text-5xl lg:text-6xl text-white text-center tracking-wider`}>
                 {isMongolian ? silo.mn : silo.en}
               </h3>
