@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "next-intl";
 import { X, Instagram, Facebook, Phone, MapPin, LayoutGrid } from "lucide-react";
 import Link from "next/link";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface NavigationOverlayProps {
   isOpen: boolean;
@@ -181,6 +182,10 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     </span>
                   </Link>
                 </motion.div>
+
+                <div className="mt-auto pt-10 border-t border-warm-beige/10 flex justify-center md:hidden">
+                  <LanguageSwitcher />
+                </div>
               </div>
 
               <div className="hidden md:flex flex-1 items-center justify-center p-8">

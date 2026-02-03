@@ -53,13 +53,15 @@ export default function Navbar() {
 
             <Link 
               href={localePrefix || "/"}
-              className="absolute left-1/2 -translate-x-1/2 font-serif text-2xl md:text-3xl text-warm-beige hover:text-white transition-colors"
+              className="absolute left-1/2 -translate-x-1/2 font-serif text-xl md:text-3xl whitespace-nowrap text-warm-beige hover:text-white transition-colors"
             >
               Dalai Eej
             </Link>
 
             <div className="flex items-center gap-4 md:gap-6">
-              <LanguageSwitcher />
+              <div className="hidden md:block">
+                <LanguageSwitcher />
+              </div>
               
               <Link
                 href={`${localePrefix}/booking`}
