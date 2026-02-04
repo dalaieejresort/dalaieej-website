@@ -4,6 +4,25 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useTranslations } from 'next-intl';
 
+function useNavOpen() {
+  const [navOpen, setNavOpen] = useState(false);
+  
+  useEffect(() => {
+    const checkNavOpen = () => {
+      setNavOpen(document.body.classList.contains('nav-open'));
+    };
+    
+    checkNavOpen();
+    
+    const observer = new MutationObserver(checkNavOpen);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  return navOpen;
+}
+
 function getDateString(date: Date): string {
   return date.toISOString().split("T")[0];
 }
@@ -12,6 +31,9 @@ export default function AvailabilityBar() {
   const t = useTranslations('booking');
   const router = useRouter();
   const pathname = usePathname();
+  const navOpen = useNavOpen();
+  
+  if (navOpen) return null;
   
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
