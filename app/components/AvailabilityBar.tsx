@@ -33,8 +33,6 @@ export default function AvailabilityBar() {
   const pathname = usePathname();
   const navOpen = useNavOpen();
   
-  if (navOpen) return null;
-  
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
@@ -55,6 +53,8 @@ export default function AvailabilityBar() {
     setCheckIn(getDateString(now));
     setCheckOut(getDateString(defaultCheckout));
   }, []);
+
+  if (navOpen) return null;
 
   const handleCheckAvailability = () => {
     if (checkIn && checkOut) {
