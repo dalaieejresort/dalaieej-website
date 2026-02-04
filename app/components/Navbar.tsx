@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import LanguageSwitcher from "./LanguageSwitcher";
 import NavigationOverlay from "./layout/NavigationOverlay";
 
 export default function Navbar() {
@@ -62,10 +61,6 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="hidden md:block">
-                <LanguageSwitcher />
-              </div>
-              
               <Link
                 href={`${localePrefix}/booking`}
                 className="px-5 py-2.5 bg-warm-beige text-lake-blue font-body text-xs font-semibold tracking-[0.1em] uppercase hover:bg-white transition-colors rounded"
