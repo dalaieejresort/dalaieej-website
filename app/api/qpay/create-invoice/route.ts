@@ -137,17 +137,35 @@ export async function POST(request: NextRequest) {
     console.error("QPay invoice creation error:", error);
 
     if (axios.isAxiosError(error)) {
+      const qpayError = error.response?.data;
+      const statusCode = error.response?.status || 500;
+      
+      console.error("QPay API Response:", {
+        status: statusCode,
+        data: JSON.stringify(qpayError),
+        url: error.config?.url,
+      });
+
+      let userMessage = "Failed to create QPay invoice";
+      if (statusCode === 401) {
+        userMessage = "QPay authentication failed - invalid credentials";
+      } else if (statusCode === 400) {
+        userMessage = `QPay rejected the request: ${qpayError?.message || qpayError?.error || JSON.stringify(qpayError)}`;
+      }
+
       return NextResponse.json(
         {
-          error: "Failed to create QPay invoice",
-          details: error.response?.data || error.message,
+          error: userMessage,
+          details: qpayError,
+          statusCode,
         },
-        { status: error.response?.status || 500 }
+        { status: statusCode }
       );
     }
 
+    const errMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: errMessage },
       { status: 500 }
     );
   }
