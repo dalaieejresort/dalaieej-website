@@ -80,7 +80,7 @@ export default function OffersCarousel() {
   const localePrefix = locale === 'mn' ? '/mn' : '';
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startAutoPlay = useCallback(() => {
     if (intervalRef.current) {
@@ -114,7 +114,7 @@ export default function OffersCarousel() {
     setIsPaused(false);
   };
 
-  const handleDotClick = (index) => {
+  const handleDotClick = (index: number) => {
     setActiveIndex(index);
     if (!isPaused) {
       startAutoPlay();
