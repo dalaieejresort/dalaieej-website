@@ -32,7 +32,7 @@ const silos = [
     href: "/experiences",
     en: "Wilderness",
     mn: "Хөвч",
-    image: "silogrid/wilderness.jpg"
+    image: "/silogrid/wilderness.jpg"
   }
 ];
 
