@@ -4,7 +4,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["*"],
+  allowedDevOrigins: [
+    "*.picard.replit.dev",
+    "*.replit.dev",
+    "127.0.0.1",
+  ],
   images: {
     remotePatterns: [
       {
