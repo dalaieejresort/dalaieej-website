@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface Location {
   id: string;
@@ -55,6 +56,13 @@ export default function InteractiveMap() {
 
   return (
     <section className="bg-cream py-20 px-8">
+      {/* Hidden Preloader for Hotspot Images */}
+      <div className="hidden">
+        {locations.map((loc) => (
+           loc.image && <Image key={loc.id} src={loc.image} alt="preload" width={10} height={10} priority />
+        ))}
+      </div>
+
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="font-heading text-4xl md:text-5xl text-forest-green mb-4">
@@ -66,6 +74,7 @@ export default function InteractiveMap() {
         </div>
 
         <div className="flex justify-center mb-6">
+          {/* ... [Tabs Logic - Unchanged] ... */}
           <div className="inline-flex bg-forest-green/10 rounded-full p-1">
             <button
               onClick={() => handleTabChange("accommodation")}
@@ -90,15 +99,21 @@ export default function InteractiveMap() {
           </div>
         </div>
 
+        {/* --- FIXED CONTAINER --- */}
         <div 
+          // FIX 1: Changed 'overflow-hidden' to 'overflow-visible' so popups can stick out
           className="relative w-full overflow-visible z-10 cursor-pointer" 
           style={{ aspectRatio: '6876 / 3000' }}
           onClick={handleBackgroundClick}
         >
-          <img
+          <Image
             src="/images/resort-map.jpg"
             alt="Dalai Eej Resort Map"
-            className="w-full h-full object-fill rounded-lg shadow-2xl"
+            fill
+            priority
+            // FIX 2: Moved rounding and shadow to the Image itself
+            className="object-cover rounded-lg shadow-2xl"
+            sizes="(max-width: 1200px) 100vw, 1200px"
           />
 
           <AnimatePresence mode="wait">
@@ -159,11 +174,13 @@ export default function InteractiveMap() {
                           <X className="w-4 h-4" />
                         </button>
                         {location.image && (
-                          <div className="aspect-video w-full">
-                            <img
+                          <div className="relative aspect-video w-full">
+                            <Image
                               src={location.image}
                               alt={t(`map.${location.id}.title`)}
-                              className="w-full h-full object-cover"
+                              fill
+                              className="object-cover"
+                              sizes="288px" 
                             />
                           </div>
                         )}
