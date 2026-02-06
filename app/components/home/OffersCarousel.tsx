@@ -6,48 +6,72 @@ import { useLocale } from "next-intl";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+// STRATEGY UPDATE:
+// 1. Erdenet 50th: Targeted local intent.
+// 2. Early Bird: Urgency for February/March traffic.
+// 3. Workation: New "Long Stay" offer to increase occupancy length.
+// 4. June Couples: Fills the low-occupancy dates before the school rush.
+
 const offers = [
   {
     id: 1,
     en: { 
-      tag: "Special Offers",
-      title: "Romantic Lake Retreat", 
-      description: "15% off + Complimentary Wine & Chocolate" 
+      tag: "Limited Time",
+      title: "Erdenet 50th Jubilee", 
+      description: "Exclusive 50th Anniversary benefits for Erdenet residents." 
     },
     mn: { 
-      tag: "Онцгой Саналууд",
-      title: "Романтик Нуурын Амралт", 
-      description: "15% хөнгөлөлт + Дарс & Шоколад бэлэг" 
+      tag: "Тусгай Санал",
+      title: "Эрдэнэт 50 Жил", 
+      description: "Эрдэнэт хотын оршин суугчдад зориулсан баярын тусгай хөнгөлөлт." 
     },
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&auto=format&fit=crop&q=80"
+    // Replace with: "/specialoffers/erdenet50.jpg"
+  image: "/images/specialoffers/2022-1.jpg"
   },
   {
     id: 2,
     en: { 
-      tag: "Special Offers",
-      title: "Summer 2026 Early Booking", 
-      description: "Book ahead and save 15%" 
+      tag: "Best Value",
+      title: "Summer 2026 Early Bird", 
+      description: "Book before March 31 to lock in 2025 rates." 
     },
     mn: { 
-      tag: "Онцгой Саналууд",
-      title: "Зун 2026 Эрт захиалга", 
-      description: "Урьдчилж төлөөд 15% хэмнэ" 
+      tag: "Хамгийн Ашигтай",
+      title: "Зун 2026 Эрт Захиалга", 
+      description: "3-р сарын 31-ээс өмнө захиалаад 2025 оны үнээр амраарай." 
     },
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop&q=80"
+    // Replace with: "/specialoffers/earlybird.jpg"
+  image: "images/specialoffers/early-bird.jpg"
   },
   {
     id: 3,
     en: { 
-      tag: "Special Offers",
-      title: "Honeymoon Package", 
-      description: "5 nights luxury + spa treatment" 
+      tag: "Most Popular", // "Most Popular" builds trust for families
+      title: "Ultimate Family Getaway", 
+      description: "Spacious cabins & daily kids' activities included." 
     },
     mn: { 
-      tag: "Онцгой Саналууд",
-      title: "Зугаалгын Аялал", 
-      description: "5 шөнийн люкс + спа эмчилгээ" 
+      tag: "Эрэлттэй",
+      title: "Гэр Бүлийн Аялал", 
+      description: "Гэр бүлийн том байшин + хүүхдийн тоглоомын хөтөлбөр." 
     },
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80"
+    // Image: Happy kids running or a family by the lake
+    image: "images/specialoffers/families.jpg"
+  },
+  {
+    id: 4,
+    en: { 
+      tag: "June Special",
+      title: "Shoulder Season Escape", 
+      description: "Enjoy the peace of the lake before the July rush." 
+    },
+    mn: { 
+      tag: "6-р Сарын Санал",
+      title: "Намуухан Нуурын Эрэгт", 
+      description: "7-р сарын их хөл хөдөлгөөнөөс урьтаж тухлан амраарай." 
+    },
+    // Replace with: "/specialoffers/couples.jpg"
+  image: "/images/specialoffers/couples-package.jpg"
   }
 ];
 
@@ -56,7 +80,7 @@ export default function OffersCarousel() {
   const localePrefix = locale === 'mn' ? '/mn' : '';
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef(null);
 
   const startAutoPlay = useCallback(() => {
     if (intervalRef.current) {
@@ -90,7 +114,7 @@ export default function OffersCarousel() {
     setIsPaused(false);
   };
 
-  const handleDotClick = (index: number) => {
+  const handleDotClick = (index) => {
     setActiveIndex(index);
     if (!isPaused) {
       startAutoPlay();
@@ -108,51 +132,59 @@ export default function OffersCarousel() {
         onMouseLeave={handleMouseLeave}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px] lg:min-h-[600px]">
+          {/* Image Side */}
           <div className="relative h-[350px] lg:h-auto overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentOffer.id}
                 src={currentOffer.image}
                 alt={content.title}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.7 }}
                 className="w-full h-full object-cover"
               />
             </AnimatePresence>
+
+            {/* Mobile Overlay Text (Optional visibility boost) */}
+            <div className="absolute inset-0 bg-black/10 lg:hidden" />
           </div>
 
-          <div className="flex flex-col items-center justify-center px-8 lg:px-16 py-16 lg:py-0">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#3A4D3F]/70 mb-12">
-              {content.tag}
-            </p>
-            
+          {/* Content Side */}
+          <div className="flex flex-col items-center justify-center px-8 lg:px-16 py-16 lg:py-0 text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentOffer.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="text-center"
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="flex flex-col items-center"
               >
-                <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-[#3A4D3F] mb-6 font-light">
+                <p className="text-xs tracking-[0.3em] uppercase text-[#3A4D3F]/70 mb-6">
+                  {content.tag}
+                </p>
+
+                <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-[#3A4D3F] mb-6 font-light leading-tight">
                   {content.title}
                 </h3>
-                <p className="font-body text-[#3A4D3F]/60 text-base mb-10">
+
+                <p className="font-body text-[#3A4D3F]/60 text-base mb-10 max-w-md mx-auto">
                   {content.description}
                 </p>
+
                 <Link
                   href={`${localePrefix}/offers`}
-                  className="group inline-flex items-center gap-2 text-sm tracking-widest uppercase text-[#3A4D3F] hover:text-[#3A4D3F]/70 transition-colors duration-300"
+                  className="group inline-flex items-center gap-2 text-sm tracking-widest uppercase text-[#3A4D3F] border-b border-[#3A4D3F]/30 pb-1 hover:text-[#3A4D3F]/70 hover:border-[#3A4D3F]/70 transition-all duration-300"
                 >
-                  <span>{locale === 'mn' ? "Санал Үзэх" : "View Offer"}</span>
+                  <span>{locale === 'mn' ? "Дэлгэрэнгүй" : "View Offer"}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             </AnimatePresence>
 
+            {/* Navigation Dots */}
             <div className="flex gap-3 mt-16">
               {offers.map((offer, index) => (
                 <button
@@ -160,7 +192,7 @@ export default function OffersCarousel() {
                   onClick={() => handleDotClick(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === activeIndex 
-                      ? "bg-[#3A4D3F]" 
+                      ? "bg-[#3A4D3F] w-6" 
                       : "bg-[#3A4D3F]/20 hover:bg-[#3A4D3F]/40"
                   }`}
                   aria-label={`Go to offer ${index + 1}`}
