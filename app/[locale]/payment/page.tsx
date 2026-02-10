@@ -292,17 +292,87 @@ function PaymentContent() {
     }
   };
 
-  const checkPaymentStatus = async () => {
-    setCheckingStatus(true);
-    setPaymentStatus("");
+  const pollCheckPayment = async (): Promise<"paid" | "pending" | "error"> => {
+    try {
+      const response = await fetch("/api/qpay/check-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          invoiceId,
+          expectedAmount: amount ? parseFloat(amount) : undefined,
+        }),
+      });
 
-    setTimeout(() => {
-      setPaymentStatus(currentLocale === 'mn' 
-        ? "Төлбөрийн статусыг шалгаж байна... Банкнаас баталгаажуулалт хүлээнэ үү."
-        : "Checking payment status... Please wait for confirmation from your bank.");
-      setCheckingStatus(false);
-    }, 2000);
+      if (!response.ok) return "error";
+
+      const data = await response.json();
+      if (data.paid) {
+        setPaymentSuccess(true);
+        return "paid";
+      }
+      return "pending";
+    } catch {
+      return "error";
+    }
   };
+
+  const checkPaymentStatus = async () => {
+    if (!invoiceId) return;
+    
+    setCheckingStatus(true);
+    setPaymentStatus(currentLocale === 'mn' 
+      ? "Төлбөрийн статусыг шалгаж байна..."
+      : "Checking payment status...");
+
+    const result = await pollCheckPayment();
+
+    if (result === "error") {
+      setPaymentStatus(currentLocale === 'mn' 
+        ? "Статус шалгахад алдаа гарлаа. Дахин оролдоно уу."
+        : "Error checking status. Please try again.");
+    } else if (result === "pending") {
+      setPaymentStatus(currentLocale === 'mn' 
+        ? "Төлбөр хараахан баталгаажаагүй байна. Банкны апп-аас төлбөрөө хийнэ үү."
+        : "Payment not yet confirmed. Please complete the payment in your bank app.");
+    }
+    setCheckingStatus(false);
+  };
+
+  useEffect(() => {
+    if (!invoiceId || paymentSuccess) return;
+
+    let pollCount = 0;
+    const maxPolls = 120;
+    let consecutiveErrors = 0;
+
+    const interval = setInterval(async () => {
+      pollCount++;
+      if (pollCount > maxPolls) {
+        clearInterval(interval);
+        setPaymentStatus(currentLocale === 'mn' 
+          ? "Автомат шалгалтын хугацаа дууссан. \"Төлбөр шалгах\" товч дарна уу."
+          : "Auto-check timed out. Please click \"Check Payment\" manually.");
+        return;
+      }
+
+      const result = await pollCheckPayment();
+      if (result === "paid") {
+        clearInterval(interval);
+      } else if (result === "error") {
+        consecutiveErrors++;
+        if (consecutiveErrors >= 5) {
+          clearInterval(interval);
+          setPaymentStatus(currentLocale === 'mn' 
+            ? "Холболтын алдаа. \"Төлбөр шалгах\" товч дарна уу."
+            : "Connection error. Please click \"Check Payment\" manually.");
+        }
+      } else {
+        consecutiveErrors = 0;
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [invoiceId, paymentSuccess]);
 
   const copyAccountNumber = () => {
     navigator.clipboard.writeText("5765050027");
