@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
+import Link from "next/link";
 import { Suspense } from "react";
 import { Users, Check, Tag, Loader2, Plus, Minus, AlertTriangle } from "lucide-react";
 import { useTranslations } from 'next-intl';
@@ -55,6 +56,14 @@ function BookingContent() {
 
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
+
+  const getRoomDetailPath = (roomTypeName: string) => {
+    const name = (roomTypeName || '').toLowerCase();
+    if (name.includes('cabin') || name.includes('байшин') || name.includes('шинэс') || name.includes('larch')) {
+      return `${localePrefix}/cabins`;
+    }
+    return `${localePrefix}/accommodation`;
+  };
 
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
@@ -361,7 +370,11 @@ function BookingContent() {
                     </div>
 
                     <div className="p-5">
-                      <h3 className="font-serif text-xl text-[#1A3C34] mb-2">{room.roomTypeName || "Room"}</h3>
+                      <h3 className="font-serif text-xl text-[#1A3C34] mb-2">
+                        <Link href={getRoomDetailPath(room.roomTypeName)} className="hover:text-[#1A3C34]/70 underline underline-offset-4 decoration-[#1A3C34]/30 hover:decoration-[#1A3C34]/60 transition-colors">
+                          {room.roomTypeName || "Room"}
+                        </Link>
+                      </h3>
 
                       <div 
                         className="text-[#1A3C34]/60 text-sm mb-4 line-clamp-2"
