@@ -43,12 +43,14 @@ This project is a luxury hotel landing page for the Dalai Eej Resort, built with
 
 ## External Dependencies
 
--   **Cloudbeds API**: For room availability, add-ons, and reservation creation.
+-   **Cloudbeds API**: For room availability, add-ons, reservation creation, and confirmation.
     *   `GET /api/cloudbeds/availability`
     *   `GET /api/cloudbeds/addons`
     *   `POST /api/cloudbeds/reservation`
--   **QPay API**: For creating payment invoices for Mongolian domestic payments.
+    *   `POST /api/cloudbeds/confirm-reservation` — Updates reservation status to "confirmed" after payment
+-   **QPay API**: For creating payment invoices and verifying Mongolian domestic payments.
     *   `POST /api/qpay/create-invoice`
+    *   `POST /api/qpay/check-payment` — Polls QPay for payment status with token caching
     *   `POST /api/qpay/webhook`
 -   **Stripe API**: For processing international card payments.
     *   `POST /api/stripe/payment-intent`

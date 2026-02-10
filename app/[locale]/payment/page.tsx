@@ -161,7 +161,16 @@ function PaymentContent() {
     if (urlAmount) setAmount(urlAmount);
     if (urlNights) setNights(urlNights);
     if (urlGuestName) setGuestName(urlGuestName);
-    if (success === "true") setPaymentSuccess(true);
+    if (success === "true") {
+      setPaymentSuccess(true);
+      if (urlBookingId && !urlBookingId.startsWith("booking-")) {
+        fetch("/api/cloudbeds/confirm-reservation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reservationId: urlBookingId }),
+        }).catch((err) => console.error("Error confirming reservation on redirect:", err));
+      }
+    }
     
     if (urlBookingId && urlAmount && urlGuestName) {
       setFromCheckout(true);
@@ -292,6 +301,29 @@ function PaymentContent() {
     }
   };
 
+  const confirmReservationInCloudbeds = async () => {
+    if (!bookingId || bookingId.startsWith("booking-")) return;
+
+    try {
+      const response = await fetch("/api/cloudbeds/confirm-reservation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reservationId: bookingId }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to confirm reservation in Cloudbeds");
+      }
+    } catch (err) {
+      console.error("Error confirming reservation:", err);
+    }
+  };
+
+  const handlePaymentConfirmed = async () => {
+    await confirmReservationInCloudbeds();
+    setPaymentSuccess(true);
+  };
+
   const pollCheckPayment = async (): Promise<"paid" | "pending" | "error"> => {
     try {
       const response = await fetch("/api/qpay/check-payment", {
@@ -307,7 +339,7 @@ function PaymentContent() {
 
       const data = await response.json();
       if (data.paid) {
-        setPaymentSuccess(true);
+        await handlePaymentConfirmed();
         return "paid";
       }
       return "pending";
@@ -519,7 +551,7 @@ function PaymentContent() {
                   bookingId={bookingId}
                   guestName={guestName}
                   nights={nights}
-                  onSuccess={() => setPaymentSuccess(true)}
+                  onSuccess={() => handlePaymentConfirmed()}
                 />
               </Elements>
             </div>
