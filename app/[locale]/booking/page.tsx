@@ -52,10 +52,10 @@ function BookingContent() {
   const t = useTranslations('booking');
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  
+
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
-  
+
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
   const [totalAdults, setTotalAdults] = useState(2);
@@ -73,6 +73,8 @@ function BookingContent() {
 
   const totalGuests = totalAdults + totalChildren;
   const cartCapacity = cart.reduce((sum, item) => sum + (item.maxGuests * item.quantity), 0);
+
+  // FIX: Removed guest multiplier. Price is simply Rate * Quantity * Nights.
   const cartTotal = cart.reduce((sum, item) => sum + (item.pricePerNight * item.quantity * numberOfNights), 0);
   const totalRooms = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -95,7 +97,7 @@ function BookingContent() {
     const urlPromo = searchParams.get("promo");
     const urlAdults = searchParams.get("adults");
     const urlChildren = searchParams.get("children");
-    
+
     if (urlCheckin) setCheckin(urlCheckin);
     if (urlCheckout) setCheckout(urlCheckout);
     if (urlPromo) {
@@ -107,21 +109,24 @@ function BookingContent() {
 
     if (urlCheckin && urlCheckout) {
       setNumberOfNights(calculateNights(urlCheckin, urlCheckout));
-      fetchAvailability(urlCheckin, urlCheckout, urlPromo || "");
+      fetchAvailability(urlCheckin, urlCheckout, urlPromo || "", parseInt(urlAdults) || 2, parseInt(urlChildren) || 0);
     }
   }, [searchParams]);
 
-  const fetchAvailability = async (checkInDate: string, checkOutDate: string, promo: string = "") => {
+  // RESTORED: We now pass the REAL guest count to the API.
+  const fetchAvailability = async (checkInDate: string, checkOutDate: string, promo: string = "", adults: number = totalAdults, children: number = totalChildren) => {
     setLoading(true);
     setError("");
     setRooms([]);
 
     try {
-      let url = `/api/cloudbeds/availability?checkin=${checkInDate}&checkout=${checkOutDate}`;
+      // Cloudbeds returns the TOTAL price for this specific number of adults.
+      let url = `/api/cloudbeds/availability?checkin=${checkInDate}&checkout=${checkOutDate}&adults=${adults}&children=${children}`;
+
       if (promo) {
         url += `&promo=${encodeURIComponent(promo)}`;
       }
-      
+
       const response = await fetch(url);
       const data: AvailabilityData = await response.json();
 
@@ -144,25 +149,21 @@ function BookingContent() {
       return;
     }
     setNumberOfNights(calculateNights(checkin, checkout));
-    fetchAvailability(checkin, checkout, appliedPromo);
+    fetchAvailability(checkin, checkout, appliedPromo, totalAdults, totalChildren);
   };
 
   const handleApplyPromo = async () => {
     if (!promoCode.trim()) return;
-    
     setPromoLoading(true);
     setAppliedPromo(promoCode.trim());
-    
     if (checkin && checkout) {
       await fetchAvailability(checkin, checkout, promoCode.trim());
     }
-    
     setPromoLoading(false);
   };
 
   const toggleRoomSelection = (room: Room) => {
     const existingIndex = cart.findIndex(item => item.roomTypeID === room.roomTypeID);
-    
     if (existingIndex >= 0) {
       setCart(cart.filter(item => item.roomTypeID !== room.roomTypeID));
     } else {
@@ -184,13 +185,11 @@ function BookingContent() {
   const updateRoomQuantity = (roomTypeID: string, delta: number) => {
     const room = rooms.find(r => r.roomTypeID === roomTypeID);
     const maxAvailable = room?.roomsAvailable || 10;
-    
+
     setCart(cart.map(item => {
       if (item.roomTypeID === roomTypeID) {
         const newQty = item.quantity + delta;
-        if (newQty <= 0) {
-          return null;
-        }
+        if (newQty <= 0) return null;
         return { ...item, quantity: Math.min(maxAvailable, newQty) };
       }
       return item;
@@ -202,28 +201,25 @@ function BookingContent() {
       setError(currentLocale === 'mn' ? "Өрөө сонгоно уу" : "Please select a room");
       return;
     }
-    
-    if (cartCapacity < totalGuests) {
-      return;
-    }
+    if (cartCapacity < totalGuests) return;
 
     const distributeGuests = () => {
       const distributed: CartItem[] = [];
       let remainingAdults = totalAdults;
       let remainingChildren = totalChildren;
-      
+
       for (const item of cart) {
         for (let i = 0; i < item.quantity; i++) {
           const roomCapacity = item.maxGuests;
           const adultsForRoom = Math.min(remainingAdults, roomCapacity);
           remainingAdults -= adultsForRoom;
-          
+
           const spaceLeft = roomCapacity - adultsForRoom;
           const childrenForRoom = Math.min(remainingChildren, spaceLeft);
           remainingChildren -= childrenForRoom;
-          
+
           const finalAdults = adultsForRoom > 0 ? adultsForRoom : (childrenForRoom > 0 ? 0 : 1);
-          
+
           distributed.push({
             ...item,
             quantity: 1,
@@ -236,7 +232,6 @@ function BookingContent() {
     };
 
     const distributedCart = distributeGuests();
-    
     const checkoutParams = new URLSearchParams({
       checkin,
       checkout,
@@ -245,16 +240,12 @@ function BookingContent() {
       totalChildren: String(totalChildren),
       cart: encodeURIComponent(JSON.stringify(distributedCart)),
     });
-    
-    if (appliedPromo) {
-      checkoutParams.set('promo', appliedPromo);
-    }
-    
+
+    if (appliedPromo) checkoutParams.set('promo', appliedPromo);
     window.location.href = `${localePrefix}/checkout?${checkoutParams.toString()}`;
   };
 
   const minDate = new Date().toISOString().split("T")[0];
-
   const placeholderImages = [
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&auto=format&fit=crop&q=80",
@@ -265,87 +256,38 @@ function BookingContent() {
     <main className="min-h-screen bg-[#F5F5DC] pt-24 md:pt-16 pb-32">
       <div className="bg-[#1A3C34] py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl text-[#F5F5DC] mb-4">
-            {t('findRoom')}
-          </h1>
-          <p className="font-sans text-[#F5F5DC]/70 mb-8">
-            {t('selectDates')}
-          </p>
+          <h1 className="font-serif text-4xl md:text-5xl text-[#F5F5DC] mb-4">{t('findRoom')}</h1>
+          <p className="font-sans text-[#F5F5DC]/70 mb-8">{t('selectDates')}</p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-4xl mx-auto flex-wrap">
             <div className="flex flex-col">
-              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                {t('checkIn')}
-              </label>
-              <input
-                type="date"
-                value={checkin}
-                onChange={(e) => setCheckin(e.target.value)}
-                min={minDate}
-                className="px-4 py-3 bg-white/10 border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors"
-              />
+              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">{t('checkIn')}</label>
+              <input type="date" value={checkin} onChange={(e) => setCheckin(e.target.value)} min={minDate} className="px-4 py-3 bg-white/10 border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors" />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">{t('checkOut')}</label>
+              <input type="date" value={checkout} onChange={(e) => setCheckout(e.target.value)} min={checkin || minDate} className="px-4 py-3 bg-white/10 border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors" />
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                {t('checkOut')}
-              </label>
-              <input
-                type="date"
-                value={checkout}
-                onChange={(e) => setCheckout(e.target.value)}
-                min={checkin || minDate}
-                className="px-4 py-3 bg-white/10 border border-[#F5F5DC]/50 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                {currentLocale === 'mn' ? 'Насанд хүрэгчид' : 'Adults'}
-              </label>
+              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">{currentLocale === 'mn' ? 'Насанд хүрэгчид' : 'Adults'}</label>
               <div className="flex items-center gap-2 bg-white/10 border border-[#F5F5DC]/50 rounded-lg px-3 py-2">
-                <button
-                  onClick={() => setTotalAdults(Math.max(1, totalAdults - 1))}
-                  className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
+                <button onClick={() => setTotalAdults(Math.max(1, totalAdults - 1))} className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"><Minus className="w-4 h-4" /></button>
                 <span className="w-8 text-center text-[#F5F5DC] font-semibold">{totalAdults}</span>
-                <button
-                  onClick={() => setTotalAdults(Math.min(20, totalAdults + 1))}
-                  className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
+                <button onClick={() => setTotalAdults(Math.min(20, totalAdults + 1))} className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"><Plus className="w-4 h-4" /></button>
               </div>
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">
-                {currentLocale === 'mn' ? 'Хүүхдүүд' : 'Children'}
-              </label>
+              <label className="text-[#F5F5DC]/70 text-xs uppercase tracking-wider mb-1 font-sans text-left">{currentLocale === 'mn' ? 'Хүүхдүүд' : 'Children'}</label>
               <div className="flex items-center gap-2 bg-white/10 border border-[#F5F5DC]/50 rounded-lg px-3 py-2">
-                <button
-                  onClick={() => setTotalChildren(Math.max(0, totalChildren - 1))}
-                  className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
+                <button onClick={() => setTotalChildren(Math.max(0, totalChildren - 1))} className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"><Minus className="w-4 h-4" /></button>
                 <span className="w-8 text-center text-[#F5F5DC] font-semibold">{totalChildren}</span>
-                <button
-                  onClick={() => setTotalChildren(Math.min(10, totalChildren + 1))}
-                  className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
+                <button onClick={() => setTotalChildren(Math.min(10, totalChildren + 1))} className="w-8 h-8 flex items-center justify-center text-[#F5F5DC] hover:bg-white/10 rounded transition-colors"><Plus className="w-4 h-4" /></button>
               </div>
             </div>
 
-            <button
-              onClick={handleSearch}
-              disabled={loading}
-              className="mt-6 sm:mt-6 px-8 py-3 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50"
-            >
+            <button onClick={handleSearch} disabled={loading} className="mt-6 sm:mt-6 px-8 py-3 bg-[#F5F5DC] text-[#1A3C34] font-serif uppercase tracking-widest hover:bg-white transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50">
               {loading ? t('loading') : t('searchRooms')}
             </button>
           </div>
@@ -353,24 +295,13 @@ function BookingContent() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 max-w-md mx-auto">
             <div className="flex items-center gap-2 flex-1 w-full sm:w-auto">
               <Tag className="w-4 h-4 text-[#F5F5DC]/70" />
-              <input
-                type="text"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                placeholder={t('enterPromo')}
-                className="flex-1 px-3 py-2 bg-white/10 border border-[#F5F5DC]/30 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30 text-sm uppercase tracking-wider"
-              />
+              <input type="text" value={promoCode} onChange={(e) => setPromoCode(e.target.value.toUpperCase())} placeholder={t('enterPromo')} className="flex-1 px-3 py-2 bg-white/10 border border-[#F5F5DC]/30 text-[#F5F5DC] rounded-lg focus:outline-none focus:border-[#F5F5DC] transition-colors placeholder:text-[#F5F5DC]/30 text-sm uppercase tracking-wider" />
             </div>
-            <button
-              onClick={handleApplyPromo}
-              disabled={promoLoading || !promoCode.trim()}
-              className="px-4 py-2 bg-[#F5F5DC]/20 text-[#F5F5DC] text-sm uppercase tracking-wider hover:bg-[#F5F5DC]/30 transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-            >
+            <button onClick={handleApplyPromo} disabled={promoLoading || !promoCode.trim()} className="px-4 py-2 bg-[#F5F5DC]/20 text-[#F5F5DC] text-sm uppercase tracking-wider hover:bg-[#F5F5DC]/30 transition-all cursor-pointer rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
               {promoLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               {t('apply')}
             </button>
           </div>
-          
           {appliedPromo && (
             <div className="mt-3 text-center">
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 text-green-300 text-sm rounded-full">
@@ -379,12 +310,7 @@ function BookingContent() {
               </span>
             </div>
           )}
-
-          {error && (
-            <div className="mt-4 text-red-300 text-sm">
-              {error}
-            </div>
-          )}
+          {error && <div className="mt-4 text-red-300 text-sm">{error}</div>}
         </div>
       </div>
 
@@ -405,166 +331,112 @@ function BookingContent() {
 
         {!loading && rooms.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {rooms.map((room, index) => {
-              const perNightRate = room.totalRate ? Number(room.totalRate) : 0;
-              const hasPrice = perNightRate > 0;
-              const photos = room.photos || [];
-              const features = room.features || [];
-              const cartItem = cart.find(item => item.roomTypeID === room.roomTypeID);
-              const isSelected = !!cartItem;
-              const maxGuests = room.maxGuests || 2;
-              
-              return (
-                <div
-                  key={room.roomTypeID || index}
-                  className={`bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all ${
-                    isSelected ? 'ring-2 ring-green-500' : ''
-                  }`}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={photos[0] || placeholderImages[index % placeholderImages.length]}
-                      alt={room.roomTypeName || "Room"}
-                      className="w-full h-full object-cover"
-                    />
-                    {room.roomsAvailable && room.roomsAvailable <= 3 && (
-                      <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                        {t('onlyLeft', { count: room.roomsAvailable })}
-                      </div>
-                    )}
-                    {isSelected && (
-                      <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 font-medium">
-                        <Check className="w-3.5 h-3.5" />
-                        {currentLocale === 'mn' ? 'Сонгосон' : 'Selected'}
-                      </div>
-                    )}
-                  </div>
+            {rooms
+              // Filter logic remains to ensure rooms are big enough for the group
+              .filter(room => (room.maxGuests || 0) >= totalGuests)
+              .map((room, index) => {
+                const perNightRate = room.totalRate ? Number(room.totalRate) : 0;
+                const hasPrice = perNightRate > 0;
+                const photos = room.photos || [];
+                const features = room.features || [];
+                const cartItem = cart.find(item => item.roomTypeID === room.roomTypeID);
+                const isSelected = !!cartItem;
+                const maxGuests = room.maxGuests || 2;
 
-                  <div className="p-5">
-                    <h3 className="font-serif text-xl text-[#1A3C34] mb-2">
-                      {room.roomTypeName || "Room"}
-                    </h3>
-                    
-                    <p className="text-[#1A3C34]/60 text-sm mb-4 line-clamp-2">
-                      {room.description || "Luxurious accommodation with premium amenities"}
-                    </p>
-
-                    <div className="flex items-center gap-4 mb-4 text-sm text-[#1A3C34]/70">
-                      <div className="flex items-center gap-1.5">
-                        <Users className="w-4 h-4" />
-                        <span>{currentLocale === 'mn' ? `${maxGuests} хүн хүртэл` : `Up to ${maxGuests} guests`}</span>
-                      </div>
-                    </div>
-
-                    {features.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {features.slice(0, 3).map((feature, idx) => (
-                          <span
-                            key={idx}
-                            className="flex items-center gap-1 text-xs text-[#1A3C34]/60 bg-[#F5F5DC] px-2 py-1 rounded"
-                          >
-                            <Check className="w-3 h-3" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="pt-4 border-t border-[#1A3C34]/10">
-                      {hasPrice ? (
-                        <>
-                          <div className="flex items-center justify-between mb-4">
-                            <div>
-                              <p className="font-serif text-2xl text-[#1A3C34] font-bold">
-                                {perNightRate.toLocaleString()}
-                              </p>
-                              <p className="text-[#1A3C34]/50 text-xs">
-                                {room.currency || "MNT"} / {t('perNight')}
-                              </p>
-                            </div>
-                            {numberOfNights > 1 && (
-                              <div className="text-right">
-                                <p className="text-sm text-[#1A3C34]/70">
-                                  {numberOfNights} {numberOfNights === 1 ? t('night') : t('nights')}
-                                </p>
-                                <p className="font-semibold text-[#1A3C34]">
-                                  {(perNightRate * numberOfNights).toLocaleString()} {room.currency || "MNT"}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          {isSelected ? (
-                            <div className="space-y-3">
-                              <div className="flex items-center justify-between bg-[#F5F5DC] rounded-lg p-3">
-                                <span className="text-sm text-[#1A3C34]">
-                                  {currentLocale === 'mn' ? 'Тоо хэмжээ' : 'Quantity'}
-                                </span>
-                                <div className="flex items-center gap-3">
-                                  <button
-                                    onClick={() => updateRoomQuantity(room.roomTypeID, -1)}
-                                    className="w-8 h-8 border border-[#1A3C34]/20 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                                  >
-                                    <Minus className="w-4 h-4" />
-                                  </button>
-                                  <span className="w-8 text-center font-semibold text-[#1A3C34]">
-                                    {cartItem.quantity}
-                                  </span>
-                                  <button
-                                    onClick={() => updateRoomQuantity(room.roomTypeID, 1)}
-                                    disabled={cartItem.quantity >= room.roomsAvailable}
-                                    className="w-8 h-8 border border-[#1A3C34]/20 rounded-full flex items-center justify-center hover:bg-white transition-colors disabled:opacity-30"
-                                  >
-                                    <Plus className="w-4 h-4" />
-                                  </button>
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => toggleRoomSelection(room)}
-                                className="w-full py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-                              >
-                                <Check className="w-5 h-5" />
-                                {currentLocale === 'mn' ? 'Сонгосон' : 'Selected'}
-                              </button>
-                            </div>
-                          ) : (
-                            <button
-                              onClick={() => toggleRoomSelection(room)}
-                              className="w-full py-3 bg-[#1A3C34] text-white font-medium rounded-lg hover:bg-[#1A3C34]/90 transition-colors"
-                            >
-                              {currentLocale === 'mn' ? 'Сонгох' : 'Select Room'}
-                            </button>
-                          )}
-                        </>
-                      ) : (
-                        <div className="text-center">
-                          <p className="font-serif text-lg text-[#1A3C34]/50">
-                            {t('contactUs')}
-                          </p>
+                return (
+                  <div key={room.roomTypeID || index} className={`bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all ${isSelected ? 'ring-2 ring-green-500' : ''}`}>
+                    <div className="relative h-48 overflow-hidden">
+                      <img src={photos[0] || placeholderImages[index % placeholderImages.length]} alt={room.roomTypeName || "Room"} className="w-full h-full object-cover" />
+                      {room.roomsAvailable && room.roomsAvailable <= 3 && (
+                        <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                          {t('onlyLeft', { count: room.roomsAvailable })}
+                        </div>
+                      )}
+                      {isSelected && (
+                        <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 font-medium">
+                          <Check className="w-3.5 h-3.5" />
+                          {currentLocale === 'mn' ? 'Сонгосон' : 'Selected'}
                         </div>
                       )}
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
 
-        {!searched && !loading && (
-          <div className="text-center py-12">
-            <p className="text-[#1A3C34]/50 text-lg">{t('selectDatesPrompt')}</p>
+                    <div className="p-5">
+                      <h3 className="font-serif text-xl text-[#1A3C34] mb-2">{room.roomTypeName || "Room"}</h3>
+
+                      <div 
+                        className="text-[#1A3C34]/60 text-sm mb-4 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: room.description || "Luxurious accommodation" }}
+                      />
+
+                      <div className="flex items-center gap-4 mb-4 text-sm text-[#1A3C34]/70">
+                        <div className="flex items-center gap-1.5">
+                          <Users className="w-4 h-4" />
+                          <span>{currentLocale === 'mn' ? `${maxGuests} хүн хүртэл` : `Up to ${maxGuests} guests`}</span>
+                        </div>
+                      </div>
+
+                      {features.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {features.slice(0, 3).map((feature, idx) => (
+                            <span key={idx} className="flex items-center gap-1 text-xs text-[#1A3C34]/60 bg-[#F5F5DC] px-2 py-1 rounded">
+                              <Check className="w-3 h-3" />{feature}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="pt-4 border-t border-[#1A3C34]/10">
+                        {hasPrice ? (
+                          <>
+                            <div className="flex items-center justify-between mb-4">
+                              <div>
+                                {/* FIX: Display the API returned rate directly without frontend multiplication */}
+                                <p className="font-serif text-2xl text-[#1A3C34] font-bold">{perNightRate.toLocaleString()}</p>
+                                <p className="text-[#1A3C34]/50 text-xs">{room.currency || "MNT"} / {t('perNight')}</p>
+                              </div>
+                              {numberOfNights > 1 && (
+                                <div className="text-right">
+                                  <p className="text-sm text-[#1A3C34]/70">{numberOfNights} {t('nights')}</p>
+                                  {/* FIX: Only multiply by nights. Cloudbeds already handled the guest multiplier in perNightRate */}
+                                  <p className="font-semibold text-[#1A3C34]">{(perNightRate * numberOfNights).toLocaleString()} {room.currency}</p>
+                                </div>
+                              )}
+                            </div>
+                            {isSelected ? (
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between bg-[#F5F5DC] rounded-lg p-3">
+                                  <span className="text-sm text-[#1A3C34]">{currentLocale === 'mn' ? 'Тоо хэмжээ' : 'Quantity'}</span>
+                                  <div className="flex items-center gap-3">
+                                    <button onClick={() => updateRoomQuantity(room.roomTypeID, -1)} className="w-8 h-8 border border-[#1A3C34]/20 rounded-full flex items-center justify-center hover:bg-white transition-colors"><Minus className="w-4 h-4" /></button>
+                                    <span className="w-8 text-center font-semibold text-[#1A3C34]">{cartItem.quantity}</span>
+                                    <button onClick={() => updateRoomQuantity(room.roomTypeID, 1)} disabled={cartItem.quantity >= room.roomsAvailable} className="w-8 h-8 border border-[#1A3C34]/20 rounded-full flex items-center justify-center hover:bg-white transition-colors disabled:opacity-30"><Plus className="w-4 h-4" /></button>
+                                  </div>
+                                </div>
+                                <button onClick={() => toggleRoomSelection(room)} className="w-full py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2">
+                                  <Check className="w-5 h-5" />{currentLocale === 'mn' ? 'Сонгосон' : 'Selected'}
+                                </button>
+                              </div>
+                            ) : (
+                              <button onClick={() => toggleRoomSelection(room)} className="w-full py-3 bg-[#1A3C34] text-white font-medium rounded-lg hover:bg-[#1A3C34]/90 transition-colors">
+                                {currentLocale === 'mn' ? 'Сонгох' : 'Select Room'}
+                              </button>
+                            )}
+                          </>
+                        ) : (
+                          <div className="text-center"><p className="font-serif text-lg text-[#1A3C34]/50">{t('contactUs')}</p></div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         )}
+        {!searched && !loading && <div className="text-center py-12"><p className="text-[#1A3C34]/50 text-lg">{t('selectDatesPrompt')}</p></div>}
       </div>
 
       <div className="py-8 text-center">
-        <a
-          href={localePrefix || "/"}
-          className="text-[#1A3C34]/50 text-sm hover:text-[#1A3C34] transition-colors"
-        >
-          &larr; {t('backToHome')}
-        </a>
+        <a href={localePrefix || "/"} className="text-[#1A3C34]/50 text-sm hover:text-[#1A3C34] transition-colors">&larr; {t('backToHome')}</a>
       </div>
 
       {cart.length > 0 && (
@@ -576,39 +448,17 @@ function BookingContent() {
                 <p className="text-orange-700 text-sm">{capacityError}</p>
               </div>
             )}
-            
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-3 text-sm text-[#1A3C34]">
-                <span className="font-medium">
-                  {totalRooms} {totalRooms === 1 
-                    ? (currentLocale === 'mn' ? 'өрөө' : 'Room') 
-                    : (currentLocale === 'mn' ? 'өрөө' : 'Rooms')}
-                </span>
+                <span className="font-medium">{totalRooms} {currentLocale === 'mn' ? 'өрөө' : 'Room(s)'}</span>
                 <span className="text-[#1A3C34]/30">•</span>
-                <span>
-                  {totalGuests} {currentLocale === 'mn' ? 'зочин' : 'Guests'}
-                </span>
+                <span>{totalGuests} {currentLocale === 'mn' ? 'зочин' : 'Guests'}</span>
                 <span className="text-[#1A3C34]/30">•</span>
-                <span>
-                  {numberOfNights} {numberOfNights === 1 
-                    ? (currentLocale === 'mn' ? 'шөнө' : 'Night') 
-                    : (currentLocale === 'mn' ? 'шөнө' : 'Nights')}
-                </span>
+                <span>{numberOfNights} {currentLocale === 'mn' ? 'шөнө' : 'Night(s)'}</span>
                 <span className="text-[#1A3C34]/30">•</span>
-                <span className="font-serif text-xl font-bold">
-                  {cartTotal.toLocaleString()} MNT
-                </span>
+                <span className="font-serif text-xl font-bold">{cartTotal.toLocaleString()} MNT</span>
               </div>
-              
-              <button
-                onClick={proceedToCheckout}
-                disabled={cartCapacity < totalGuests}
-                className={`px-8 py-3 font-serif uppercase tracking-widest text-sm rounded-lg font-semibold transition-colors whitespace-nowrap ${
-                  cartCapacity >= totalGuests
-                    ? 'bg-[#1A3C34] text-white hover:bg-[#1A3C34]/90 cursor-pointer'
-                    : 'bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed'
-                }`}
-              >
+              <button onClick={proceedToCheckout} disabled={cartCapacity < totalGuests} className={`px-8 py-3 font-serif uppercase tracking-widest text-sm rounded-lg font-semibold transition-colors whitespace-nowrap ${cartCapacity >= totalGuests ? 'bg-[#1A3C34] text-white hover:bg-[#1A3C34]/90 cursor-pointer' : 'bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed'}`}>
                 {currentLocale === 'mn' ? 'Захиалга үргэлжлүүлэх' : 'Complete Reservation'}
               </button>
             </div>
@@ -621,13 +471,8 @@ function BookingContent() {
 
 export default function BookingPage() {
   const t = useTranslations('common');
-  
   return (
-    <Suspense fallback={
-      <main className="min-h-screen bg-[#F5F5DC] flex items-center justify-center">
-        <p className="text-[#1A3C34]">{t('loading')}</p>
-      </main>
-    }>
+    <Suspense fallback={<main className="min-h-screen bg-[#F5F5DC] flex items-center justify-center"><p className="text-[#1A3C34]">{t('loading')}</p></main>}>
       <BookingContent />
     </Suspense>
   );
