@@ -36,13 +36,9 @@ export default function AvailabilityBar() {
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const localePrefix = currentLocale === 'mn' ? '/mn' : '';
   
-  const today = new Date();
-  const threeDaysLater = new Date(today);
-  threeDaysLater.setDate(threeDaysLater.getDate() + 3);
-  
-  const [checkIn, setCheckIn] = useState(getDateString(today));
-  const [checkOut, setCheckOut] = useState(getDateString(threeDaysLater));
-  const [minDate, setMinDate] = useState(getDateString(today));
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [minDate, setMinDate] = useState("");
 
   useEffect(() => {
     const now = new Date();
