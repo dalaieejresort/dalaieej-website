@@ -42,6 +42,34 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Resort',
+            name: 'Dalai Eej Resort',
+            image: 'https://dalaieej.mn/images/hero.jpg',
+            telephone: '+976-7011-1234',
+            email: 'hello@dalaieej.com',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Khuvsgul Lake National Park',
+              addressLocality: 'Khatgal',
+              addressRegion: 'Khuvsgul',
+              postalCode: '67143',
+              addressCountry: 'MN'
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: '50.48479874018978',
+              longitude: '100.18977589128245'
+            },
+            url: 'https://dalaieej.mn',
+            priceRange: '$$$'
+          }) }}
+        />
+      </head>
       <body className={`${playfair.variable} ${lato.variable} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <NavbarWrapper />

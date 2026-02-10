@@ -172,7 +172,7 @@ function BookingContent() {
         roomTypeName: room.roomTypeName,
         rateID: room.rateID,
         maxGuests: room.maxGuests || 2,
-        pricePerNight: room.totalRate || 0,
+        pricePerNight: numberOfNights > 0 ? (room.totalRate || 0) / numberOfNights : (room.totalRate || 0),
         currency: room.currency || 'MNT',
         adults: Math.min(totalAdults, room.maxGuests || 2),
         children: 0,
@@ -335,7 +335,7 @@ function BookingContent() {
               // Filter logic remains to ensure rooms are big enough for the group
               .filter(room => (room.maxGuests || 0) >= totalGuests)
               .map((room, index) => {
-                const perNightRate = room.totalRate ? Number(room.totalRate) : 0;
+                const perNightRate = room.totalRate && numberOfNights > 0 ? Number(room.totalRate) / numberOfNights : (Number(room.totalRate) || 0);
                 const hasPrice = perNightRate > 0;
                 const photos = room.photos || [];
                 const features = room.features || [];
