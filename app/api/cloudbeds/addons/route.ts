@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
     const items = Array.isArray(itemsData.data) ? itemsData.data : [];
     
     const addons = items
-      .filter((item: any) => item.isAddOn || item.itemType === 'addon' || item.availableForBookingEngine)
       .map((item: any) => ({
         id: item.itemID || item.id,
         name: item.itemName || item.name,
