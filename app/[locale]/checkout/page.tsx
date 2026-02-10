@@ -416,27 +416,38 @@ function CheckoutContent() {
                             }`}
                             onClick={() => toggleAddon(addon)}
                           >
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <div className={`w-5 h-5 rounded border flex items-center justify-center ${
-                                    isSelected ? 'bg-[#1D3C45] border-[#1D3C45]' : 'border-[#333]/30'
-                                  }`}>
-                                    {isSelected && <Check className="w-3 h-3 text-white" />}
-                                  </div>
-                                  <h4 className="font-medium text-[#333]">{addon.name}</h4>
+                            <div className="flex items-start gap-4">
+                              {addon.image && (
+                                <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                                  <img
+                                    src={addon.image}
+                                    alt={addon.name}
+                                    className="w-full h-full object-cover"
+                                  />
                                 </div>
-                                {addon.description && (
-                                  <p className="text-sm text-[#333]/60 mt-1 ml-7">{addon.description}</p>
-                                )}
-                              </div>
-                              <div className="text-right">
-                                <p className="font-semibold text-[#333]">
-                                  {addon.price.toLocaleString()} {addon.currency}
-                                </p>
-                                <p className="text-xs text-[#333]/50">
-                                  {addon.priceType === "per_night" ? t('perNight') : t('oneTime')}
-                                </p>
+                              )}
+                              <div className="flex-1 flex items-start justify-between">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <div className={`w-5 h-5 rounded border flex items-center justify-center ${
+                                      isSelected ? 'bg-[#1D3C45] border-[#1D3C45]' : 'border-[#333]/30'
+                                    }`}>
+                                      {isSelected && <Check className="w-3 h-3 text-white" />}
+                                    </div>
+                                    <h4 className="font-medium text-[#333]">{addon.name}</h4>
+                                  </div>
+                                  {addon.description && (
+                                    <p className="text-sm text-[#333]/60 mt-1 ml-7">{addon.description}</p>
+                                  )}
+                                </div>
+                                <div className="text-right">
+                                  <p className="font-semibold text-[#333]">
+                                    {addon.price.toLocaleString()} {addon.currency}
+                                  </p>
+                                  <p className="text-xs text-[#333]/50">
+                                    {addon.priceType === "per_night" ? t('perNight') : t('oneTime')}
+                                  </p>
+                                </div>
                               </div>
                             </div>
 
