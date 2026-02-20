@@ -12,16 +12,16 @@ export default function Footer() {
   const localePrefix = locale === 'mn' ? '/mn' : '';
 
   const experienceLinks = [
-    { key: "stay", href: "/accommodation" },
-    { key: "dining", href: "/dining" },
-    { key: "wellness", href: "/wellness" },
-    { key: "adventures", href: "/experiences" },
+    { key: "stay", href: "#" },
+    { key: "dining", href: "#" },
+    { key: "wellness", href: "#" },
+    { key: "adventures", href: "#" },
   ];
 
   const resortLinks = [
-    { key: "about", href: "/about" },
-    { key: "gallery", href: "/gallery" },
-    { key: "faq", href: "/faq" },
+    { key: "about", href: "#" },
+    { key: "gallery", href: "#" },
+    { key: "faq", href: "#" },
   ];
 
   return (
@@ -49,9 +49,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {experienceLinks.map((item) => (
-                <li key={item.href}>
+                <li key={item.key}>
                   <Link
-                    href={`${localePrefix}${item.href}`}
+                    href="#"
                     className="font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                   >
                     {t(item.key)}
@@ -68,9 +68,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {resortLinks.map((item) => (
-                <li key={item.href}>
+                <li key={item.key}>
                   <Link
-                    href={`${localePrefix}${item.href}`}
+                    href="#"
                     className="font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                   >
                     {t(item.key)}

@@ -126,13 +126,16 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     transition={{ delay: i * 0.1 + 0.1 }}
                   >
                     <Link
-                      href={`${isMongolian ? "/mn" : ""}${item.href}`}
-                      onClick={onClose}
+                      href="#"
+                      onClick={(e) => { e.preventDefault(); }}
                       onMouseEnter={() => setHoveredLink(item.id)}
                       onMouseLeave={() => setHoveredLink(null)}
                       className="font-serif text-4xl md:text-6xl text-[#F5F5DC]/60 hover:text-white transition-colors tracking-wide block"
                     >
                       {isMongolian ? item.mn : item.label}
+                      <span className="ml-3 font-body text-xs md:text-sm tracking-[0.15em] uppercase text-[#F5F5DC]/40 align-middle">
+                        {isMongolian ? "Тун удахгүй" : "Coming Soon"}
+                      </span>
                     </Link>
                   </motion.div>
                 ))}
@@ -158,8 +161,8 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                       transition={{ delay: 0.6 + (i * 0.1) }}
                     >
                       <Link
-                        href={`${isMongolian ? "/mn" : ""}${item.href}`}
-                        onClick={onClose}
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); }}
                         className="group flex items-center gap-2 font-sans text-xs md:text-sm tracking-[0.2em] uppercase text-[#F5F5DC]/80 hover:text-white transition-colors"
                       >
                         <Icon className="w-4 h-4 text-[#F5F5DC]/60 group-hover:text-white transition-colors" />
