@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
 import NavigationOverlay from "./layout/NavigationOverlay";
 
@@ -56,9 +57,16 @@ export default function Navbar() {
 
             <Link 
               href={localePrefix || "/"}
-              className="absolute left-1/2 -translate-x-1/2 font-serif text-xl md:text-3xl whitespace-nowrap text-warm-beige hover:text-white transition-colors"
+              className="absolute left-1/2 -translate-x-1/2 hover:opacity-90 transition-opacity"
             >
-              Dalai Eej
+              <Image
+                src="/images/logo-white.png"
+                alt="Dalai Eej Resort"
+                width={180}
+                height={50}
+                className="h-10 md:h-12 w-auto"
+                priority
+              />
             </Link>
 
             <div className="flex items-center gap-4 md:gap-6">

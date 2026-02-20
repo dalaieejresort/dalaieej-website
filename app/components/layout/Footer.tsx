@@ -31,8 +31,12 @@ export default function Footer() {
 
           {/* Column 1: Brand & Weather */}
           <div className="lg:col-span-1">
-            <Link href={localePrefix || "/"} className="font-serif text-3xl text-warm-beige hover:text-white transition-colors">
-              Dalai Eej
+            <Link href={localePrefix || "/"} className="inline-block hover:opacity-90 transition-opacity">
+              <img
+                src="/images/logo-white.png"
+                alt="Dalai Eej Resort"
+                className="h-12 w-auto"
+              />
             </Link>
             <p className="mt-4 font-body text-sm text-warm-beige/70 leading-relaxed max-w-xs">
               {t("bio")}
