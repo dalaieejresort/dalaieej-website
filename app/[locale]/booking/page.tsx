@@ -113,15 +113,21 @@ function BookingContent() {
       setPromoCode(urlPromo);
       setAppliedPromo(urlPromo);
     }
-    if (urlAdults) setTotalAdults(parseInt(urlAdults) || 2);
-    if (urlChildren) setTotalChildren(parseInt(urlChildren) || 0);
+
+    // Fallback values for parsing
+    const parsedAdults = urlAdults ? parseInt(urlAdults) : 2;
+    const parsedChildren = urlChildren ? parseInt(urlChildren) : 0;
+
+    if (urlAdults) setTotalAdults(parsedAdults);
+    if (urlChildren) setTotalChildren(parsedChildren);
 
     if (urlCheckin && urlCheckout) {
       setNumberOfNights(calculateNights(urlCheckin, urlCheckout));
-      fetchAvailability(urlCheckin, urlCheckout, urlPromo || "", parseInt(urlAdults) || 2, parseInt(urlChildren) || 0);
+      // Now TypeScript knows these are safe numbers
+      fetchAvailability(urlCheckin, urlCheckout, urlPromo || "", parsedAdults, parsedChildren);
     }
   }, [searchParams]);
-
+  
   // RESTORED: We now pass the REAL guest count to the API.
   const fetchAvailability = async (checkInDate: string, checkOutDate: string, promo: string = "", adults: number = totalAdults, children: number = totalChildren) => {
     setLoading(true);

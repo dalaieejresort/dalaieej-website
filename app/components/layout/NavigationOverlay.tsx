@@ -13,35 +13,35 @@ const mainNavItems = [
     href: "/accommodation", 
     label: "Stay", 
     mn: "Өргөө",
-    image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&auto=format&fit=crop&q=80"
+    image: "/images/nav-overlay/accommodation.jpg"
   },
   { 
     id: "dining",
     href: "/dining", 
     label: "Dining", 
     mn: "Зоог",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80"
+    image: "/images/nav-overlay/dining.jpg"
   },
   { 
     id: "wellness",
     href: "/wellness", 
     label: "Wellness", 
     mn: "Амрахуй",
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&auto=format&fit=crop&q=80"
+    image: "/images/nav-overlay/wellness.jpg"
   },
   { 
     id: "adventure",
     href: "/experiences", 
     label: "Adventures", 
     mn: "Адал явдал",
-    image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&auto=format&fit=crop&q=80"
+    image: "images/nav-overlay/adventure.jpg"
   },
   { 
     id: "about",
     href: "/about", 
     label: "Our Story", 
     mn: "Бидний тухай",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80"
+    image: "/images/nav-overlay/about.jpg"
   },
 ];
 
