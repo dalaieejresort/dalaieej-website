@@ -102,7 +102,7 @@ export default function Footer() {
                   className="flex items-center gap-3 font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                 >
                   <Phone className="w-4 h-4 text-warm-beige/50 flex-shrink-0" />
-                  +976 7011 1234
+                  +976 9500 5595
                 </a>
               </li>
               <li>
@@ -111,7 +111,7 @@ export default function Footer() {
                   className="flex items-center gap-3 font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4 text-warm-beige/50 flex-shrink-0" />
-                  info@dalaieej.mn
+                  hello@dalaieej.com
                 </a>
               </li>
             </ul>
