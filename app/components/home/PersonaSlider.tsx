@@ -15,14 +15,14 @@ const personas = [
       description: "Refined comfort in the wild. A peaceful escape from the capital, with zero compromises.",
       // EN Image: Interior focus (Safety/Comfort)
       image: "/images/personas/mergen-view.jpg",
-      href: "/suites"
+      href: /*"/suites"*/ "/#"
     },
     mn: { 
       title: "ЭРХЭМСЭГ АЯЛАЛ",
       description: "Тав тух, аюулгүй байдал, тансаг зэрэглэл. Таны гэр бүлд зориулсан дээд зэрэглэлийн үйлчилгээ.",
       // MN Image: Exterior/Grandeur focus (Status/Nature)
       image: "/images/personas/neo-nomad.jpg",
-      href: "/suites"
+      href: /*"/suites"*/ "/#"
     }
   },
   {
@@ -32,14 +32,14 @@ const personas = [
       description: "For those who have been everywhere. Experience the untamed Taiga and the raw beauty of the Blue Pearl.",
       // EN Image: Moody, dramatic, "National Geographic" style
       image: "/images/personas/nomad.jpg",
-      href: "/experiences"
+      href: /*"/experiences"*/ "/#"
     },
     mn: { 
       title: "ХӨХ СУВДЫН АЯЛАЛ",
       description: "Хязгааргүй эрх чөлөө, онгон байгаль. Морьт аялал, явган алхалт, байгалийн гэрэл зураг.",
       // MN Image: Bright, sunny, "Holiday" style
       image: "/images/personas/inner-Mongolians.jpg",
-      href: "/experiences"
+      href: /*"/experiences"*/ "/#"
     }
   },
   {
@@ -49,14 +49,14 @@ const personas = [
       description: "Silence the noise. No Zoom calls, just crackling fires, lake sounds, and deep focus.",
       // EN Image: Solitude, person reading, calm water
       image: "/images/personas/blue-pearl-birds.jpg",
-      href: "/retreats"
+      href: /*"/retreats"*/ "/#"
     },
     mn: { 
       title: "ХИЙМОРЬ СЭРГЭЭХ АЯН",
       description: "Амжилттай яваа эрхмүүдийн алжаал тайлах цэг. Чимээгүй орчин, хувийн орон зай.",
       // MN Image: Powerful stance, looking at horizon (Revitalization)
       image: "/images/personas/hiimori.jpg",
-      href: "/retreats"
+      href: /*"/retreats"*/ "/#"
     }
   },
   {
@@ -66,14 +66,14 @@ const personas = [
       description: "Intimate escapes designed for two. Private dining, sunset wine, and zero interruptions.",
       // EN Image: Wine glasses, dim lighting, intimate
       image: "/images/personas/paradise.jpg",
-      href: "/offers"
+      href: /*"/offers"*/ "/#"
     },
     mn: { 
       title: "ХАЙРЫН ДИВААЖИН",
       description: "Хоёулаа төгс цагийг өнгөрүүлэх. Хувийн оройн хоол, жаргах нар, нандин мөчүүд.",
       // MN Image: Couple walking together, golden hour
       image: "/images/personas/paradise.jpg",
-      href: "/offers"
+      href: /*"/offers"*/ "/#"
     }
   }
 ];

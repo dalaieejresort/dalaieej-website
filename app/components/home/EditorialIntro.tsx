@@ -41,7 +41,7 @@ export default function EditorialIntro() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <Link
-            href={`${localePrefix}/about`}
+            href=/*{`${localePrefix}/about`}*/{`${localePrefix}/#`}
             className="inline-flex items-center gap-2 font-body text-lake-blue font-medium hover:gap-4 transition-all group"
           >
             <span className="border-b border-lake-blue/30 group-hover:border-lake-blue transition-colors">

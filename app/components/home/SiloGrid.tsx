@@ -8,28 +8,28 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 const silos = [
   {
     id: "stay",
-    href: /*"/accommodation",*/ "#"
+    href: /*"/accommodation",*/ "#",
     en: "Sanctuary",
     mn: "Өргөө",
     image: "/silogrid/sanctuary.jpg"
   },
   {
     id: "dining",
-    href: /*"/dining",*/ "#"
+    href: /*"/dining",*/ "#",
     en: "Hearth",
     mn: "Гал голомт",
     image: "/silogrid/hearth.jpg"
   },
   {
     id: "wellness",
-    href: /*"/wellness",*/ "#"
+    href: /*"/wellness",*/ "#",
     en: "Stillness",
     mn: "Анир",
     image: "/silogrid/wellness.jpg"
   },
   {
     id: "adventure",
-    href: /*"/experiences",*/ "#"
+    href: /*"/experiences",*/ "#",
     en: "Wilderness",
     mn: "Хөвч",
     image: "/silogrid/wilderness.jpg"

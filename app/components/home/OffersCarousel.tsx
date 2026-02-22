@@ -25,7 +25,6 @@ const offers = [
       title: "Эрдэнэт 50 Жил", 
       description: "Эрдэнэт хотын оршин суугчдад зориулсан баярын тусгай хөнгөлөлт." 
     },
-    // Replace with: "/specialoffers/erdenet50.jpg"
   image: "/images/specialoffers/2022-1.jpg"
   },
   {
@@ -40,7 +39,6 @@ const offers = [
       title: "Зун 2026 Эрт Захиалга", 
       description: "3-р сарын 31-ээс өмнө захиалаад 2025 оны үнээр амраарай." 
     },
-    // Replace with: "/specialoffers/earlybird.jpg"
   image: "images/specialoffers/early-bird.jpg"
   },
   {
@@ -55,7 +53,6 @@ const offers = [
       title: "Гэр Бүлийн Аялал", 
       description: "Гэр бүлийн том байшин + хүүхдийн тоглоомын хөтөлбөр." 
     },
-    // Image: Happy kids running or a family by the lake
     image: "images/specialoffers/families.jpg"
   },
   {
@@ -70,7 +67,6 @@ const offers = [
       title: "Намуухан Нуурын Эрэгт", 
       description: "7-р сарын их хөл хөдөлгөөнөөс урьтаж тухлан амраарай." 
     },
-    // Replace with: "/specialoffers/couples.jpg"
   image: "/images/specialoffers/couples-package.jpg"
   }
 ];
@@ -175,7 +171,7 @@ export default function OffersCarousel() {
                 </p>
 
                 <Link
-                  href={`${localePrefix}/offers`}
+                  href=/*{`${localePrefix}/offers`}*/{`${localePrefix}/#`}
                   className="group inline-flex items-center gap-2 text-sm tracking-widest uppercase text-[#3A4D3F] border-b border-[#3A4D3F]/30 pb-1 hover:text-[#3A4D3F]/70 hover:border-[#3A4D3F]/70 transition-all duration-300"
                 >
                   <span>{locale === 'mn' ? "Дэлгэрэнгүй" : "View Offer"}</span>
