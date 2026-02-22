@@ -98,7 +98,7 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="tel:+97670111234" 
+                  href="tel:+97695005595" 
                   className="flex items-center gap-3 font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                 >
                   <Phone className="w-4 h-4 text-warm-beige/50 flex-shrink-0" />
@@ -107,7 +107,7 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="mailto:info@dalaieej.mn" 
+                  href="mailto:hello@dalaieej.com" 
                   className="flex items-center gap-3 font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4 text-warm-beige/50 flex-shrink-0" />
