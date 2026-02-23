@@ -49,7 +49,7 @@ const content = {
 };
 
 const scrapbookImages = [
-  { src: "/images/deer-1,png", alt: "Khuvsgul Lake", rotate: "rotate-2", size: "w-64 h-80" },
+  { src: "/images/deer-1.png", alt: "Khuvsgul Lake", rotate: "rotate-2", size: "w-64 h-80" },
   { src: "/images/water-1.png", alt: "Wooden cabin", rotate: "-rotate-3", size: "w-56 h-72" },
   { src: "/images/gramps.jpg", alt: "Forest path", rotate: "rotate-1", size: "w-52 h-64" },
 ];

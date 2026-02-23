@@ -1,4 +1,18 @@
 {
+  "metadata": {
+    "index": {
+      "title": "Dalai Eej | Heritage Site & Resort at Lake Khuvsgul, Mongolia",
+      "description": "A lakeside sanctuary dedicated to the heritage of the Blue Pearl. Experience authentic Mongolian hospitality in wood-fired cabins on the shores of Lake Khuvsgul."
+    },
+    "story": {
+      "title": "Our Heritage & Story | Dalai Eej Resort",
+      "description": "From pioneer camp beginnings to a refined heritage refuge. Discover the history and mission behind Dalai Eej on the Khuvsgul shoreline."
+    },
+    "planner": {
+      "title": "Mongolia Itinerary Planner | Gobi to Khuvsgul Heritage Trail",
+      "description": "Plan your journey across the Great Steppe. A curated guide for travelers seeking the intersection of Mongolian history and nature."
+    }
+  },
   "nav": {
     "home": "Home",
     "rooms": "Rooms",
@@ -18,32 +32,33 @@
   },
   "about": {
     "hero": {
-      "title": "Welcome to Dalai Eej Resort",
-      "subtitle": "A sanctuary of peace on the shores of Mongolia's Blue Pearl"
+      "title": "A Heritage Site on the Blue Pearl",
+      "subtitle": "Preserving the spirit of Khuvsgul through timber, tradition, and time."
     },
     "story": {
-      "title": "Our Story",
-      "content": "Nestled on the pristine shores of Khuvsgul Lake National Park, Dalai Eej Resort is a homegrown destination born from a deep love for Mongolia's untouched wilderness. We are dedicated to elevating Mongolian hospitality standards while staying true to our authentic roots. Every detail of our resort reflects our commitment to showcasing the natural beauty and rich cultural heritage of this extraordinary region."
+      "title": "Our Heritage",
+      "subtitle": "From Pioneer Beginnings to a Lakeside Sanctuary",
+      "content": "Dalai Eej is more than a destination; it is a legacy. Rooted in the history of Khuvsgul’s early days, our resort stands as a testament to the enduring beauty of the Mongolian wilderness. What began as a pioneering spirit on these shores has evolved into a heritage site where the stories of the past meet the quiet stillness of the present."
     },
     "mission": {
-      "label": "Our Mission",
-      "quote": "Our goal is to showcase the unique, pristine value of our national park to the world.",
-      "content": "We strive to be the leading hospitality destination in the Khuvsgul region, bridging the warmth of local traditions with the comfort of modern amenities. Our mission is to create unforgettable experiences that connect guests with the spirit of Mongolia."
+      "label": "Our Stewardship",
+      "quote": "To protect the sanctity of the shoreline and share the honest beauty of our home with the world.",
+      "content": "We are the keepers of this corner of the National Park. Our mission is to honor Mongolian heritage by providing a stay that is both raw and refined—where the warmth of a wood-burning stove and the clarity of the lake water remind us of what is true and lasting."
     },
     "experience": {
-      "title": "The Experience",
-      "subtitle": "Discover what awaits you at Dalai Eej Resort",
+      "title": "The Heritage Experience",
+      "subtitle": "A sensory journey through the textures of the north",
       "nature": {
-        "title": "Peaceful Nature",
-        "desc": "Wake up to crystal-clear waters, ancient forests, and pristine mountain landscapes untouched by time."
+        "title": "Living Landscapes",
+        "desc": "An immersive encounter with ancient larch forests and the rhythmic pulse of the crystal-clear shoreline."
       },
       "culture": {
-        "title": "Authentic Culture",
-        "desc": "Immerse yourself in genuine Mongolian hospitality, traditions, and the timeless wisdom of nomadic life."
+        "title": "Nomadic Legacy",
+        "desc": "Connect with the timeless wisdom of Khuvsgul’s people through authentic hospitality and local craftsmanship."
       },
       "escape": {
-        "title": "A True Escape",
-        "desc": "Step away from the busy world and reconnect with yourself in one of Earth's last great wildernesses."
+        "title": "A Timeless Refuge",
+        "desc": "A place to disconnect from the digital noise and re-anchor yourself in the elemental truth of the Earth."
       }
     },
     "cta": {
@@ -54,22 +69,22 @@
   },
   "amenities": {
     "hero": {
-      "title": "The Ultimate Nature Escape",
-      "subtitle": "Situated on the pristine shores of Lake Khuvsgul, Dalai Eej Resort offers a sanctuary of comfort in the heart of the National Park."
+      "title": "A Sanctuary on the Shoreline",
+      "subtitle": "Situated on the pristine shores of Lake Khuvsgul, Dalai Eej offers a refuge of comfort in the heart of the National Park."
     },
     "keyAmenities": {
       "title": "Key Amenities",
       "items": {
-        "yurts": "Luxury & Standard Yurts with Lake Views",
+        "yurts": "Heritage Cabins & Yurts with Lake Views",
         "shoreline": "Private Shoreline Access",
         "restaurant": "On-site Restaurant with Panoramic Deck",
-        "sauna": "Traditional Sauna & Shower Facilities",
+        "sauna": "Traditional Sauna & Wellness Facilities",
         "tours": "Daily Guided Tours & Horse Trekking"
       }
     },
     "dining": {
       "title": "Flavors of the Steppe",
-      "desc": "Experience warm Mongolian hospitality. From hearty Khorkhog (stone-cooked meat) to fresh European favorites, our restaurant serves delicious meals prepared with local ingredients. Enjoy your morning coffee while watching the sunrise over the lake.",
+      "desc": "Experience warm Mongolian hospitality. From hearty Khorkhog to fresh European favorites, our restaurant serves delicious meals prepared with local ingredients. Enjoy your morning coffee while watching the sunrise over the lake.",
       "cta": "View Menu"
     },
     "activities": {
@@ -85,7 +100,7 @@
     "inclusions": {
       "title": "Your Stay Includes",
       "breakfast": "Daily Breakfast Buffet",
-      "firewood": "Daily Firewood Basket (for Yurt stoves)",
+      "firewood": "Daily Firewood (for Cabin stoves)",
       "parking": "Secure On-site Parking",
       "security": "24/7 Security Service",
       "concierge": "Concierge for Tour Bookings",
@@ -96,7 +111,7 @@
     "testimonials": {
       "title": "Guest Experiences",
       "review1": {
-        "text": "Waking up to the sound of the waves and the smell of pine trees was magical. The yurt was cozy and warm even on chilly nights.",
+        "text": "Waking up to the sound of the waves and the smell of pine trees was magical. The heritage cabin was cozy and warm even on chilly nights.",
         "author": "Sarah J., USA"
       },
       "review2": {
@@ -129,34 +144,34 @@
     }
   },
   "hero": {
-    "title": "Dalai Eej Resort",
-    "subtitle": "Experience tranquility in the heart of Mongolia",
+    "title": "Dalai Eej",
+    "subtitle": "A Heritage Site in the Heart of Mongolia",
     "cta": "Discover More"
   },
   "home": {
     "services": {
       "title": "Resort Services",
       "subtitle": "Everything you need for your stay",
-      "service1_title": "5-Star Service",
-      "service1_desc": "World-class hospitality",
+      "service1_title": "Heritage Hospitality",
+      "service1_desc": "Authentic local service",
       "service2_title": "Prime Location",
-      "service2_desc": "Heart of Mongolian wilderness",
+      "service2_desc": "Heart of the National Park",
       "service3_title": "Private Tours",
       "service3_desc": "Exclusive guided experiences",
       "service4_title": "Flexible Booking",
       "service4_desc": "Easy reservations"
     },
     "featured_rooms": {
-      "title": "Featured Rooms",
-      "subtitle": "Discover our carefully curated accommodations",
-      "room1_name": "Standard Ger",
-      "room1_desc": "Traditional Mongolian experience with authentic furnishings",
+      "title": "Heritage Accommodations",
+      "subtitle": "Discover our carefully curated selection of lakeside stays",
+      "room1_name": "Lakeside Cabin",
+      "room1_desc": "Traditional wood-fired experience with authentic furnishings",
       "room1_price": "From $300",
-      "room2_name": "Deluxe Ger",
+      "room2_name": "Ensuite Suite",
       "room2_desc": "Added comfort with stunning lake views",
       "room2_price": "From $450",
-      "room3_name": "Lakeside Villa",
-      "room3_desc": "Panoramic lake views with private terrace",
+      "room3_name": "Grand Peninsula Suite",
+      "room3_desc": "Commanding lake views with a private terrace",
       "room3_price": "From $600"
     }
   },
@@ -178,14 +193,14 @@
     "brand": "Brand"
   },
   "cta": {
-    "title": "Ready to Experience Paradise?",
-    "subtitle": "Book your unforgettable stay at Dalai Eej Resort",
-    "viewRooms": "View Rooms",
+    "title": "Ready to Experience the Blue Pearl?",
+    "subtitle": "Book your unforgettable stay at Dalai Eej Heritage Site",
+    "viewRooms": "View Stays",
     "bookNow": "Book Now"
   },
   "map": {
-    "title": "Explore Our Resort",
-    "subtitle": "Click on the hotspots to discover what awaits you",
+    "title": "Explore the Peninsula",
+    "subtitle": "Discover the heritage landmarks of our shoreline",
     "hint": "Click the + icons to learn more about each area",
     "tabs": {
       "accommodation": "Buildings & Accommodation",
@@ -245,21 +260,21 @@
     }
   },
   "discover": {
-    "rooms": "The Gers",
+    "rooms": "The Stays",
     "dining": "Dining & Bar",
     "wellness": "Wellness",
     "experiences": "Experiences"
   },
   "offers": {
-    "title": "Special Offers",
-    "subtitle": "Summer 2026 exclusive packages for unforgettable experiences",
+    "title": "Heritage Packages",
+    "subtitle": "Summer 2026 exclusive experiences on the Khuvsgul shoreline",
     "viewOffer": "View Offer",
     "bookNow": "Book Now",
     "checkAvailability": "Check Availability",
     "contactBook": "Contact to Book",
     "couples": {
-      "title": "Romantic Lakeview Escape",
-      "desc": "A private yurt for two, secluded from the crowd with uninterrupted views of the lake.",
+      "title": "Romantic Shoreline Escape",
+      "desc": "A private cabin for two, secluded from the crowd with uninterrupted views of the lake.",
       "offer": "15% Off + Welcome Wine & Chocolates"
     },
     "erdenet": {
@@ -269,12 +284,12 @@
     },
     "pioneer": {
       "title": "Nostalgia Returns",
-      "desc": "Did you spend your childhood summers at a Khuvsgul pioneer camp? Relive the memories and show your own kids the magic of the lake.",
+      "desc": "Did you spend your childhood summers at a Khuvsgul pioneer camp? Relive the memories at our heritage site.",
       "offer": "Free 'Campfire' Dinner Package + Souvenir"
     },
     "early": {
       "title": "Summer 2026 Early Bird",
-      "desc": "Secure your favorite cabin or yurt before the rush. Planning ahead pays off.",
+      "desc": "Secure your favorite heritage cabin before the seasonal rush.",
       "offer": "Prepay & Save 15%"
     },
     "longstay": {
@@ -284,29 +299,29 @@
     },
     "family": {
       "title": "The Big Family Reunion",
-      "desc": "Traveling with friends or extended family? Book neighboring yurts to keep the group together.",
+      "desc": "Traveling with extended family? Book neighboring cabins to keep the legacy alive together.",
       "offer": "10% Off when booking 2+ Units"
     },
     "tourOperators": {
       "label": "Industry Partners",
       "title": "For Tour Operators & Agencies",
-      "desc": "Looking to partner with us? We invite eligible tour operators to experience Dalai Eej Resort firsthand.",
+      "desc": "Looking to partner with us? We invite eligible operators to experience our heritage firsthand.",
       "button": "Request a FAM Trip"
     }
   },
   "fam": {
     "hero": {
       "title": "Partner Familiarization (FAM) Tour",
-      "subtitle": "We believe in our product and want our partners to see it firsthand. Experience Dalai Eej Resort and discover why our guests keep coming back."
+      "subtitle": "Experience the legacy of Dalai Eej firsthand and discover why our guests return year after year."
     },
     "benefits": {
       "complimentary": {
         "title": "100% Complimentary Stay",
-        "desc": "Eligible tour operators receive a fully complimentary stay to experience our resort."
+        "desc": "Eligible tour operators receive a fully complimentary stay to experience our heritage site."
       },
       "verification": {
         "title": "Subject to Verification",
-        "desc": "All applications are reviewed to verify legitimate tour operator status and availability."
+        "desc": "All applications are reviewed to verify legitimate tour operator status."
       },
       "blackout": {
         "title": "Blackout Dates Apply",
@@ -323,10 +338,10 @@
       "requestedDates": "Requested Dates",
       "datesPlaceholder": "e.g., June 15-18, 2026",
       "clientele": "Tell us about your clientele",
-      "clientelePlaceholder": "Describe your typical guests, markets you serve, and how you might promote Dalai Eej Resort...",
+      "clientelePlaceholder": "Describe your typical guests and how you might promote our heritage stay...",
       "submit": "Apply for Promo Code",
-      "submitted": "Thank you for your application! Our team will review and contact you within 5 business days.",
-      "disclaimer": "By submitting this form, you confirm that you represent a legitimate tour operator or travel agency."
+      "submitted": "Thank you for your application! Our team will contact you within 5 business days.",
+      "disclaimer": "By submitting this form, you confirm that you represent a legitimate travel agency."
     }
   },
   "booking": {
@@ -335,13 +350,13 @@
     "checkIn": "Check-in",
     "checkOut": "Check-out",
     "guests": "Guests",
-    "searchRooms": "Search Rooms",
-    "findRoom": "Find Your Perfect Room",
+    "searchRooms": "Search Stays",
+    "findRoom": "Find Your Perfect Stay",
     "selectDates": "Select your dates to view available accommodations",
-    "noRooms": "No rooms available for the selected dates.",
+    "noRooms": "No stays available for the selected dates.",
     "tryDifferent": "Please try different dates.",
-    "selectDatesPrompt": "Select your dates above to see available rooms",
-    "loading": "Loading available rooms...",
+    "selectDatesPrompt": "Select your dates above to see available heritage cabins",
+    "loading": "Loading available stays...",
     "perNight": "Per Night",
     "totalFor": "Total for",
     "night": "Night",
@@ -358,14 +373,14 @@
     "promoApplied": "Promo code applied!"
   },
   "rooms": {
-    "title": "Our Accommodations",
-    "subtitle": "Choose from our carefully curated selection of rooms",
+    "title": "Our Heritage Stays",
+    "subtitle": "Choose from our selection of wood-fired cabins and suites",
     "grandSuite": {
       "title": "Grand Peninsula Suite",
       "subtitle": "The resort's premier residence",
       "capacity": "Sleeps up to 5",
       "bedding": "2 Double Beds + 1 Single Bed",
-      "description": "Designed for families or groups seeking a shared sanctuary, this suite offers the resort's most commanding vantage point. Spacious residences feature panoramic windows framing the lake, ensuring the view is never more than a glance away.",
+      "description": "Designed for those seeking a shared sanctuary, this suite offers our most commanding vantage point. Panoramic windows frame the lake, ensuring the heritage of the Blue Pearl is always in view.",
       "features": [
         "Panoramic Lake Views",
         "Private in-room toilet & washbasin",
@@ -379,7 +394,7 @@
       "subtitle": "Generous space for groups",
       "capacity": "Sleeps up to 4",
       "bedding": "2 Double Beds",
-      "description": "A generous cabin designed for groups who value shared space. Offers the convenience of two large beds in a single private setting with a private veranda.",
+      "description": "A generous cabin designed for groups. Offers the convenience of private facilities with a secluded veranda overlooking the larch forests.",
       "features": [
         "Private in-room toilet & washbasin",
         "Choice of wood stove or electric heating",
@@ -459,8 +474,7 @@
     "enterBookingId": "Enter your booking ID",
     "amount": "Amount to Pay (MNT)",
     "enterAmount": "Enter amount in MNT",
-    "generatePayment": "Generate Payment",
-    "generating": "Generating...",
+    "generatePayment": "Generating...",
     "payWithApp": "Pay with Banking App",
     "tapBank": "Tap your bank to open the app and complete payment",
     "scanQR": "Scan QR Code",

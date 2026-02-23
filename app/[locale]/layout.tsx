@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lato, Pinyon_Script, Merriweather } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/request';
 import "../globals.css";
 import NavbarWrapper from "../components/NavbarWrapper";
 import Footer from "../components/layout/Footer";
 
+// Font Configurations
 const playfair = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
@@ -35,10 +36,43 @@ const merriweather = Merriweather({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Dalai Eej Resort | Luxury Hotel in Mongolia",
-  description: "Experience the timeless beauty of Mongolia in unparalleled luxury at Dalai Eej Resort. Book your stay today.",
-};
+// Dynamic SEO & Social Media Metadata
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata.index' });
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    metadataBase: new URL('https://dalaieej.com'),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: 'https://dalaieej.com',
+      siteName: 'Dalai Eej Resort',
+      locale: locale === 'mn' ? 'mn_MN' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/images/og-heritage.jpg', 
+          width: 1200,
+          height: 630,
+          alt: 'Dalai Eej Heritage Resort at Lake Khuvsgul',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: ['/images/og-heritage.jpg'],
+    },
+    icons: {
+      icon: '/favicon.ico',
+      apple: '/apple-touch-icon.png',
+    },
+  };
+}
 
 interface Props {
   children: React.ReactNode;
@@ -62,10 +96,10 @@ export default async function LocaleLayout({ children, params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Resort',
-            name: 'Dalai Eej Resort',
-            image: 'https://dalaieej.mn/images/hero.jpg',
+            name: 'Dalai Eej Heritage Site',
+            image: 'https://dalaieej.com/images/hero.jpg',
             telephone: '+976-7011-1234',
-            email: 'hello@dalaieej.com',
+            email: 'info@dalaieej.mn',
             address: {
               '@type': 'PostalAddress',
               streetAddress: 'Khuvsgul Lake National Park',
@@ -79,7 +113,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               latitude: '50.48479874018978',
               longitude: '100.18977589128245'
             },
-            url: 'https://dalaieej.mn',
+            url: 'https://dalaieej.com',
             priceRange: '$$$'
           }) }}
         />
