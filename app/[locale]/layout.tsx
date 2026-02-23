@@ -8,7 +8,7 @@ import "../globals.css";
 import NavbarWrapper from "../components/NavbarWrapper";
 import Footer from "../components/layout/Footer";
 
-// Font Configurations
+// Font Configurations for the "Heritage" Aesthetic
 const playfair = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
@@ -36,7 +36,7 @@ const merriweather = Merriweather({
   display: "swap",
 });
 
-// Dynamic SEO & Social Media Metadata
+// Dynamic SEO, Social Media, and Favicon Metadata
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata.index' });
@@ -45,6 +45,28 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('title'),
     description: t('description'),
     metadataBase: new URL('https://dalaieej.com'),
+
+    // Favicon and App Icons (Mapping files from your /public folder)
+    icons: {
+      icon: [
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      ],
+      shortcut: '/favicon.ico',
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+      other: [
+        {
+          rel: 'mask-icon',
+          url: '/safari-pinned-tab.svg',
+          color: '#5bbad5',
+        },
+      ],
+    },
+    manifest: '/site.webmanifest',
+
+    // Social Media Previews
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -67,10 +89,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('description'),
       images: ['/images/og-heritage.jpg'],
     },
-    icons: {
-      icon: '/favicon.ico',
-      apple: '/apple-touch-icon.png',
-    },
   };
 }
 
@@ -91,6 +109,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        {/* Schema.org Markup for Search Engines */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
