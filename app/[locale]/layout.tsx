@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: t('description'),
     metadataBase: new URL('https://dalaieej.com'),
 
-    // Favicon and App Icons (Matched to your specific generated files)
+    // Favicon and App Icons 
     icons: {
       icon: [
         { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     manifest: '/site.webmanifest',
 
-    // Social Media Previews (Open Graph)
+    // Social Media Previews (Absolute URLs for WhatsApp)
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -69,10 +69,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: 'website',
       images: [
         {
-          url: '/images/og-heritage.jpg', 
+          url: 'https://dalaieej.com/images/og-heritage.jpg', 
           width: 1200,
           height: 630,
           alt: 'Dalai Eej Heritage Resort at Lake Khuvsgul',
+          type: 'image/jpeg',
         },
       ],
     },
@@ -80,7 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
-      images: ['/images/og-heritage.jpg'],
+      images: ['https://dalaieej.com/images/og-heritage.jpg'],
     },
   };
 }
@@ -108,7 +109,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Resort',
-            name: 'Dalai Eej | Heritage Site',
+            name: 'Dalai Eej Heritage Site',
             image: 'https://dalaieej.com/images/hero.jpg',
             telephone: '+976-9500-5595',
             email: 'hello@dalaieej.com',
