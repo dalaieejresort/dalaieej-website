@@ -108,10 +108,10 @@ export default async function LocaleLayout({ children, params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Resort',
-            name: 'Dalai Eej Heritage Site',
+            name: 'Dalai Eej | Heritage Site',
             image: 'https://dalaieej.com/images/hero.jpg',
-            telephone: '+976-7011-1234',
-            email: 'info@dalaieej.mn',
+            telephone: '+976-9500-5595',
+            email: 'hello@dalaieej.com',
             address: {
               '@type': 'PostalAddress',
               streetAddress: 'Khuvsgul Lake National Park',
