@@ -4,6 +4,35 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Legacy Slugs to Home Page
+      { source: '/about', destination: '/', permanent: true },
+      { source: '/catalogue', destination: '/', permanent: true },
+      { source: '/reserve', destination: '/', permanent: true },
+      { source: '/secret', destination: '/', permanent: true },
+      { source: '/services', destination: '/', permanent: true },
+      { source: '/rooms-and-facilities', destination: '/', permanent: true },
+      { source: '/gallery', destination: '/', permanent: true },
+      { source: '/faqs', destination: '/', permanent: true },
+      { source: '/getting-here-mn', destination: '/', permanent: true },
+      { source: '/home-kr', destination: '/', permanent: true },
+      { source: '/home-mn', destination: '/', permanent: true },
+      { source: '/rooms-and-facilities-kr', destination: '/', permanent: true },
+      { source: '/tour-packages-kr', destination: '/', permanent: true },
+      { source: '/gallery-kr', destination: '/', permanent: true },
+      { source: '/rooms-and-facilities-mn', destination: '/', permanent: true },
+      { source: '/services-mn', destination: '/', permanent: true },
+      { source: '/gallery-mn', destination: '/', permanent: true },
+      { source: '/faqs-mn', destination: '/', permanent: true },
+      { source: '/getting-here-kr', destination: '/', permanent: true },
+      { source: '/faqs-kr', destination: '/', permanent: true },
+      { source: '/virtual-tour', destination: '/', permanent: true },
+      { source: '/aerial-360', destination: '/', permanent: true },
+      { source: '/mongolia-itinerary-planner', destination: '/', permanent: true }
+      { source: '/mongolia-itinerary-planner-gobi-khuvsgul', destination: '/', permanent: true }
+    ];
+  },
   allowedDevOrigins: [
     "*.picard.replit.dev",
     "*.replit.dev",
