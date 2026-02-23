@@ -47,6 +47,14 @@ body {
   font-family: 'Sloops', serif;
 }
 
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial), serif;
+}
+
 html {
   scroll-behavior: smooth;
 }

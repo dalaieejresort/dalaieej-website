@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato } from "next/font/google";
+import { Playfair_Display, Lato, Pinyon_Script, Merriweather } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -16,6 +16,20 @@ const playfair = Playfair_Display({
 
 const lato = Lato({
   variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+});
+
+const pinyonScript = Pinyon_Script({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+const merriweather = Merriweather({
+  variable: "--font-editorial",
   subsets: ["latin"],
   weight: ["300", "400", "700"],
   display: "swap",
@@ -70,7 +84,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           }) }}
         />
       </head>
-      <body className={`${playfair.variable} ${lato.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${playfair.variable} ${lato.variable} ${pinyonScript.variable} ${merriweather.variable} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <NavbarWrapper />
           <main>{children}</main>

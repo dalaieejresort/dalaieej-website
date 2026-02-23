@@ -19,7 +19,7 @@ export default function Footer() {
   ];
 
   const resortLinks = [
-    { key: "about", href: "#" },
+    { key: "about", href: "/about-us" },
     { key: "gallery", href: "#" },
     { key: "faq", href: "#" },
   ];
@@ -74,7 +74,7 @@ export default function Footer() {
               {resortLinks.map((item) => (
                 <li key={item.key}>
                   <Link
-                    href="#"
+                    href={item.href === "#" ? "#" : `${localePrefix}${item.href}`}
                     className="font-body text-sm text-warm-beige/80 hover:text-white transition-colors"
                   >
                     {t(item.key)}

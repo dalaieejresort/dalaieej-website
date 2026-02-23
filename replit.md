@@ -16,7 +16,7 @@ This project is a luxury hotel landing page for the Dalai Eej Resort, built with
 ### Tech Stack
 - **Framework**: Next.js 16 with App Router
 - **Styling**: Tailwind CSS 4
-- **Fonts**: Playfair Display (headings), Lato (body)
+- **Fonts**: Playfair Display (headings), Lato (body), Pinyon Script (editorial script), Merriweather (editorial body)
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **HTTP Client**: Axios

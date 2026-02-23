@@ -125,18 +125,30 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 + 0.1 }}
                   >
-                    <Link
-                      href="#"
-                      onClick={(e) => { e.preventDefault(); }}
-                      onMouseEnter={() => setHoveredLink(item.id)}
-                      onMouseLeave={() => setHoveredLink(null)}
-                      className="font-serif text-4xl md:text-6xl text-[#F5F5DC]/60 hover:text-white transition-colors tracking-wide block"
-                    >
-                      {isMongolian ? item.mn : item.label}
-                      <span className="ml-3 font-body text-xs md:text-sm tracking-[0.15em] uppercase text-[#F5F5DC]/40 align-middle">
-                        {isMongolian ? "Тун удахгүй" : "Coming Soon"}
-                      </span>
-                    </Link>
+                    {item.id === "about" ? (
+                      <Link
+                        href={`${isMongolian ? "/mn" : ""}/about-us`}
+                        onClick={onClose}
+                        onMouseEnter={() => setHoveredLink(item.id)}
+                        onMouseLeave={() => setHoveredLink(null)}
+                        className="font-serif text-4xl md:text-6xl text-[#F5F5DC]/60 hover:text-white transition-colors tracking-wide block"
+                      >
+                        {isMongolian ? item.mn : item.label}
+                      </Link>
+                    ) : (
+                      <Link
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); }}
+                        onMouseEnter={() => setHoveredLink(item.id)}
+                        onMouseLeave={() => setHoveredLink(null)}
+                        className="font-serif text-4xl md:text-6xl text-[#F5F5DC]/60 hover:text-white transition-colors tracking-wide block"
+                      >
+                        {isMongolian ? item.mn : item.label}
+                        <span className="ml-3 font-body text-xs md:text-sm tracking-[0.15em] uppercase text-[#F5F5DC]/40 align-middle">
+                          {isMongolian ? "Тун удахгүй" : "Coming Soon"}
+                        </span>
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
               </nav>
