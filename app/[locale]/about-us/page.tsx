@@ -10,7 +10,7 @@ const content = {
     heroCaption: "Discover the wildness of the ancient, spring-fed lake.",
     storyHeading: "The Legend of the Source",
     storyBody: "Northern folklore speaks of a traveler led by a deer through the primeval forest to a hidden spring\u2014a source of water so pure it could restore the human spirit. For our family, that spring is Dalai Eej. Our foundation does not begin with a business plan; it is rooted in the deep Khuvsgul taiga. Tracing our ancestry to Rinchinlkhumbe from time immemorial, we have always understood the lake as a life force rather than a mere destination. When we transformed a historic pioneer camp in the quiet fold of the Khaich Valley into this sanctuary, we were not simply building cabins\u2014we were architecting a way to protect our native home. Whether you are seeking the profound silence of the timber walls or navigating the deer paths under the starlight, you are participating in a lifelong mission to respect, protect, and experience the pure force of the North.",
-    pillarsTitle: "The Refined Six",
+    pillarsTitle: "The Six Pillars",
     pillars: [
       { num: "01", title: "A Legacy of the Taiga", body: "Our family\u2019s roots in the Khuvsgul taiga trace back from time immemorial. For three generations, we have actively stewarded this lakeside sanctuary, opening the doors of our native home to offer an authentic, uncompromised gateway into the North." },
       { num: "02", title: "Built for the Wilderness", body: "We build with breathing timber. Our seasonal cabins are designed to sit quietly within the landscape rather than paving over it, blending rustic immersion with refined comfort so the ancient waters rightfully command the room." },
@@ -49,9 +49,9 @@ const content = {
 };
 
 const scrapbookImages = [
-  { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&auto=format&fit=crop&q=80", alt: "Khuvsgul Lake", rotate: "rotate-2", size: "w-64 h-80" },
-  { src: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=600&auto=format&fit=crop&q=80", alt: "Wooden cabin", rotate: "-rotate-3", size: "w-56 h-72" },
-  { src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&auto=format&fit=crop&q=80", alt: "Forest path", rotate: "rotate-1", size: "w-52 h-64" },
+  { src: "/images/deer-1,png", alt: "Khuvsgul Lake", rotate: "rotate-2", size: "w-64 h-80" },
+  { src: "/images/water-1.png", alt: "Wooden cabin", rotate: "-rotate-3", size: "w-56 h-72" },
+  { src: "/images/gramps.jpg", alt: "Forest path", rotate: "rotate-1", size: "w-52 h-64" },
 ];
 
 function AccordionItem({ title, body, isOpen, onToggle }: { title: string; body: string; isOpen: boolean; onToggle: () => void }) {
@@ -105,7 +105,7 @@ export default function AboutUsPage() {
           >
             <div className="relative overflow-hidden rounded-sm border border-[#2c3327]/10 shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?w=1400&auto=format&fit=crop&q=80"
+                src="/images/Lake_fin.jpg"
                 alt="Illustrated map of Khuvsgul region"
                 className="w-full h-[300px] md:h-[500px] object-cover"
               />
