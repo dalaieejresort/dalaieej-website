@@ -545,11 +545,13 @@
     "wilderness": "THE WILDERNESS"
   }
 }
-"catalogue": {
-  "archiveLabel": "The 2026 Archive",
-  "mainTitle": "Resort Journal",
-  "subtitle": "An editorial exploration of the hearth, the sanctuary, and the spirit of Khuvsgul.",
-  "downloadHeading": "Archival Print Edition",
-  "downloadSubtext": "Download the full 2026 catalogue in high-resolution PDF format.",
-  "downloadButton": "Request Digital Copy"
+{
+  "catalogue": {
+    "archiveLabel": "The 2026 Archive",
+    "mainTitle": "Resort Journal",
+    "subtitle": "An editorial exploration of the hearth, the sanctuary, and the spirit of Khuvsgul.",
+    "downloadHeading": "Archival Print Edition",
+    "downloadSubtext": "Download the full 2026 catalogue in high-resolution PDF format.",
+    "downloadButton": "Request Digital Copy"
+  }
 }
