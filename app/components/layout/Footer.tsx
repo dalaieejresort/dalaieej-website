@@ -20,6 +20,7 @@ export default function Footer() {
 
   const resortLinks = [
     { key: "about", href: "/about-us" },
+    { key: "catalogue", href: "/catalogue" },
     { key: "gallery", href: "#" },
     { key: "faq", href: "#" },
   ];
