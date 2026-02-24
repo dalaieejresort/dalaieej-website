@@ -125,7 +125,7 @@ export default function RouteFinderPage() {
                Book My Route
              </a>
           </div>
-          <div className="md:w-1/2 h-[400px] bg-stone-200 border border-stone-300 rounded-sm overflow-hidden shadow-inner grayscale contrast-125">
+          <div className="md:w-1/2 h-[400px] bg-stone-200 border border-stone-300 rounded-sm overflow-hidden shadow-inner  contrast-125">
             {/* Placeholder for Map - Matches the archival tone */}
             <div className="w-full h-full flex items-center justify-center text-stone-400 font-editorial italic">
                Satellite Imaging Offline - Refer to Coordinates
