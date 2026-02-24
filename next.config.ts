@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
     return [
       // Legacy Slugs to Home Page
       { source: '/about', destination: '/', permanent: true },
-      { source: '/catalogue', destination: '/', permanent: true },
       { source: '/reserve', destination: '/', permanent: true },
       { source: '/secret', destination: '/', permanent: true },
       { source: '/services', destination: '/', permanent: true },
