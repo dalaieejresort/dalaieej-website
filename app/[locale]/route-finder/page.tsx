@@ -1,138 +1,195 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ChevronDown, Plus, Minus } from 'lucide-react';
 
 export default function RouteFinderPage() {
+  const [openRoute, setOpenRoute] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const routes = [
+    {
+      title: "Route 1: The Sky & Lake Express (Fly-in) – Best for 4-7 Days",
+      content: (
+        <div className="space-y-4">
+          <p><strong>The Strategy:</strong> Maximum serenity. Zero road fatigue. The most direct path to the Blue Pearl.</p>
+          <p><strong>For the traveler who values depth over breadth.</strong> Most tourists lose 40% of their vacation staring at the back of a driver's seat. This route skips the long road entirely. You fly direct to Murun (MXV), giving you more days to explore the Taiga forest, visit the Reindeer tribes, and relax by the lake.</p>
+          <p><strong>The "Insider" Bonus: The UB Culture Extension</strong> Because you fly, you "buy back" 4 days of travel time. We recommend using those saved days for a "Civilized Stopover" in Ulaanbaatar:</p>
+          <ul className="list-disc pl-5 space-y-2">
+            <li><strong>History:</strong> Visit the Chinggis Khaan Museum or the massive Genghis Khan Equestrian Statue (paved road).</li>
+            <li><strong>Dining:</strong> Eat at The Bull (Hot Pot), Zalaat Garden (KBBQ), or Veranda (Italian with a view).</li>
+            <li><strong>Shopping:</strong> Buy cashmere at the source at Gobi or the State Department Store.</li>
+          </ul>
+          <p className="italic pt-2">Take the quiz above to see if this matches your schedule.</p>
+        </div>
+      )
+    },
+    {
+      title: "Route 2: The Steppe Voyage (Central Loop) – Best for 8-12 Days",
+      content: (
+        <div className="space-y-4">
+          <p><strong>The Strategy:</strong> The Essential Expedition. The only route that shows you the true scale of the country.</p>
+          <p><strong>The Route:</strong> UB → Elsen Tasarkhai (Mini Gobi) → Kharkhorin (Ancient Capital) → Khorgo Volcano → Dalai Eej Resort (3 Nights) → Fly back.</p>
+          <p><strong>Why we love it:</strong> This route solves the dilemma of "seeing it all" and ticks off the entire "Classic Mongolia" checklist. Instead of driving days to the deep Gobi, you stop at Elsen Tasarkhai to see sand dunes, ride camels, and gallop on the green steppe right on your path. You stand on the ground of Genghis Khan's ancient capital at Kharkhorin, exploring the massive monastery built from its rubble, before finishing your journey at the ecological crown of the country: Dalai Eej Resort.</p>
+          <p className="italic pt-2">Take the quiz above to see if you have enough days for this loop.</p>
+        </div>
+      )
+    },
+    {
+      title: "Route 3: The Fire & Ice Expedition (Gobi Combo) – For Tough Adventurers",
+      content: (
+        <div className="space-y-4">
+          <p><strong>The Strategy:</strong> The Ultimate Contrast. From the dinosaur lands of the south to the deep blue north.</p>
+          <p><strong>The Route:</strong> Gobi Desert (3 days) → Fly UB → Fly Murun → Dalai Eej Resort (4 Nights).</p>
+          <p><strong>The Reality:</strong> We call this "Hard Mode." This route combines the singing sands of the south with the cooling waters of the north. It requires more time, stamina, and budget (more flights), but for the right person, it is the ultimate experience of Mongolia's extremes.</p>
+        </div>
+      )
+    }
+  ];
 
   const faqs = [
     {
       q: "Why do you recommend the North over the South?",
-      a: "The South (Gobi) is spectacular, but it is an arid, demanding desert. If you want the 'Classic Mongolia' image of green grasslands and galloping horses, you find that in the North. Khuvsgul is a sanctuary—lush alpine forests and massive freshwater reserves. We believe the perfect expedition ends in the North to 'wash off the dust' of the steppe."
+      a: "The South (Gobi) is spectacular, but it is an arid, demanding desert. If you want the 'Classic Mongolia' image of green grasslands and galloping horses, you actually find that in the North and Center.\n\nKhuvsgul is a sanctuary—lush alpine forests, reindeer tribes, and massive freshwater reserves. We believe the perfect Mongolia expedition should always end in the North to 'wash off the dust' of the steppe before you fly home."
     },
     {
       q: "Do I need a tour guide?",
-      a: "No. If you take the Sky & Lake route, we can arrange a private driver. If you take the Steppe Voyage, you can simply hire a 'Car and Driver' in Ulaanbaatar without paying for a full tour agency package."
+      a: "No. If you take the Sky & Lake route, we arrange a private driver for you. If you take the Steppe Voyage, you can simply hire a 'Car and Driver' in Ulaanbaatar without paying for a full tour agency package."
     },
     {
       q: "Why are the Altai Mountains (West) excluded?",
-      a: "Logistics. The Altai are over 1,500km away. Including them requires expensive domestic flights and a completely different itinerary. This tool focuses on routes that maximize landscape diversity for a standard 1-2 week trip."
+      a: "This is a question of logistics. The Altai Mountains are incredible, but they are over 1,500km away in the far West. Including them requires a completely different itinerary (and usually expensive domestic flights) that doesn't fit neatly with the Central/North axis. This tool focuses on the routes that maximize landscape diversity for the standard 1-2 week trip."
     }
   ];
 
   return (
-    <main className="bg-[#F9F8F6] min-h-screen">
-      {/* --- HERO --- */}
-      <section className="relative h-[70vh] flex items-end pb-16 px-6 overflow-hidden">
-        <div className="absolute inset-0 z-0">
+    <main className="bg-white min-h-screen text-[#333] font-sans">
+
+      {/* 1. HERO SECTION */}
+      <section className="relative h-[50vh] flex items-center justify-center mb-16">
+        <div className="absolute inset-0">
           <img 
             src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/2269e1ae-5ec8-4118-87e2-d7803a67eda8/khuvsgul-lake-boat-tour-summer.jpg" 
             alt="Khuvsgul Lake"
-            className="w-full h-full object-cover grayscale-[20%] brightness-[0.6]"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-black/20" /> {/* Subtle overlay for text readability */}
         </div>
-        <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
-          <span className="font-body uppercase tracking-[0.4em] text-[10px] text-white/70 mb-4 block">
-            Intelligence Report: 2026 Logistics
-          </span>
-          <h1 className="font-heading text-5xl md:text-8xl text-white leading-tight uppercase tracking-tighter">
-            Route Finder
-          </h1>
-        </div>
+        <h1 className="relative z-10 text-4xl md:text-5xl font-serif text-white tracking-wide text-center px-4">
+          Mongolia Itinerary Planner
+        </h1>
       </section>
 
-      {/* --- EDITORIAL INTRO --- */}
-      <section className="py-32 px-6 max-w-4xl mx-auto">
-        <div className="border-l border-stone-300 pl-8 md:pl-16">
-          <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-8 uppercase tracking-tight leading-none">
-            Check your logic.
-          </h2>
-          <div className="space-y-8 font-editorial italic text-stone-600 text-xl md:text-2xl leading-relaxed">
-            <p>
-              "Travelers arrive with a checklist—ride a camel, see a monastery—only to realize too late that they have left the story unfinished."
-            </p>
-            <p>
-              They spend 14 days bouncing in a van through the arid south, missing the ecological crown of the country: The North.
-            </p>
-          </div>
-        </div>
+      {/* 2. TEXT INTRO */}
+      <section className="max-w-3xl mx-auto px-6 py-12 text-center space-y-6 text-lg">
+        <h3 className="text-2xl font-serif font-medium mb-8">Don't plan your trip until you check your logic.</h3>
+        <p>As locals, we see the same calculation error happen every summer. Travelers arrive with a checklist—ride a camel, see a monastery, gallop on the steppe—only to realize too late that they have left the story unfinished.</p>
+        <p>They spend 14 days bouncing in a van through the arid south, missing the ecological crown of the country: The North.</p>
+        <p>Full Disclosure: We have one bias. We believe a Mongolian expedition is incomplete without the Taiga. Whether you want a rugged road trip or a luxury flight, all paths generated by this tool ultimately lead North to the "Blue Pearl."</p>
+        <p className="italic font-medium pt-4">Which path is right for you? In 60 seconds, this tool analyzes your travel dates and style to match you with the perfect logistical plan—whether you want the "Greatest Hits" road trip or a direct luxury flight.</p>
       </section>
 
-      {/* --- TALLY QUIZ --- */}
-      <section className="px-6 pb-32">
-        <div className="max-w-4xl mx-auto shadow-2xl overflow-hidden rounded-sm border border-stone-200">
-          <iframe 
-            src="https://tally.so/embed/XxoEPP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-            loading="lazy" 
-            width="100%" 
-            height="800" 
-            frameBorder="0" 
-            title="Mongolia Vibe Quiz"
-          />
-        </div>
+      {/* 3. TALLY QUIZ EMBED */}
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <iframe 
+          data-tally-src="https://tally.so/embed/XxoEPP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+          loading="lazy" 
+          width="100%" 
+          height="700" 
+          frameBorder="0" 
+          title="What Is Your Mongolia Vibe?"
+          className="w-full"
+        />
+        <script dangerouslySetInnerHTML={{ __html: `
+          var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+        `}} />
+        <p className="text-center italic text-stone-500 mt-8">Don't want to take the quiz? Scroll down to browse our 3 recommended routes.</p>
       </section>
 
-      {/* --- PHOTO GALLERY GRID --- */}
-      <section className="px-6 pb-32">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/d51a5a9a-64ab-469f-915d-24da7f7d2d1b/central-mongolia-road-trip-itinerary-mini-gobi-sand-dunes-self-drive.jpg" className="aspect-square object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Steppe" />
-          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/9545271c-e91b-41b8-aec9-8c884a4d3b11/gobi-desert-to-khuvsgul-lake-overland-tour-route-mongolia.jpg" className="aspect-square object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Gobi" />
-          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/7be81066-9eda-4a63-9aa5-dd865dd7ce1e/luxury-mongolia-honeymoon-lake-khuvsgul-picnic-fly-in-tour.jpg" className="aspect-square object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Picnic" />
-          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/3636e8f5-ddf6-46ab-ab37-2e25d8112150/ulaanbaatar-city-tour-soviet-mosaics-gandan-monastery-cultural-guide.jpg" className="aspect-square object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="UB" />
-        </div>
-      </section>
-
-      {/* --- FAQ SECTION --- */}
-      <section className="py-24 px-6 bg-stone-900 text-[#F9F8F6]">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-heading text-3xl md:text-5xl mb-16 uppercase tracking-tighter text-center">Inquiry & Logic</h2>
-          <div className="divide-y divide-stone-700 border-t border-stone-700">
-            {faqs.map((faq, index) => (
-              <div key={index} className="py-8">
-                <button 
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full flex justify-between items-center text-left group"
-                >
-                  <span className="font-heading text-lg md:text-xl uppercase tracking-tight group-hover:text-stone-400 transition-colors">
-                    {faq.q}
-                  </span>
-                  {openFaq === index ? <Minus size={20} /> : <Plus size={20} />}
-                </button>
-                {openFaq === index && (
-                  <div className="mt-6 font-editorial italic text-stone-400 text-lg leading-relaxed animate-in fade-in slide-in-from-top-4 duration-500">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- FINAL CONTACT & MAP --- */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
-          <div className="md:w-1/2">
-             <h2 className="font-heading text-4xl text-stone-900 uppercase tracking-tighter mb-8">Contact Field Office</h2>
-             <div className="space-y-4 font-body text-stone-600 uppercase tracking-widest text-xs">
-                <p><strong>HQ:</strong> Khatgal Village, Khuvsgul, Mongolia</p>
-                <p><strong>Coordinates:</strong> 50.4° N, 100.1° E</p>
-                <p><strong>Digital:</strong> hello@dalaieej.com</p>
-                <p><strong>Signal:</strong> +976 9500 5595</p>
-             </div>
-             <a href="/reserve" className="mt-12 inline-block px-12 py-5 bg-stone-900 text-white font-body tracking-[0.2em] uppercase text-[10px] hover:bg-stone-800 transition-all shadow-xl">
-               Book My Route
-             </a>
-          </div>
-          <div className="md:w-1/2 h-[400px] bg-stone-200 border border-stone-300 rounded-sm overflow-hidden shadow-inner  contrast-125">
-            {/* Placeholder for Map - Matches the archival tone */}
-            <div className="w-full h-full flex items-center justify-center text-stone-400 font-editorial italic">
-               Satellite Imaging Offline - Refer to Coordinates
+      {/* 4. ROUTES ACCORDION */}
+      <section className="max-w-3xl mx-auto px-6 py-16">
+        <h2 className="text-3xl font-serif text-center mb-10">Preview: The 3 Routes We Compare</h2>
+        <div className="border-t border-stone-200">
+          {routes.map((route, index) => (
+            <div key={index} className="border-b border-stone-200">
+              <button 
+                onClick={() => setOpenRoute(openRoute === index ? null : index)}
+                className="w-full py-6 flex justify-between items-center text-left hover:text-stone-600 transition-colors"
+              >
+                <h4 className="text-lg font-medium pr-8">{route.title}</h4>
+                <span className="text-2xl font-light text-stone-400">
+                  {openRoute === index ? '−' : '+'}
+                </span>
+              </button>
+              {openRoute === index && (
+                <div className="pb-8 text-stone-600 leading-relaxed">
+                  {route.content}
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </div>
       </section>
+
+      {/* 5. GALLERY GRID */}
+      <section className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/d51a5a9a-64ab-469f-915d-24da7f7d2d1b/central-mongolia-road-trip-itinerary-mini-gobi-sand-dunes-self-drive.jpg" alt="Mongolia Road Trip" className="w-full aspect-[4/3] object-cover" />
+          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/9545271c-e91b-41b8-aec9-8c884a4d3b11/gobi-desert-to-khuvsgul-lake-overland-tour-route-mongolia.jpg" alt="Gobi Desert to Khuvsgul" className="w-full aspect-[4/3] object-cover" />
+          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/7be81066-9eda-4a63-9aa5-dd865dd7ce1e/luxury-mongolia-honeymoon-lake-khuvsgul-picnic-fly-in-tour.jpg" alt="Luxury Picnic" className="w-full aspect-[4/3] object-cover" />
+          <img src="https://images.squarespace-cdn.com/content/v1/64643a1d0c5968146b6cbd44/3636e8f5-ddf6-46ab-ab37-2e25d8112150/ulaanbaatar-city-tour-soviet-mosaics-gandan-monastery-cultural-guide.jpg" alt="Ulaanbaatar City Tour" className="w-full aspect-[4/3] object-cover" />
+        </div>
+      </section>
+
+      {/* 6. FAQ ACCORDION */}
+      <section className="max-w-3xl mx-auto px-6 py-16">
+        <h2 className="text-3xl font-serif text-center mb-10">Frequently Asked Questions</h2>
+        <div className="border-t border-stone-200">
+          {faqs.map((faq, index) => (
+            <div key={index} className="border-b border-stone-200">
+              <button 
+                onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                className="w-full py-6 flex justify-between items-center text-left hover:text-stone-600 transition-colors"
+              >
+                <h4 className="text-lg font-medium pr-8">{faq.q}</h4>
+                <span className="text-2xl font-light text-stone-400">
+                  {openFaq === index ? '−' : '+'}
+                </span>
+              </button>
+              {openFaq === index && (
+                <div className="pb-8 text-stone-600 leading-relaxed whitespace-pre-wrap">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. FOOTER / CONTACT */}
+      <footer className="py-20 px-6 bg-[#F9F8F6] text-center">
+        <div className="max-w-3xl mx-auto space-y-4 text-stone-800">
+          <h2 className="text-3xl font-serif mb-8">Contact Us</h2>
+          <p><strong>Address:</strong> Mergen’s Point, Khatgal Village, Khövsgöl Province, Mongolia</p>
+          <p><strong>Location Notes:</strong> 50.4° N, 100.1° E</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@dalaieej.com" className="underline hover:text-stone-500">hello@dalaieej.com</a></p>
+          <p className="pt-4 text-sm">For all inquiries: <a href="tel:+97695005595" className="underline hover:text-stone-500">+976 9500 5595</a></p>
+          <p className="text-sm text-stone-500">Available via Whatsapp, WeChat, Telegram and KakaoTalk</p>
+        </div>
+
+        {/* Simple Map Embed matching the original intent */}
+        <div className="max-w-6xl mx-auto mt-16 h-[400px] w-full bg-stone-200">
+           <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d149097.43058866164!2d100.08115629471131!3d50.48473215568853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5d0ee2b5c0c9d9d1%3A0xc34375cc51a4cf13!2sDalai%20Eej%20Resort!5e0!3m2!1sen!2sde!4v1708780000000!5m2!1sen!2sde" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Dalai Eej Resort Map"
+            />
+        </div>
+      </footer>
     </main>
   );
 }
