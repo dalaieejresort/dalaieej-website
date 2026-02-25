@@ -16,6 +16,12 @@
   --pine-green: #2C3E30;
   --warm-beige: #F5F5F0;
   --charcoal: #333333;
+  --brand-green: #1A3C34;
+  --brand-cream: #F5F5DC;
+  --brand-parchment: #fdfbf7;
+  --brand-charcoal: #2c3327;
+  --brand-olive: #3A4D3F;
+  --brand-taiga: #1A2C22;
 }
 
 @theme inline {
@@ -25,13 +31,19 @@
   --color-pine-green: var(--pine-green);
   --color-warm-beige: var(--warm-beige);
   --color-charcoal: var(--charcoal);
+  --color-brand-green: var(--brand-green);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-parchment: var(--brand-parchment);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --color-brand-olive: var(--brand-olive);
+  --color-brand-taiga: var(--brand-taiga);
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 }
 
 body {
-  background: var(--white);
-  color: var(--forest-green);
+  background: var(--brand-parchment);
+  color: var(--brand-charcoal);
   font-family: var(--font-body), Arial, sans-serif;
 }
 

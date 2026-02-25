@@ -224,13 +224,13 @@ function CheckoutContent() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5F0] pt-24 md:pt-16">
-      <div className="bg-[#1D3C45] py-8 px-4">
+    <main className="min-h-screen bg-warm-beige pt-24 md:pt-16">
+      <div className="bg-lake-blue py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-3xl md:text-4xl text-[#F5F5F0] mb-2">
+          <h1 className="font-serif text-3xl md:text-4xl text-warm-beige mb-2">
             {t('title')}
           </h1>
-          <p className="font-sans text-[#F5F5F0]/70 text-sm">
+          <p className="font-sans text-warm-beige/70 text-sm">
             {t('subtitle')}
           </p>
         </div>
@@ -244,30 +244,30 @@ function CheckoutContent() {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white rounded-xl p-6 shadow-sm"
             >
-              <h2 className="font-serif text-xl text-[#333] mb-6 flex items-center gap-2">
-                <Bed className="w-5 h-5 text-[#1D3C45]" />
+              <h2 className="font-serif text-xl text-charcoal mb-6 flex items-center gap-2">
+                <Bed className="w-5 h-5 text-lake-blue" />
                 {currentLocale === 'mn' ? 'Сонгосон өрөөнүүд' : 'Selected Rooms'}
               </h2>
 
               {cartRooms.length === 0 ? (
-                <p className="text-[#333]/50">{currentLocale === 'mn' ? 'Өрөө сонгоогүй байна' : 'No rooms selected'}</p>
+                <p className="text-charcoal/50">{currentLocale === 'mn' ? 'Өрөө сонгоогүй байна' : 'No rooms selected'}</p>
               ) : (
                 <div className="space-y-4">
                   {cartRooms.map((room, index) => (
-                    <div key={`${room.roomTypeID}-${index}`} className="border border-[#333]/10 rounded-lg p-4">
+                    <div key={`${room.roomTypeID}-${index}`} className="border border-charcoal/10 rounded-lg p-4">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h3 className="font-medium text-[#333]">{room.roomTypeName}</h3>
-                          <p className="text-sm text-[#333]/60">
+                          <h3 className="font-medium text-charcoal">{room.roomTypeName}</h3>
+                          <p className="text-sm text-charcoal/60">
                             {room.adults} {currentLocale === 'mn' ? 'насанд хүрэгч' : 'adult'}{room.adults > 1 ? 's' : ''}
                             {room.children > 0 && `, ${room.children} ${currentLocale === 'mn' ? 'хүүхэд' : 'child'}${room.children > 1 ? 'ren' : ''}`}
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-[#333]">
+                          <p className="font-semibold text-charcoal">
                             {(room.pricePerNight * room.quantity * nights).toLocaleString()} {room.currency}
                           </p>
-                          <p className="text-xs text-[#333]/50">
+                          <p className="text-xs text-charcoal/50">
                             {room.pricePerNight.toLocaleString()} × {nights} {currentLocale === 'mn' ? 'шөнө' : 'nights'}
                           </p>
                         </div>
@@ -284,14 +284,14 @@ function CheckoutContent() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-xl p-6 shadow-sm"
             >
-              <h2 className="font-serif text-xl text-[#333] mb-6 flex items-center gap-2">
-                <User className="w-5 h-5 text-[#1D3C45]" />
+              <h2 className="font-serif text-xl text-charcoal mb-6 flex items-center gap-2">
+                <User className="w-5 h-5 text-lake-blue" />
                 {t('guestInfo')}
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[#333]/70 text-sm mb-1">
+                  <label className="block text-charcoal/70 text-sm mb-1">
                     {t('firstName')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -299,11 +299,11 @@ function CheckoutContent() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder={t('firstNamePlaceholder')}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#333]/70 text-sm mb-1">
+                  <label className="block text-charcoal/70 text-sm mb-1">
                     {t('lastName')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -311,11 +311,11 @@ function CheckoutContent() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder={t('lastNamePlaceholder')}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
+                  <label className="block text-charcoal/70 text-sm mb-1 flex items-center gap-1">
                     <Mail className="w-4 h-4" />
                     {t('email')} <span className="text-red-500">*</span>
                   </label>
@@ -324,11 +324,11 @@ function CheckoutContent() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('emailPlaceholder')}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
+                  <label className="block text-charcoal/70 text-sm mb-1 flex items-center gap-1">
                     <Phone className="w-4 h-4" />
                     {t('phone')}
                   </label>
@@ -337,18 +337,18 @@ function CheckoutContent() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={t('phonePlaceholder')}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
+                  <label className="block text-charcoal/70 text-sm mb-1 flex items-center gap-1">
                     <Globe className="w-4 h-4" />
                     {t('country')}
                   </label>
                   <select
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors bg-white"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors bg-white"
                   >
                     <option value="MN">{currentLocale === 'mn' ? 'Монгол' : 'Mongolia'}</option>
                     <option value="US">{currentLocale === 'mn' ? 'АНУ' : 'USA'}</option>
@@ -363,7 +363,7 @@ function CheckoutContent() {
                   </select>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-[#333]/70 text-sm mb-1 flex items-center gap-1">
+                  <label className="block text-charcoal/70 text-sm mb-1 flex items-center gap-1">
                     <MessageSquare className="w-4 h-4" />
                     {t('specialRequests')}
                   </label>
@@ -372,7 +372,7 @@ function CheckoutContent() {
                     onChange={(e) => setSpecialRequests(e.target.value)}
                     placeholder={t('specialRequestsPlaceholder')}
                     rows={3}
-                    className="w-full px-4 py-3 border border-[#333]/20 rounded-lg focus:outline-none focus:border-[#1D3C45] transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-charcoal/20 rounded-lg focus:outline-none focus:border-lake-blue transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -389,17 +389,17 @@ function CheckoutContent() {
                   onClick={() => setAddonsExpanded(!addonsExpanded)}
                   className="w-full flex items-center justify-between mb-4"
                 >
-                  <h2 className="font-serif text-xl text-[#333] flex items-center gap-2">
-                    <Plus className="w-5 h-5 text-[#1D3C45]" />
+                  <h2 className="font-serif text-xl text-charcoal flex items-center gap-2">
+                    <Plus className="w-5 h-5 text-lake-blue" />
                     {t('addons')}
                   </h2>
-                  {addonsExpanded ? <ChevronUp className="w-5 h-5 text-[#333]/50" /> : <ChevronDown className="w-5 h-5 text-[#333]/50" />}
+                  {addonsExpanded ? <ChevronUp className="w-5 h-5 text-charcoal/50" /> : <ChevronDown className="w-5 h-5 text-charcoal/50" />}
                 </button>
 
                 {addonsExpanded && (
                   <div className="space-y-3">
                     {loadingAddons ? (
-                      <div className="flex items-center gap-2 text-[#333]/50">
+                      <div className="flex items-center gap-2 text-charcoal/50">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         {tCommon('loading')}
                       </div>
@@ -412,7 +412,7 @@ function CheckoutContent() {
                           <div
                             key={addon.id}
                             className={`border rounded-lg p-4 transition-colors cursor-pointer ${
-                              isSelected ? 'border-[#1D3C45] bg-[#1D3C45]/5' : 'border-[#333]/10 hover:border-[#333]/30'
+                              isSelected ? 'border-lake-blue bg-lake-blue/5' : 'border-charcoal/10 hover:border-charcoal/30'
                             }`}
                             onClick={() => toggleAddon(addon)}
                           >
@@ -430,21 +430,21 @@ function CheckoutContent() {
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2">
                                     <div className={`w-5 h-5 rounded border flex items-center justify-center ${
-                                      isSelected ? 'bg-[#1D3C45] border-[#1D3C45]' : 'border-[#333]/30'
+                                      isSelected ? 'bg-lake-blue border-lake-blue' : 'border-charcoal/30'
                                     }`}>
                                       {isSelected && <Check className="w-3 h-3 text-white" />}
                                     </div>
-                                    <h4 className="font-medium text-[#333]">{addon.name}</h4>
+                                    <h4 className="font-medium text-charcoal">{addon.name}</h4>
                                   </div>
                                   {addon.description && (
-                                    <p className="text-sm text-[#333]/60 mt-1 ml-7">{addon.description}</p>
+                                    <p className="text-sm text-charcoal/60 mt-1 ml-7">{addon.description}</p>
                                   )}
                                 </div>
                                 <div className="text-right">
-                                  <p className="font-semibold text-[#333]">
+                                  <p className="font-semibold text-charcoal">
                                     {addon.price.toLocaleString()} {addon.currency}
                                   </p>
-                                  <p className="text-xs text-[#333]/50">
+                                  <p className="text-xs text-charcoal/50">
                                     {addon.priceType === "per_night" ? t('perNight') : t('oneTime')}
                                   </p>
                                 </div>
@@ -453,17 +453,17 @@ function CheckoutContent() {
 
                             {isSelected && selectedAddon && (
                               <div className="mt-3 ml-7 flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
-                                <span className="text-sm text-[#333]/70">{t('quantity')}:</span>
+                                <span className="text-sm text-charcoal/70">{t('quantity')}:</span>
                                 <button
                                   onClick={() => updateAddonQuantity(addon.id, -1)}
-                                  className="w-7 h-7 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
+                                  className="w-7 h-7 border border-charcoal/20 rounded flex items-center justify-center hover:bg-warm-beige"
                                 >
                                   <Minus className="w-3 h-3" />
                                 </button>
                                 <span className="w-6 text-center">{selectedAddon.quantity}</span>
                                 <button
                                   onClick={() => updateAddonQuantity(addon.id, 1)}
-                                  className="w-7 h-7 border border-[#333]/20 rounded flex items-center justify-center hover:bg-[#F5F5F0]"
+                                  className="w-7 h-7 border border-charcoal/20 rounded flex items-center justify-center hover:bg-warm-beige"
                                 >
                                   <Plus className="w-3 h-3" />
                                 </button>
@@ -486,30 +486,30 @@ function CheckoutContent() {
               transition={{ delay: 0.3 }}
               className="bg-white rounded-xl p-6 shadow-sm sticky top-24"
             >
-              <h2 className="font-serif text-xl text-[#333] mb-4">
+              <h2 className="font-serif text-xl text-charcoal mb-4">
                 {t('summary')}
               </h2>
 
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="text-[#333]/50 text-xs uppercase">{currentLocale === 'mn' ? 'Огноо' : 'Dates'}</p>
-                  <p className="text-[#333]">{formatDate(checkin)} - {formatDate(checkout)}</p>
-                  <p className="text-[#333]/60">{nights} {nights === 1 ? t('night') : t('nights')}</p>
+                  <p className="text-charcoal/50 text-xs uppercase">{currentLocale === 'mn' ? 'Огноо' : 'Dates'}</p>
+                  <p className="text-charcoal">{formatDate(checkin)} - {formatDate(checkout)}</p>
+                  <p className="text-charcoal/60">{nights} {nights === 1 ? t('night') : t('nights')}</p>
                 </div>
 
-                <div className="border-t border-[#333]/10 pt-3">
-                  <p className="text-[#333]/50 text-xs uppercase mb-2">{currentLocale === 'mn' ? 'Өрөөнүүд' : 'Rooms'}</p>
+                <div className="border-t border-charcoal/10 pt-3">
+                  <p className="text-charcoal/50 text-xs uppercase mb-2">{currentLocale === 'mn' ? 'Өрөөнүүд' : 'Rooms'}</p>
                   {cartRooms.map((room, index) => (
                     <div key={`summary-${room.roomTypeID}-${index}`} className="flex justify-between mb-1">
-                      <span className="text-[#333]">{room.roomTypeName}</span>
-                      <span className="text-[#333]">{(room.pricePerNight * room.quantity * nights).toLocaleString()} {room.currency}</span>
+                      <span className="text-charcoal">{room.roomTypeName}</span>
+                      <span className="text-charcoal">{(room.pricePerNight * room.quantity * nights).toLocaleString()} {room.currency}</span>
                     </div>
                   ))}
                 </div>
 
                 {selectedAddons.length > 0 && (
-                  <div className="border-t border-[#333]/10 pt-3">
-                    <p className="text-[#333]/50 text-xs uppercase mb-2">{t('addons')}</p>
+                  <div className="border-t border-charcoal/10 pt-3">
+                    <p className="text-charcoal/50 text-xs uppercase mb-2">{t('addons')}</p>
                     {selectedAddons.map((addon) => {
                       let addonTotal = addon.price * addon.quantity;
                       if (addon.priceType === "per_night") {
@@ -517,18 +517,18 @@ function CheckoutContent() {
                       }
                       return (
                         <div key={addon.id} className="flex justify-between mb-1">
-                          <span className="text-[#333]">
+                          <span className="text-charcoal">
                             {addon.name} {addon.quantity > 1 && `×${addon.quantity}`}
                           </span>
-                          <span className="text-[#333]">{addonTotal.toLocaleString()} {addon.currency}</span>
+                          <span className="text-charcoal">{addonTotal.toLocaleString()} {addon.currency}</span>
                         </div>
                       );
                     })}
                   </div>
                 )}
 
-                <div className="border-t border-[#333]/10 pt-3">
-                  <div className="flex justify-between font-serif text-lg text-[#333]">
+                <div className="border-t border-charcoal/10 pt-3">
+                  <div className="flex justify-between font-serif text-lg text-charcoal">
                     <span>{t('total')}</span>
                     <span className="font-bold">{totalPrice.toLocaleString()} {currency}</span>
                   </div>
@@ -549,13 +549,13 @@ function CheckoutContent() {
                       type="checkbox"
                       checked={termsAccepted}
                       onChange={(e) => setTermsAccepted(e.target.checked)}
-                      className="mt-1 w-4 h-4 text-[#1D3C45] border-[#333]/30 rounded focus:ring-[#1D3C45]"
+                      className="mt-1 w-4 h-4 text-lake-blue border-charcoal/30 rounded focus:ring-lake-blue"
                     />
-                    <span className="text-sm text-[#333]/70">
+                    <span className="text-sm text-charcoal/70">
                       {t('agreeToTerms')}{' '}
-                      <a href="#" className="text-[#1D3C45] underline">{t('termsLink')}</a>
+                      <a href="#" className="text-lake-blue underline">{t('termsLink')}</a>
                       {' '}{currentLocale === 'mn' ? 'болон' : 'and'}{' '}
-                      <a href="#" className="text-[#1D3C45] underline">{t('cancellationLink')}</a>.
+                      <a href="#" className="text-lake-blue underline">{t('cancellationLink')}</a>.
                     </span>
                   </label>
                 </div>
@@ -565,8 +565,8 @@ function CheckoutContent() {
                   disabled={loading || !termsAccepted}
                   className={`w-full py-4 font-serif uppercase tracking-widest transition-all rounded-lg font-semibold flex items-center justify-center gap-2 ${
                     termsAccepted && !loading
-                      ? 'bg-[#1D3C45] text-white hover:bg-[#1D3C45]/90 cursor-pointer'
-                      : 'bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed'
+                      ? 'bg-lake-blue text-white hover:bg-lake-blue/90 cursor-pointer'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}
                 >
                   {loading && <Loader2 className="w-5 h-5 animate-spin" />}
@@ -580,7 +580,7 @@ function CheckoutContent() {
         <div className="mt-8 text-center">
           <a
             href={`${localePrefix}/booking?checkin=${checkin}&checkout=${checkout}`}
-            className="text-[#333]/50 text-sm hover:text-[#333] transition-colors"
+            className="text-charcoal/50 text-sm hover:text-charcoal transition-colors"
           >
             &larr; {t('backToRooms')}
           </a>
@@ -595,8 +595,8 @@ export default function CheckoutPage() {
 
   return (
     <Suspense fallback={
-      <main className="min-h-screen bg-[#F5F5F0] flex items-center justify-center">
-        <p className="text-[#333]">{t('loading')}</p>
+      <main className="min-h-screen bg-warm-beige flex items-center justify-center">
+        <p className="text-charcoal">{t('loading')}</p>
       </main>
     }>
       <CheckoutContent />

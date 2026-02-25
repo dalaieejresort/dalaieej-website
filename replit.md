@@ -23,7 +23,14 @@ This project is a luxury hotel landing page for the Dalai Eej Resort, built with
 - **i18n**: next-intl for English/Mongolian support
 
 ### UI/UX and Design Decisions
-- **Color Scheme**: Deep Forest Green (#1A3C34), Cream (#F5F5DC), and White.
+- **Design System (Semantic Tokens in `app/globals.css`)**: All colors use semantic Tailwind tokens — no arbitrary hex values in components.
+  - `brand-green` (#1A3C34) — Deep Taiga Green (primary backgrounds, buttons)
+  - `brand-cream` (#F5F5DC) — Warm Cream (text on dark, booking accents)
+  - `brand-parchment` (#fdfbf7) — DÔEN Off-White (global body background)
+  - `brand-charcoal` (#2c3327) — Deep Olive (global body text)
+  - `brand-olive` (#3A4D3F) — Muted Green (editorial/carousel accents)
+  - `brand-taiga` (#1A2C22) — Dark Forest (gradient overlays)
+  - Legacy tokens also available: `forest-green`, `cream`, `lake-blue`, `pine-green`, `warm-beige`, `charcoal`
 - **Navigation**: Simplified Navbar with hover dropdowns and a full-screen curtain navigation overlay. All navigation links are visible as text, with horizontal scrolling on mobile.
 - **Homepage Structure ("Luxury Editorial")**: Features a full-screen video hero, an editorial intro, a 4-quadrant `SiloGrid` (stacks on mobile), offers carousel, tabbed journey experiences, and an interactive resort map.
 - **Gallery**: Masonry grid with category filtering.

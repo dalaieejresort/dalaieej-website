@@ -56,16 +56,16 @@ const scrapbookImages = [
 
 function AccordionItem({ title, body, isOpen, onToggle }: { title: string; body: string; isOpen: boolean; onToggle: () => void }) {
   return (
-    <div className="border-b border-[#2c3327]/15">
+    <div className="border-b border-brand-charcoal/15">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-6 md:py-8 text-left group"
       >
-        <h3 className="font-heading text-xl md:text-2xl text-[#2c3327] group-hover:text-[#1A3C34] transition-colors">
+        <h3 className="font-heading text-xl md:text-2xl text-brand-charcoal group-hover:text-brand-green transition-colors">
           {title}
         </h3>
-        <span className="flex-shrink-0 ml-4 w-8 h-8 flex items-center justify-center rounded-full border border-[#2c3327]/20">
-          {isOpen ? <Minus className="w-4 h-4 text-[#2c3327]" /> : <Plus className="w-4 h-4 text-[#2c3327]" />}
+        <span className="flex-shrink-0 ml-4 w-8 h-8 flex items-center justify-center rounded-full border border-brand-charcoal/20">
+          {isOpen ? <Minus className="w-4 h-4 text-brand-charcoal" /> : <Plus className="w-4 h-4 text-brand-charcoal" />}
         </span>
       </button>
       <motion.div
@@ -76,7 +76,7 @@ function AccordionItem({ title, body, isOpen, onToggle }: { title: string; body:
       >
         <div className="pb-8 pr-12">
           {body.split("\n\n").map((paragraph, i) => (
-            <p key={i} className="font-editorial text-base md:text-lg leading-relaxed text-[#2c3327]/80 mb-4 last:mb-0">
+            <p key={i} className="font-editorial text-base md:text-lg leading-relaxed text-brand-charcoal/80 mb-4 last:mb-0">
               {paragraph}
             </p>
           ))}
@@ -93,7 +93,7 @@ export default function AboutUsPage() {
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   return (
-    <div className="bg-[#fdfbf7] text-[#2c3327] min-h-screen" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E\")" }}>
+    <div className="bg-brand-parchment text-brand-charcoal min-h-screen" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E\")" }}>
 
       <section className="pt-28 md:pt-36 pb-12 md:pb-20">
         <div className="max-w-5xl mx-auto px-6">
@@ -103,15 +103,15 @@ export default function AboutUsPage() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative overflow-hidden rounded-sm border border-[#2c3327]/10 shadow-lg">
+            <div className="relative overflow-hidden rounded-sm border border-brand-charcoal/10 shadow-lg">
               <img
                 src="/images/Lake_fin.jpg"
                 alt="Illustrated map of Khuvsgul region"
                 className="w-full h-[300px] md:h-[500px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#fdfbf7]/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-parchment/60 to-transparent" />
             </div>
-            <p className="text-center mt-6 font-editorial text-sm md:text-base italic text-[#2c3327]/60 tracking-wide">
+            <p className="text-center mt-6 font-editorial text-sm md:text-base italic text-brand-charcoal/60 tracking-wide">
               {t.heroCaption}
             </p>
           </motion.div>
@@ -127,10 +127,10 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="font-script text-5xl md:text-7xl text-[#2c3327] mb-8 md:mb-12 leading-tight">
+              <h2 className="font-script text-5xl md:text-7xl text-brand-charcoal mb-8 md:mb-12 leading-tight">
                 {t.storyHeading}
               </h2>
-              <p className="font-editorial text-base md:text-lg leading-[1.9] text-[#2c3327]/85">
+              <p className="font-editorial text-base md:text-lg leading-[1.9] text-brand-charcoal/85">
                 {t.storyBody}
               </p>
             </motion.div>
@@ -178,11 +178,11 @@ export default function AboutUsPage() {
             className="mb-16 md:mb-20"
           >
             <div className="flex items-center gap-6 mb-2">
-              <div className="h-px flex-1 bg-[#2c3327]/15" />
-              <h2 className="font-heading text-3xl md:text-4xl text-[#2c3327] tracking-wide">
+              <div className="h-px flex-1 bg-brand-charcoal/15" />
+              <h2 className="font-heading text-3xl md:text-4xl text-brand-charcoal tracking-wide">
                 {t.pillarsTitle}
               </h2>
-              <div className="h-px flex-1 bg-[#2c3327]/15" />
+              <div className="h-px flex-1 bg-brand-charcoal/15" />
             </div>
           </motion.div>
 
@@ -195,13 +195,13 @@ export default function AboutUsPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
-                <span className="font-heading text-5xl md:text-6xl text-[#2c3327]/10 block mb-2">
+                <span className="font-heading text-5xl md:text-6xl text-brand-charcoal/10 block mb-2">
                   {pillar.num}
                 </span>
-                <h3 className="font-heading text-xl md:text-2xl text-[#2c3327] mb-4">
+                <h3 className="font-heading text-xl md:text-2xl text-brand-charcoal mb-4">
                   {pillar.title}
                 </h3>
-                <p className="font-editorial text-base leading-[1.8] text-[#2c3327]/75">
+                <p className="font-editorial text-base leading-[1.8] text-brand-charcoal/75">
                   {pillar.body}
                 </p>
               </motion.div>
@@ -220,15 +220,15 @@ export default function AboutUsPage() {
             className="mb-12"
           >
             <div className="flex items-center gap-6 mb-2">
-              <div className="h-px flex-1 bg-[#2c3327]/15" />
-              <h2 className="font-heading text-3xl md:text-4xl text-[#2c3327] tracking-wide">
+              <div className="h-px flex-1 bg-brand-charcoal/15" />
+              <h2 className="font-heading text-3xl md:text-4xl text-brand-charcoal tracking-wide">
                 {t.accordionTitle}
               </h2>
-              <div className="h-px flex-1 bg-[#2c3327]/15" />
+              <div className="h-px flex-1 bg-brand-charcoal/15" />
             </div>
           </motion.div>
 
-          <div className="border-t border-[#2c3327]/15">
+          <div className="border-t border-brand-charcoal/15">
             {t.accordion.map((item, i) => (
               <AccordionItem
                 key={i}
