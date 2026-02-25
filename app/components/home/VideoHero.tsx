@@ -17,7 +17,7 @@ export default function VideoHero() {
           className="w-full h-full object-cover opacity-80"
           poster="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&auto=format&fit=crop&q=80"
         >
-          <source src="/images/videos/Flyover_Dalaieej_360-2.mp4" type="video/mp4" />
+          <source src="/images/videos/resort-aerial.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-lake-blue/40 via-transparent to-lake-blue/60" />
       </div>
