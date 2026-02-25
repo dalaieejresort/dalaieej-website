@@ -21,6 +21,8 @@ const resortAerial = {
     },
   ],
   poster: "https://image.mux.com/01PQp009SKEfaXSKTQHovctcbBvzQUVVQf1CfRg5oOnWI/thumbnail.webp",
+  createdAt: 1772030111923,
+  updatedAt: 1772030266449,
 };
 
 export default function VideoHero() {
