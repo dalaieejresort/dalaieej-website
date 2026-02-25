@@ -39,7 +39,7 @@ export default function VideoHero() {
           playsInline
           controls={false}
           className="w-full h-full object-cover opacity-80"
-          style={{ '--media-object-fit': 'cover', '--media-object-position': 'center' } as React.CSSProperties}
+          style={{ '--media-object-fit': 'cover', '--media-object-position': 'center' } as Record<string, string>}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-lake-blue/40 via-transparent to-lake-blue/60" />
       </div>
