@@ -2,6 +2,26 @@
 
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
+import Video from "next-video";
+
+const resortAerial = {
+  status: "ready" as const,
+  originalFilePath: "videos/resort-aerial.mp4",
+  provider: "mux" as const,
+  providerMetadata: {
+    mux: {
+      assetId: "A5RubJHFuc1uJs9VQ02dfw00VlOTA7IegdFZkahEEQ2wI",
+      playbackId: "01PQp009SKEfaXSKTQHovctcbBvzQUVVQf1CfRg5oOnWI",
+    },
+  },
+  sources: [
+    {
+      src: "https://stream.mux.com/01PQp009SKEfaXSKTQHovctcbBvzQUVVQf1CfRg5oOnWI.m3u8",
+      type: "application/x-mpegURL",
+    },
+  ],
+  poster: "https://image.mux.com/01PQp009SKEfaXSKTQHovctcbBvzQUVVQf1CfRg5oOnWI/thumbnail.webp",
+};
 
 export default function VideoHero() {
   const locale = useLocale();
@@ -9,16 +29,16 @@ export default function VideoHero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-lake-blue">
-        <video
+        <Video
+          src={resortAerial}
           autoPlay
-          loop
           muted
+          loop
           playsInline
+          controls={false}
           className="w-full h-full object-cover opacity-80"
-          poster="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&auto=format&fit=crop&q=80"
-        >
-          <source src="/images/videos/resort-aerial.mp4" type="video/mp4" />
-        </video>
+          style={{ '--media-object-fit': 'cover', '--media-object-position': 'center' } as React.CSSProperties}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-lake-blue/40 via-transparent to-lake-blue/60" />
       </div>
       
