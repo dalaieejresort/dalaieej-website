@@ -105,7 +105,7 @@ export default function AboutUsPage() {
           >
             <div className="relative overflow-hidden rounded-sm border border-brand-charcoal/10 shadow-lg">
               <img
-                src="/images/Lake_fin.jpg"
+                src="/images/hero-neighbourhood-guide.webp"
                 alt="Illustrated map of Khuvsgul region"
                 className="w-full h-[300px] md:h-[500px] object-cover"
               />

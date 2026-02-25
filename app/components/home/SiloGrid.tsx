@@ -11,28 +11,28 @@ const silos = [
     href: /*"/accommodation",*/ "#",
     en: "Sanctuary",
     mn: "Өргөө",
-    image: "/silogrid/sanctuary.jpg"
+    image: "/silogrid/sanctuary.webp"
   },
   {
     id: "dining",
     href: /*"/dining",*/ "#",
     en: "Hearth",
     mn: "Гал голомт",
-    image: "/silogrid/hearth.jpg"
+    image: "/silogrid/hearth.webp"
   },
   {
     id: "wellness",
     href: /*"/wellness",*/ "#",
     en: "Stillness",
     mn: "Анир",
-    image: "/silogrid/wellness.jpg"
+    image: "/silogrid/wellness.webp"
   },
   {
     id: "adventure",
     href: /*"/experiences",*/ "#",
     en: "Wilderness",
     mn: "Хөвч",
-    image: "/silogrid/wilderness.jpg"
+    image: "/silogrid/wilderness.webp"
   }
 ];
 
