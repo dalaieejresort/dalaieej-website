@@ -147,10 +147,15 @@ export async function POST(request: NextRequest) {
       });
 
       let userMessage = "Failed to create QPay invoice";
+      const errorDetail = typeof qpayError === 'object' 
+        ? JSON.stringify(qpayError) 
+        : String(qpayError || 'Unknown error');
       if (statusCode === 401) {
         userMessage = "QPay authentication failed - invalid credentials";
       } else if (statusCode === 400) {
-        userMessage = `QPay rejected the request: ${qpayError?.message || qpayError?.error || JSON.stringify(qpayError)}`;
+        userMessage = `QPay rejected the request: ${errorDetail}`;
+      } else {
+        userMessage = `QPay error (${statusCode}): ${errorDetail}`;
       }
 
       return NextResponse.json(
