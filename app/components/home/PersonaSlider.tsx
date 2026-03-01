@@ -96,6 +96,10 @@ const slideVariants = {
 export default function PersonaSlider() {
   const locale = useLocale();
   const localePrefix = locale === 'mn' ? '/mn' : '';
+
+  const filtered = locale === 'en' ? personas.filter(p => p.id === 2) : personas;
+  const visiblePersonas = filtered.length > 0 ? filtered : personas;
+
   const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -103,14 +107,14 @@ export default function PersonaSlider() {
     setActiveIndex(([currentIndex]) => {
       const newIndex = currentIndex + newDirection;
       if (newIndex < 0) {
-        return [personas.length - 1, newDirection];
-      } else if (newIndex >= personas.length) {
+        return [visiblePersonas.length - 1, newDirection];
+      } else if (newIndex >= visiblePersonas.length) {
         return [0, newDirection];
       } else {
         return [newIndex, newDirection];
       }
     });
-  }, []);
+  }, [visiblePersonas.length]);
 
   const resetTimer = useCallback(() => {
     if (intervalRef.current) {
@@ -140,8 +144,7 @@ export default function PersonaSlider() {
     resetTimer();
   };
 
-  const currentPersona = personas[activeIndex];
-  // SELECT CONTENT BASED ON LOCALE
+  const currentPersona = visiblePersonas[activeIndex];
   const content = locale === 'mn' ? currentPersona.mn : currentPersona.en;
 
   return (
@@ -182,21 +185,24 @@ export default function PersonaSlider() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={() => handlePaginate(-1)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full transition-colors border border-white/10"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft className="w-6 h-6 text-white" />
-            </button>
-            <button
-              onClick={() => handlePaginate(1)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full transition-colors border border-white/10"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="w-6 h-6 text-white" />
-            </button>
+            {visiblePersonas.length > 1 && (
+              <>
+                <button
+                  onClick={() => handlePaginate(-1)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full transition-colors border border-white/10"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+                <button
+                  onClick={() => handlePaginate(1)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full transition-colors border border-white/10"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
+              </>
+            )}
           </div>
 
           <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -207,7 +213,7 @@ export default function PersonaSlider() {
                 </span>
                 <div className="h-[1px] w-12 bg-warm-beige/20" />
                 <span className="font-body text-warm-beige/50 text-sm">
-                  0{personas.length}
+                  0{visiblePersonas.length}
                 </span>
               </div>
 
@@ -240,7 +246,7 @@ export default function PersonaSlider() {
           </div>
 
           <div className="flex justify-center gap-2 mt-12 md:mt-0 md:absolute md:top-6 md:right-6 z-20">
-            {personas.map((_, index) => (
+            {visiblePersonas.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}

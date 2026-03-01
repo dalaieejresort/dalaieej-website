@@ -46,10 +46,12 @@ const mainNavItems = [
 ];
 
 // 2. Secondary Navigation (Utilities)
+const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Dalai+Eej+Resort+%7C+%D0%94%D0%B0%D0%BB%D0%B0%D0%B9+%D1%8D%D1%8D%D0%B6+%D1%80%D0%B5%D1%81%D0%BE%D1%80%D1%82/@50.4846993,100.1867456,582m/data=!3m1!1e3!4m15!1m5!8m4!1e2!2s118380989629208568150!3m1!1e1!3m8!1s0x5d0dbb730711f929:0xb57b13f8b35c0cf3!5m2!4m1!1i2!8m2!3d50.4846951!4d100.1893209!16s%2Fg%2F11stqvr5td";
+
 const secondaryNavItems = [
-  { href: "/contact", label: "Contact", mn: "Холбоо барих", icon: Phone },
-  { href: "/location", label: "Map", mn: "Байршил", icon: MapPin },
-  { href: "/gallery", label: "Gallery", mn: "Зургийн сан", icon: LayoutGrid },
+  { href: "/contact", label: "Contact", mn: "Холбоо барих", icon: Phone, external: false },
+  { href: GOOGLE_MAPS_URL, label: "Map", mn: "Байршил", icon: MapPin, external: true },
+  { href: "/gallery", label: "Gallery", mn: "Зургийн сан", icon: LayoutGrid, external: false },
 ];
 
 interface NavigationOverlayProps {
@@ -165,21 +167,34 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
               <nav className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-6 mb-8 md:mb-0">
                 {secondaryNavItems.map((item, i) => {
                   const Icon = item.icon;
+                  const linkClass = "group flex items-center gap-2 font-sans text-xs md:text-sm tracking-[0.2em] uppercase text-brand-cream/80 hover:text-white transition-colors";
                   return (
                     <motion.div
-                      key={item.href}
+                      key={item.label}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6 + (i * 0.1) }}
                     >
-                      <Link
-                        href="#"
-                        onClick={(e) => { e.preventDefault(); }}
-                        className="group flex items-center gap-2 font-sans text-xs md:text-sm tracking-[0.2em] uppercase text-brand-cream/80 hover:text-white transition-colors"
-                      >
-                        <Icon className="w-4 h-4 text-brand-cream/60 group-hover:text-white transition-colors" />
-                        <span>{isMongolian ? item.mn : item.label}</span>
-                      </Link>
+                      {item.external ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={linkClass}
+                        >
+                          <Icon className="w-4 h-4 text-brand-cream/60 group-hover:text-white transition-colors" />
+                          <span>{isMongolian ? item.mn : item.label}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href="#"
+                          onClick={(e) => { e.preventDefault(); }}
+                          className={linkClass}
+                        >
+                          <Icon className="w-4 h-4 text-brand-cream/60 group-hover:text-white transition-colors" />
+                          <span>{isMongolian ? item.mn : item.label}</span>
+                        </Link>
+                      )}
                     </motion.div>
                   );
                 })}
