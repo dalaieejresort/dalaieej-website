@@ -23,6 +23,7 @@ export default function Footer() {
     { key: "catalogue", href: "/catalogue" },
     { key: "gallery", href: "#" },
     { key: "faq", href: "#" },
+    { key: "route-finder", href: "/route-finder" }
   ];
 
   return (
