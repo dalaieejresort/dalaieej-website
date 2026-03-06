@@ -83,6 +83,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('description'),
       images: ['https://dalaieej.com/images/og-heritage.jpg'],
     },
+
+    other: {
+      'facebook-domain-verification': 'fbzj6dj5kddr5k4wktv59ukuvx1avi',
+    },
   };
 }
 
