@@ -191,14 +191,15 @@ const COPY: Record<"en" | "mn", Record<CopyKey, string>> = {
   },
 };
 
-const HERO_IMAGE = assetUrl("/images/rooms/superior-cabin/00.webp");
+const SUPERIOR_IMAGE = assetUrl("/images/cabins/room-superior.webp");
+const HERO_IMAGE = SUPERIOR_IMAGE;
 
 const GALLERY_IMAGES = [
-  "01",
-  "02",
-  "03",
-  "04",
-].map((i) => assetUrl(`/images/rooms/superior-cabin/${i}.webp`));
+  SUPERIOR_IMAGE,
+  SUPERIOR_IMAGE,
+  SUPERIOR_IMAGE,
+  SUPERIOR_IMAGE,
+];
 
 // Mirage effect pairs — identical set used on /cabins so the crossfade reads
 // consistently across the site.
@@ -206,7 +207,7 @@ const SPA_IMAGE_BEFORE = assetUrl("/images/cabins/spa-mirage-before.webp");
 const SPA_IMAGE_AFTER = assetUrl("/images/cabins/spa-mirage-after.webp");
 const WELLNESS_IMAGE_BEFORE = assetUrl("/images/cabins/wellness-mirage-before.webp");
 const WELLNESS_IMAGE_AFTER = assetUrl("/images/cabins/wellness-mirage-after.webp");
-const TAGLINE_BG_MAIN = assetUrl("/images/rooms/superior-cabin/00.webp");
+const TAGLINE_BG_MAIN = SUPERIOR_IMAGE;
 
 function makeOtherRoom(slug: CabinSlug, image: string) {
   const fact = getRequiredCabinFact(slug);

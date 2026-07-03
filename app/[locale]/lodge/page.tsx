@@ -97,7 +97,7 @@ export default function LodgePage() {
               className="w-full h-64 object-cover rounded-lg md:col-span-2"
             />
             <img
-              src="/images/rooms/superior-cabin/03.webp"
+              src="/images/cabins/room-superior.webp"
               alt="Lodge bedroom"
               className="w-full h-64 object-cover rounded-lg"
             />

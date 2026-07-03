@@ -52,13 +52,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     name: { en: "Ерөнхийлөгчийн Хаус", mn: "Ерөнхийлөгчийн Хаус" },
     href: "/superior-cabin",
     cardImage: "/images/cabins/room-superior.webp",
-    gallery: [
-      "/images/rooms/superior-cabin/00.webp",
-      "/images/rooms/superior-cabin/01.webp",
-      "/images/rooms/superior-cabin/02.webp",
-      "/images/rooms/superior-cabin/03.webp",
-      "/images/rooms/superior-cabin/04.webp",
-    ],
+    gallery: ["/images/cabins/room-superior.webp"],
     cloudbedsIds: ["198039847624896"],
     aliases: [
       ["superior"],
@@ -203,10 +197,11 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/family-house-wood-fired",
     cardImage: "/images/cabins/room-grand-peninsula.webp",
     gallery: [
-      "/images/rooms/family-house-wood-fired/00.webp",
-      "/images/rooms/family-house-wood-fired/02.webp",
-      "/images/rooms/family-house-wood-fired/03.webp",
-      "/images/rooms/family-house-wood-fired/04.webp",
+      "/images/rooms/presidential-house/00.webp",
+      "/images/rooms/presidential-house/01.webp",
+      "/images/rooms/presidential-house/02.webp",
+      "/images/rooms/presidential-house/03.webp",
+      "/images/rooms/presidential-house/04.webp",
     ],
     cloudbedsIds: ["ESH", "198038298677377"],
     aliases: [
