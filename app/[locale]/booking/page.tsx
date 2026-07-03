@@ -12,6 +12,7 @@ import { parseBoundedInteger, validateStayDates } from "@/lib/booking-guards";
 import { formatIsoDateAsDots } from "@/lib/dateFormat";
 import DateInput from "@/app/components/ui/DateInput";
 import { withLocalePath } from "@/lib/localePath";
+import { getDefaultAvailabilityStayDates, getLocalDateInputValue } from "@/lib/defaultStayDates";
 import { openNaadamSchedule } from "@/lib/naadamSchedule";
 import {
   MAX_BOOKING_ADULTS,
@@ -212,15 +213,6 @@ function formatDate(dateStr: string): string {
 function calculateNights(checkinDate: string, checkoutDate: string): number {
   const stayDates = validateStayDates(checkinDate, checkoutDate);
   return stayDates.ok ? stayDates.nights : 1;
-}
-
-/** Jul 1–5 for the upcoming summer window (next year after Jul 5 has passed). */
-function getDefaultJulyStayDates(): { checkin: string; checkout: string } {
-  const now = new Date();
-  let year = now.getFullYear();
-  const afterWindow = now.getMonth() > 6 || (now.getMonth() === 6 && now.getDate() > 5);
-  if (afterWindow) year += 1;
-  return { checkin: `${year}-07-01`, checkout: `${year}-07-05` };
 }
 
 function translateRateName(name: string, locale: string): string {
@@ -593,7 +585,7 @@ function BookingContent() {
     const urlAdults = searchParams.get("adults");
     const urlChildren = searchParams.get("children");
 
-    const defaults = getDefaultJulyStayDates();
+    const defaults = getDefaultAvailabilityStayDates();
     const candidateCheckin = urlCheckin || defaults.checkin;
     const candidateCheckout = urlCheckout || defaults.checkout;
     const initialStayDates = validateStayDates(candidateCheckin, candidateCheckout);
@@ -1039,11 +1031,7 @@ function BookingContent() {
     }
   };
 
-  const [minDate, setMinDate] = useState("");
-
-  useEffect(() => {
-    setMinDate(new Date().toISOString().split("T")[0]);
-  }, []);
+  const [minDate] = useState(() => getLocalDateInputValue());
 
   const placeholderImages = [
     "/images/cabins/room-superior.webp",

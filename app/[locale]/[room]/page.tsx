@@ -38,6 +38,7 @@ import {
 } from "@/lib/cabinCatalog";
 import { withLocalePath } from "@/lib/localePath";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
+import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
 
 const MirageImage = dynamic(
   () => import("@/app/components/cabins/MirageImage"),
@@ -48,14 +49,6 @@ const SHARED_SPA_IMAGE_BEFORE = assetUrl("/images/cabins/spa-mirage-before.webp"
 const SHARED_SPA_IMAGE_AFTER = assetUrl("/images/cabins/spa-mirage-after.webp");
 const SHARED_WELLNESS_IMAGE_BEFORE = assetUrl("/images/cabins/wellness-mirage-before.webp");
 const SHARED_WELLNESS_IMAGE_AFTER = assetUrl("/images/cabins/wellness-mirage-after.webp");
-
-function getDefaultJulyStayDates(): { checkin: string; checkout: string } {
-  const now = new Date();
-  let year = now.getFullYear();
-  const afterWindow = now.getMonth() > 6 || (now.getMonth() === 6 && now.getDate() > 5);
-  if (afterWindow) year += 1;
-  return { checkin: `${year}-07-01`, checkout: `${year}-07-05` };
-}
 
 type Bilingual = { en: string; mn: string };
 type RoomConfig = {
@@ -218,7 +211,7 @@ export default function RoomDetailPage() {
   );
   const headlineFont = isMn ? "font-editorial-mn" : "font-editorial-en";
 
-  const defaults = useMemo(() => getDefaultJulyStayDates(), []);
+  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
   const [checkin, setCheckin] = useState(defaults.checkin);
   const [checkout, setCheckout] = useState(defaults.checkout);
   const [adults, setAdults] = useState(2);

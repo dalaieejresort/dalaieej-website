@@ -8,6 +8,7 @@ import { CTAButton } from "./ui/Typography";
 import { useScrolledPast } from "@/hooks/useScrolledPast";
 import { withLocalePath } from "@/lib/localePath";
 import { formatIsoDateAsDots } from "@/lib/dateFormat";
+import { getDefaultAvailabilityStayDates, getLocalDateInputValue } from "@/lib/defaultStayDates";
 
 function useNavOpen() {
   const [navOpen, setNavOpen] = useState(false);
@@ -26,10 +27,6 @@ function useNavOpen() {
   }, []);
   
   return navOpen;
-}
-
-function getDateString(date: Date): string {
-  return date.toISOString().split("T")[0];
 }
 
 function HomeDateField({
@@ -74,18 +71,11 @@ export default function AvailabilityBar() {
   const bookingPath = withLocalePath(currentLocale, "/booking");
   
   // Initialize booking dates without setting state in `useEffect` (ESLint rule).
-  // Note: values are derived from the client/server's current time.
-  const [checkIn, setCheckIn] = useState(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return getDateString(d);
-  });
-  const [checkOut, setCheckOut] = useState(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 4); // defaultCheckout is defaultCheckIn + 3 days
-    return getDateString(d);
-  });
-  const [minDate] = useState(() => getDateString(new Date()));
+  // Dates use local calendar-day math rather than adding hours.
+  const [defaultStayDates] = useState(() => getDefaultAvailabilityStayDates());
+  const [checkIn, setCheckIn] = useState(defaultStayDates.checkin);
+  const [checkOut, setCheckOut] = useState(defaultStayDates.checkout);
+  const [minDate] = useState(() => getLocalDateInputValue());
 
   if (navOpen) return null;
 

@@ -63,15 +63,7 @@ import { withLocalePath } from "@/lib/localePath";
 import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
 import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
-
-/** Jul 1–5 for the upcoming summer window (matches the booking page's default). */
-function getDefaultJulyStayDates(): { checkin: string; checkout: string } {
-  const now = new Date();
-  let year = now.getFullYear();
-  const afterWindow = now.getMonth() > 6 || (now.getMonth() === 6 && now.getDate() > 5);
-  if (afterWindow) year += 1;
-  return { checkin: `${year}-07-01`, checkout: `${year}-07-05` };
-}
+import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
 
 function getRequiredCabinFact(slug: CabinSlug) {
   const fact = getCabinCloudbedsFact(slug);
@@ -271,7 +263,7 @@ export default function SuperiorCabinPage() {
   const localePrefix = withLocalePath(locale, "/");
   const reduce = useReducedMotion();
 
-  const defaults = useMemo(() => getDefaultJulyStayDates(), []);
+  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
   const [checkin, setCheckin] = useState(defaults.checkin);
   const [checkout, setCheckout] = useState(defaults.checkout);
   const [adults, setAdults] = useState(2);

@@ -36,6 +36,7 @@ import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
 import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
 import DateInput from "@/app/components/ui/DateInput";
+import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
 
 // Client-only: bundles ~150 LOC of WebGL, dynamically loaded so /cabins SSR
 // stays clean and no WebGL code ships to other routes.
@@ -43,15 +44,6 @@ const MirageImage = dynamic(
   () => import("@/app/components/cabins/MirageImage"),
   { ssr: false },
 );
-
-/** Jul 1–5 default stay window, aligned with /booking + /superior-cabin. */
-function getDefaultJulyStayDates(): { checkin: string; checkout: string } {
-  const now = new Date();
-  let year = now.getFullYear();
-  const afterWindow = now.getMonth() > 6 || (now.getMonth() === 6 && now.getDate() > 5);
-  if (afterWindow) year += 1;
-  return { checkin: `${year}-07-01`, checkout: `${year}-07-05` };
-}
 
 type Bilingual = { en: string; mn: string };
 
@@ -227,7 +219,7 @@ export default function CabinsPage() {
   const headlineFont = isMn ? "font-editorial-mn" : "font-editorial-en";
   const heroEyebrow = isMn ? t.eyebrow.toUpperCase() : "STAY WITH US FEEL LIKE HOME";
 
-  const defaults = useMemo(() => getDefaultJulyStayDates(), []);
+  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
   const [checkin, setCheckin] = useState(defaults.checkin);
   const [checkout, setCheckout] = useState(defaults.checkout);
   const [adults, setAdults] = useState(2);
