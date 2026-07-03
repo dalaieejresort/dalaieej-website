@@ -4,6 +4,7 @@ import path from "path";
 import {
   CABIN_CATALOG,
   getCanonicalCabinHrefFromRouteSlug,
+  getCabinCatalogSortIndex,
   getCabinCatalogEntry,
   getCabinDisplayName,
   getCabinDetailHref,
@@ -27,6 +28,7 @@ describe("cabin catalog Cloudbeds mapping", () => {
     ["198036698427584", "triple-electric-cabin"],
     ["LDG", "signature-cabin"],
     ["197943412437120", "signature-cabin"],
+    ["248639578054784", "original-camp-cabin"],
     ["198046100787328", "quad-electric-cabin"],
     ["ESH", "grand-peninsula-suite"],
     ["198038298677377", "grand-peninsula-suite"],
@@ -59,8 +61,20 @@ describe("cabin catalog Cloudbeds mapping", () => {
 
   it("keeps local galleries attached to the resolved slug", () => {
     expect(getCabinGallery("quad-electric-cabin")[0]).toBe(
-      "/images/rooms/quad-electric-cabin/00.webp"
+      "/images/rooms/family-house-electric/00.webp"
     );
+    expect(getCabinGallery("signature-cabin").slice(2, 4)).toEqual([
+      "/images/rooms/simple-stay/DBR_8363.webp",
+      "/images/rooms/simple-stay/DBR_8355-Pano.webp",
+    ]);
+    expect(getCabinGallery("original-camp-cabin")[0]).toBe(
+      "/images/rooms/original-camp-cabin/DBR_2163.webp"
+    );
+  });
+
+  it("places the original camp cabin second in public ordering", () => {
+    expect(CABIN_CATALOG[1]?.slug).toBe("original-camp-cabin");
+    expect(getCabinCatalogSortIndex("original-camp-cabin")).toBe(1);
   });
 
   it("only references public image assets that exist", () => {
@@ -75,6 +89,7 @@ describe("cabin catalog Cloudbeds mapping", () => {
   it("uses cleaned canonical room URLs", () => {
     expect(getCabinDetailHref("superior-cabin")).toBe("/superior-cabin");
     expect(getCabinDetailHref("signature-cabin")).toBe("/simple-stay");
+    expect(getCabinDetailHref("original-camp-cabin")).toBe("/original-camp-cabin");
     expect(getCabinDetailHref("grand-peninsula-suite")).toBe("/family-house-wood-fired");
     expect(getCabinDetailHref("camping")).toBe("/traveler-camp");
   });
@@ -88,6 +103,8 @@ describe("cabin catalog Cloudbeds mapping", () => {
     expect(resolveCabinSlugFromRouteSlug("simple-stay")).toBe("signature-cabin");
     expect(resolveCabinSlugFromRouteSlug("signature-cabin")).toBe("signature-cabin");
     expect(getCanonicalCabinHrefFromRouteSlug("signature-cabin")).toBe("/simple-stay");
+    expect(resolveCabinSlugFromRouteSlug("ankhny-zuslangiin-bair")).toBe("original-camp-cabin");
+    expect(getCanonicalCabinHrefFromRouteSlug("first-camp-cabin")).toBe("/original-camp-cabin");
   });
 
   it("uses MNT starting prices instead of stale dollar display values", () => {
@@ -102,6 +119,7 @@ describe("cabin catalog Cloudbeds mapping", () => {
     expect(getCabinCatalogEntry("lakeside-cabin")?.priceFrom).toEqual({ amount: 550000, currency: "MNT" });
     expect(getCabinCatalogEntry("triple-electric-cabin")?.priceFrom).toEqual({ amount: 690000, currency: "MNT" });
     expect(getCabinCatalogEntry("signature-cabin")?.priceFrom).toEqual({ amount: 250000, currency: "MNT" });
+    expect(getCabinCatalogEntry("original-camp-cabin")?.priceFrom).toEqual({ amount: 350000, currency: "MNT" });
     expect(getCabinCatalogEntry("quad-electric-cabin")?.priceFrom).toEqual({ amount: 850000, currency: "MNT" });
     expect(getCabinCatalogEntry("grand-peninsula-suite")?.priceFrom).toEqual({ amount: 850000, currency: "MNT" });
     expect(getCabinCatalogEntry("camping")?.priceFrom).toBeNull();

@@ -7,6 +7,7 @@ describe("cabin Cloudbeds snapshot room sizes", () => {
     expect(CABIN_CLOUDBEDS_FACTS["triple-traditional-cabin"].roomSizeLabel?.en).toBe("25-30 m\u00b2");
     expect(CABIN_CLOUDBEDS_FACTS["lakeside-cabin"].roomSizeLabel?.en).toBe("40 m\u00b2");
     expect(CABIN_CLOUDBEDS_FACTS["triple-electric-cabin"].roomSizeLabel?.en).toBe("20 m\u00b2");
+    expect(CABIN_CLOUDBEDS_FACTS["original-camp-cabin"].roomSizeLabel?.en).toBe("30 m\u00b2");
     expect(CABIN_CLOUDBEDS_FACTS["quad-electric-cabin"].roomSizeLabel?.en).toBe("25 m\u00b2");
     expect(CABIN_CLOUDBEDS_FACTS["grand-peninsula-suite"].roomSizeLabel?.en).toBe("35 m\u00b2");
   });
@@ -29,6 +30,11 @@ describe("cabin Cloudbeds snapshot layouts", () => {
     expect(CABIN_CLOUDBEDS_FACTS["triple-electric-cabin"].guestLabel.en).toBe(
       "Up to 3 guests",
     );
+    expect(CABIN_CLOUDBEDS_FACTS["lakeside-cabin"].maxGuests).toBe(4);
+    expect(CABIN_CLOUDBEDS_FACTS["original-camp-cabin"].maxGuests).toBe(4);
+    expect(CABIN_CLOUDBEDS_FACTS["original-camp-cabin"].bedLabel.en).toContain(
+      "2 double beds",
+    );
   });
 });
 
@@ -45,6 +51,9 @@ describe("cabin Cloudbeds snapshot equipment", () => {
     ]);
     expect(CABIN_CLOUDBEDS_FACTS["triple-traditional-cabin"].equipmentLabels.map((x) => x.en)).toContain(
       "Select units with TV",
+    );
+    expect(CABIN_CLOUDBEDS_FACTS["original-camp-cabin"].equipmentLabels.map((x) => x.mn)).toContain(
+      "Орчин үеийн засваргүй, анхны модон хийцээрээ",
     );
   });
 

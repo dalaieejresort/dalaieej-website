@@ -87,6 +87,7 @@ function makeCloudbedsRoom(slug: CabinSlug, image: string): Room {
 
 const ROOMS: Room[] = [
   makeCloudbedsRoom("superior-cabin", assetUrl("/images/cabins/room-superior.webp")),
+  makeCloudbedsRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
   makeCloudbedsRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
   makeCloudbedsRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
   makeCloudbedsRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),

@@ -15,14 +15,13 @@
  * its motion language. We reproduce the same feel with framer-motion so it
  * stays native to this codebase:
  *
- *   • Hero: slow image zoom-out on mount + scroll-linked parallax; title fades
- *     and lifts as the hero scrolls away (Hoteller `#page_caption.hasbg` +
- *     `stellar` parallax).
+ *   • Hero: full uncropped image; title fades
+ *     and lifts as the hero scrolls away.
  *   • Sections: `smoove`-style fade-up on scroll enter.
  *   • Amenity icons: staggered children reveal.
- *   • Gallery: fade-up + hover zoom (`modulobox` feel).
- *   • Experience cards: mouse-tracked 3D tilt (`tilt.jquery.js`) + image zoom.
- *   • Other rooms: stagger reveal + image zoom on hover.
+ *   • Gallery: fade-up with full, uncropped images.
+ *   • Experience cards: mouse-tracked 3D tilt (`tilt.jquery.js`).
+ *   • Other rooms: stagger reveal with full, uncropped images.
  *   • All motion is gated on `useReducedMotion()`.
  */
 
@@ -220,6 +219,7 @@ function makeOtherRoom(slug: CabinSlug, image: string) {
 }
 
 const OTHER_ROOMS = [
+  makeOtherRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
   makeOtherRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
   makeOtherRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
   makeOtherRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),
@@ -320,7 +320,7 @@ export default function SuperiorCabinPage() {
     el.scrollBy({ left: delta, behavior: "smooth" });
   };
 
-  /* --------------------- HERO scroll parallax ---------------------------- */
+  /* --------------------- HERO scroll response ---------------------------- */
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
@@ -329,9 +329,6 @@ export default function SuperiorCabinPage() {
   // Title fades out + lifts — matches Hoteller `#page_caption.hasbg .page_title_inner`
   const titleOpacity = useTransform(heroProgress, [0, 0.6], [1, 0]);
   const titleY = useTransform(heroProgress, [0, 1], ["0%", "-30%"]);
-  // Background image parallax — subtler than Hoteller's 1.15 stellar ratio
-  const imageY = useTransform(heroProgress, [0, 1], ["0%", "15%"]);
-  const imageScale = useTransform(heroProgress, [0, 1], [1, 1.08]);
 
   const facts: { icon: typeof Ruler; label: string }[] = [
     { icon: Ruler, label: t.roomSize },
@@ -348,23 +345,13 @@ export default function SuperiorCabinPage() {
         ref={heroRef}
         className="relative h-[90vh] min-h-[560px] w-full overflow-hidden"
       >
-        <motion.div
-          className="absolute inset-0 will-change-transform"
-          style={
-            reduce
-              ? undefined
-              : { y: imageY, scale: imageScale }
-          }
-          initial={reduce ? { scale: 1 } : { scale: 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className="absolute inset-0 bg-black">
           <img
             src={HERO_IMAGE}
             alt={t.title}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain"
           />
-        </motion.div>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/80" />
 
         <motion.div
@@ -478,44 +465,44 @@ export default function SuperiorCabinPage() {
           <div className="md:col-span-3 grid grid-cols-1 gap-4 md:gap-6">
             <motion.div
               variants={fadeUpSlow}
-              className="aspect-[4/3] overflow-hidden bg-white/5 group"
+              className="aspect-[4/3] overflow-hidden bg-black"
             >
               <img
                 src={GALLERY_IMAGES[0]}
                 alt={t.title}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
             <motion.div
               variants={fadeUpSlow}
-              className="aspect-[4/3] overflow-hidden bg-white/5 group"
+              className="aspect-[4/3] overflow-hidden bg-black"
             >
               <img
                 src={GALLERY_IMAGES[3]}
                 alt={t.title}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
           </div>
           <div className="md:col-span-2 grid grid-cols-1 gap-4 md:gap-6">
             <motion.div
               variants={fadeUpSlow}
-              className="aspect-[4/3] md:aspect-auto overflow-hidden bg-white/5 group"
+              className="aspect-[4/3] md:aspect-auto overflow-hidden bg-black"
             >
               <img
                 src={GALLERY_IMAGES[1]}
                 alt={t.title}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
             <motion.div
               variants={fadeUpSlow}
-              className="aspect-[4/3] md:aspect-auto overflow-hidden bg-white/5 group"
+              className="aspect-[4/3] md:aspect-auto overflow-hidden bg-black"
             >
               <img
                 src={GALLERY_IMAGES[2]}
                 alt={t.title}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
           </div>
@@ -624,7 +611,7 @@ export default function SuperiorCabinPage() {
             <img
               src={WELLNESS_IMAGE_BEFORE}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -635,7 +622,7 @@ export default function SuperiorCabinPage() {
             <img
               src={SPA_IMAGE_BEFORE}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -647,7 +634,7 @@ export default function SuperiorCabinPage() {
             <img
               src={TAGLINE_BG_MAIN}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -658,14 +645,14 @@ export default function SuperiorCabinPage() {
             <img
               src={WELLNESS_IMAGE_AFTER}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
 
           <img
             src={TAGLINE_BG_MAIN}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-20 md:hidden"
+            className="absolute inset-0 h-full w-full object-contain opacity-20 md:hidden"
           />
         </div>
 
@@ -804,11 +791,11 @@ export default function SuperiorCabinPage() {
                     href={`${localePrefix}${room.href}`}
                     className="group block"
                   >
-                    <div className="aspect-[4/5] overflow-hidden bg-white/5 mb-5">
+                    <div className="aspect-[4/5] overflow-hidden bg-black mb-5">
                       <img
                         src={room.image}
                         alt={room.name[isMn ? "mn" : "en"]}
-                        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                        className="h-full w-full object-contain"
                       />
                     </div>
                     <h3 className={`${headlineFont} italic text-2xl md:text-3xl text-main group-hover:text-bark transition-colors`}>

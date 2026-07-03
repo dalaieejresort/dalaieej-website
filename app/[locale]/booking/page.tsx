@@ -28,6 +28,7 @@ import {
   type BookingCartLine,
 } from "@/lib/booking-cart";
 import {
+  getCabinCatalogSortIndex,
   getCabinDetailHref,
   getCabinDisplayName,
   getCabinGallery,
@@ -501,7 +502,11 @@ function BookingContent() {
       g.rates = dedupeRoomRates(g.rates, currentLocale);
       g.rates = sortRatesRefundableFirst(g.rates);
     }
-    return Array.from(groups.values());
+    return Array.from(groups.values()).sort((a, b) => {
+      const byCatalog = getCabinCatalogSortIndex(a.slug) - getCabinCatalogSortIndex(b.slug);
+      if (byCatalog !== 0) return byCatalog;
+      return a.roomTypeName.localeCompare(b.roomTypeName);
+    });
   }, [rooms, currentLocale]);
 
   useEffect(() => {

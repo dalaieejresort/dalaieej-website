@@ -12,6 +12,7 @@ export type CabinSlug =
   | "lakeside-cabin"
   | "triple-electric-cabin"
   | "signature-cabin"
+  | "original-camp-cabin"
   | "quad-electric-cabin"
   | "grand-peninsula-suite"
   | "camping";
@@ -22,6 +23,7 @@ export type CabinRouteSlug =
   | "lakeside-house"
   | "tuhtai-house-electric"
   | "simple-stay"
+  | "original-camp-cabin"
   | "family-house-electric"
   | "family-house-wood-fired"
   | "traveler-camp";
@@ -67,6 +69,29 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     priceFrom: { amount: 980000, currency: "MNT" },
   },
   {
+    slug: "original-camp-cabin",
+    routeSlug: "original-camp-cabin",
+    legacyRouteSlugs: ["first-camp-cabin", "ankhny-zuslangiin-bair", "first-children-camp-cabin"],
+    name: { en: "Анхны Зуслангийн Байр (Галлагаатай)", mn: "Анхны Зуслангийн Байр (Галлагаатай)" },
+    href: "/original-camp-cabin",
+    cardImage: "/images/rooms/original-camp-cabin/DBR_2163.webp",
+    gallery: [
+      "/images/rooms/original-camp-cabin/DBR_2163.webp",
+      "/images/rooms/original-camp-cabin/DBR_3570.webp",
+      "/images/rooms/original-camp-cabin/DBR_3576.webp",
+      "/images/rooms/original-camp-cabin/DBR_3577.webp",
+      "/images/rooms/original-camp-cabin/DBR_3578.webp",
+      "/images/rooms/original-camp-cabin/DBR_7851.webp",
+    ],
+    cloudbedsIds: ["248639578054784"],
+    aliases: [
+      ["original", "camp"],
+      ["first", "camp"],
+      ["анхны", "зуслангийн", "байр"],
+    ],
+    priceFrom: { amount: 350000, currency: "MNT" },
+  },
+  {
     slug: "triple-traditional-cabin",
     routeSlug: "tuhtai-house-wood-fired",
     legacyRouteSlugs: ["triple-traditional-cabin"],
@@ -74,9 +99,9 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/tuhtai-house-wood-fired",
     cardImage: "/images/cabins/room-triple-traditional.webp",
     gallery: [
-      "/images/rooms/triple-traditional-cabin/01.webp",
-      "/images/rooms/triple-traditional-cabin/03.webp",
-      "/images/rooms/triple-traditional-cabin/04.webp",
+      "/images/rooms/tuhtai-house-wood-fired/01.webp",
+      "/images/rooms/tuhtai-house-wood-fired/03.webp",
+      "/images/rooms/tuhtai-house-wood-fired/04.webp",
     ],
     cloudbedsIds: ["EST", "196467430240449"],
     aliases: [
@@ -93,11 +118,11 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/lakeside-house",
     cardImage: "/images/cabins/room-lakeside.webp",
     gallery: [
-      "/images/rooms/lakeside-cabin/00.webp",
-      "/images/rooms/lakeside-cabin/01.webp",
-      "/images/rooms/lakeside-cabin/02.webp",
-      "/images/rooms/lakeside-cabin/03.webp",
-      "/images/rooms/lakeside-cabin/04.webp",
+      "/images/rooms/lakeside-house/00.webp",
+      "/images/rooms/lakeside-house/01.webp",
+      "/images/rooms/lakeside-house/02.webp",
+      "/images/rooms/lakeside-house/03.webp",
+      "/images/rooms/lakeside-house/04.webp",
     ],
     cloudbedsIds: ["SCW", "198020352975040"],
     aliases: [
@@ -114,10 +139,10 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/tuhtai-house-electric",
     cardImage: "/images/cabins/room-triple-electric.webp",
     gallery: [
-      "/images/rooms/triple-electric-cabin/01.webp",
-      "/images/rooms/triple-electric-cabin/02.webp",
-      "/images/rooms/triple-electric-cabin/03.webp",
-      "/images/rooms/triple-electric-cabin/04.webp",
+      "/images/rooms/tuhtai-house-electric/01.webp",
+      "/images/rooms/tuhtai-house-electric/02.webp",
+      "/images/rooms/tuhtai-house-electric/03.webp",
+      "/images/rooms/tuhtai-house-electric/04.webp",
     ],
     cloudbedsIds: ["198036698427584"],
     aliases: [
@@ -134,11 +159,12 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/simple-stay",
     cardImage: "/images/cabins/room-signature.webp",
     gallery: [
-      "/images/rooms/signature-cabin/00.webp",
-      "/images/rooms/signature-cabin/01.webp",
-      "/images/rooms/signature-cabin/02.webp",
-      "/images/rooms/signature-cabin/03.webp",
-      "/images/rooms/signature-cabin/04.webp",
+      "/images/rooms/simple-stay/00.webp",
+      "/images/rooms/simple-stay/01.webp",
+      "/images/rooms/simple-stay/DBR_8363.webp",
+      "/images/rooms/simple-stay/DBR_8355-Pano.webp",
+      "/images/rooms/simple-stay/02.webp",
+      "/images/rooms/simple-stay/04.webp",
     ],
     cloudbedsIds: ["LDG", "197943412437120"],
     aliases: [
@@ -155,11 +181,11 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/family-house-electric",
     cardImage: "/images/cabins/room-quad-electric.webp",
     gallery: [
-      "/images/rooms/quad-electric-cabin/00.webp",
-      "/images/rooms/quad-electric-cabin/01.webp",
-      "/images/rooms/quad-electric-cabin/02.webp",
-      "/images/rooms/quad-electric-cabin/03.webp",
-      "/images/rooms/quad-electric-cabin/04.webp",
+      "/images/rooms/family-house-electric/00.webp",
+      "/images/rooms/family-house-electric/01.webp",
+      "/images/rooms/family-house-electric/02.webp",
+      "/images/rooms/family-house-electric/03.webp",
+      "/images/rooms/family-house-electric/04.webp",
     ],
     cloudbedsIds: ["198046100787328"],
     aliases: [
@@ -177,10 +203,10 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     href: "/family-house-wood-fired",
     cardImage: "/images/cabins/room-grand-peninsula.webp",
     gallery: [
-      "/images/rooms/grand-peninsula-suite/00.webp",
-      "/images/rooms/grand-peninsula-suite/02.webp",
-      "/images/rooms/grand-peninsula-suite/03.webp",
-      "/images/rooms/grand-peninsula-suite/04.webp",
+      "/images/rooms/family-house-wood-fired/00.webp",
+      "/images/rooms/family-house-wood-fired/02.webp",
+      "/images/rooms/family-house-wood-fired/03.webp",
+      "/images/rooms/family-house-wood-fired/04.webp",
     ],
     cloudbedsIds: ["ESH", "198038298677377"],
     aliases: [
@@ -247,6 +273,12 @@ export function isCanonicalCabinRouteSlug(routeSlug: string): boolean {
 
 export function getCanonicalCabinHrefs(): string[] {
   return CABIN_CATALOG.map((entry) => entry.href);
+}
+
+export function getCabinCatalogSortIndex(slug: CabinSlug | null | undefined): number {
+  if (!slug) return Number.MAX_SAFE_INTEGER;
+  const index = CABIN_CATALOG.findIndex((entry) => entry.slug === slug);
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
 }
 
 export function getCanonicalCabinPathForPathname(pathname: string): string | null {

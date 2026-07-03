@@ -227,8 +227,6 @@ export default function RoomDetailPage() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
   const facts = room
     ? [
@@ -316,20 +314,14 @@ export default function RoomDetailPage() {
   return (
     <main id="main-content" className="min-h-screen bg-ink text-main overflow-hidden">
       <section ref={heroRef} className="relative h-[90vh] min-h-[560px] w-full overflow-hidden">
-        <motion.div
-          className="absolute inset-0 will-change-transform"
-          style={reduce ? undefined : { y: imageY, scale: imageScale }}
-          initial={reduce ? { scale: 1 } : { scale: 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className="absolute inset-0 bg-black">
           <FallbackImage
             src={heroImage}
             fallbackSrc={room.image}
             alt={room.title[lang]}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain"
           />
-        </motion.div>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/80" />
         <motion.div className="relative z-10 flex h-full items-end" style={reduce ? undefined : { opacity: titleOpacity, y: titleY }}>
           <div className="mx-auto w-full max-w-6xl px-6 pb-16 md:pb-24">
@@ -359,8 +351,8 @@ export default function RoomDetailPage() {
         <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
           <p className="font-cta uppercase tracking-[0.32em] text-[10px] text-main/50 mb-8 md:mb-12 text-center">{t.detailsHeading}</p>
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-10 gap-x-6">
-            {facts.map(({ icon: Icon, label }) => (
-              <li key={label} className="flex flex-col items-center text-center gap-3 text-main/80">
+            {facts.map(({ icon: Icon, label }, index) => (
+              <li key={`${label}-${index}`} className="flex flex-col items-center text-center gap-3 text-main/80">
                 <Icon className="w-6 h-6 text-bark" strokeWidth={1.4} />
                 <span className="font-body text-sm tracking-wide">{label}</span>
               </li>
@@ -378,38 +370,38 @@ export default function RoomDetailPage() {
           className="mx-auto max-w-6xl px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6"
         >
           <div className="md:col-span-3 grid grid-cols-1 gap-4 md:gap-6">
-            <motion.div variants={fadeUp} className="aspect-[4/3] overflow-hidden bg-white/5 group">
+            <motion.div variants={fadeUp} className="aspect-[4/3] overflow-hidden bg-black">
               <img
                 src={localGalleryImages[0]}
                 onError={createImageFallbackHandler(galleryFallbackImages[0])}
                 alt={room.title[lang]}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
-            <motion.div variants={fadeUp} className="aspect-[4/3] overflow-hidden bg-white/5 group">
+            <motion.div variants={fadeUp} className="aspect-[4/3] overflow-hidden bg-black">
               <img
                 src={localGalleryImages[1]}
                 onError={createImageFallbackHandler(galleryFallbackImages[1])}
                 alt={room.title[lang]}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
           </div>
           <div className="md:col-span-2 grid grid-cols-1 gap-4 md:gap-6">
-            <motion.div variants={fadeUp} className="aspect-[4/3] md:aspect-auto overflow-hidden bg-white/5 group">
+            <motion.div variants={fadeUp} className="aspect-[4/3] md:aspect-auto overflow-hidden bg-black">
               <img
                 src={localGalleryImages[2]}
                 onError={createImageFallbackHandler(galleryFallbackImages[2])}
                 alt={room.title[lang]}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
-            <motion.div variants={fadeUp} className="aspect-[4/3] md:aspect-auto overflow-hidden bg-white/5 group">
+            <motion.div variants={fadeUp} className="aspect-[4/3] md:aspect-auto overflow-hidden bg-black">
               <img
                 src={localGalleryImages[3]}
                 onError={createImageFallbackHandler(galleryFallbackImages[3])}
                 alt={room.title[lang]}
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                className="h-full w-full object-contain"
               />
             </motion.div>
           </div>
@@ -465,7 +457,7 @@ export default function RoomDetailPage() {
             <img
               src={SHARED_WELLNESS_IMAGE_BEFORE}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -476,7 +468,7 @@ export default function RoomDetailPage() {
             <img
               src={SHARED_SPA_IMAGE_BEFORE}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -489,7 +481,7 @@ export default function RoomDetailPage() {
               src={heroImage}
               onError={createImageFallbackHandler(room.image)}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
           <ImageReveal
@@ -501,7 +493,7 @@ export default function RoomDetailPage() {
               src={localGalleryImages[3]}
               onError={createImageFallbackHandler(galleryFallbackImages[3])}
               alt=""
-              className="h-full w-full object-cover opacity-55 saturate-[0.65]"
+              className="h-full w-full object-contain opacity-55 saturate-[0.65]"
             />
           </ImageReveal>
 
@@ -509,7 +501,7 @@ export default function RoomDetailPage() {
             src={heroImage}
             onError={createImageFallbackHandler(room.image)}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-20 md:hidden"
+            className="absolute inset-0 h-full w-full object-contain opacity-20 md:hidden"
           />
         </div>
 
@@ -602,8 +594,8 @@ export default function RoomDetailPage() {
                   className="snap-start shrink-0 w-[84%] sm:w-[56%] lg:w-[32%]"
                 >
                 <Link href={`${localePrefix}${other.href}`} className="group block">
-                  <div className="aspect-[4/5] overflow-hidden bg-white/5 mb-5">
-                    <img src={other.image} alt={other.title[lang]} className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]" />
+                  <div className="aspect-[4/5] overflow-hidden bg-black mb-5">
+                    <img src={other.image} alt={other.title[lang]} className="h-full w-full object-contain" />
                   </div>
                   <h3 className={`${headlineFont} italic text-2xl md:text-3xl text-main group-hover:text-bark transition-colors`}>{other.title[lang]}</h3>
                   <p className="font-body text-main/60 text-sm mt-2">{`${other.heating[lang]} / ${other.guests[lang]}`}</p>
