@@ -36,7 +36,7 @@ import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
 import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
 import DateInput from "@/app/components/ui/DateInput";
-import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
+import { useBrowserDefaultStayDates } from "@/hooks/useBrowserDefaultStayDates";
 
 // Client-only: bundles ~150 LOC of WebGL, dynamically loaded so /cabins SSR
 // stays clean and no WebGL code ships to other routes.
@@ -220,9 +220,11 @@ export default function CabinsPage() {
   const headlineFont = isMn ? "font-editorial-mn" : "font-editorial-en";
   const heroEyebrow = isMn ? t.eyebrow.toUpperCase() : "STAY WITH US FEEL LIKE HOME";
 
-  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
-  const [checkin, setCheckin] = useState(defaults.checkin);
-  const [checkout, setCheckout] = useState(defaults.checkout);
+  const defaultStayDates = useBrowserDefaultStayDates();
+  const [selectedCheckin, setSelectedCheckin] = useState<string | null>(null);
+  const [selectedCheckout, setSelectedCheckout] = useState<string | null>(null);
+  const checkin = selectedCheckin ?? defaultStayDates.checkin;
+  const checkout = selectedCheckout ?? defaultStayDates.checkout;
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -315,7 +317,7 @@ export default function CabinsPage() {
                 <DateInput
                   id="cbns-checkin"
                   value={checkin}
-                  onChange={setCheckin}
+                  onChange={setSelectedCheckin}
                   className="w-full bg-transparent border-0 border-b border-main/40 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0"
                 />
               </div>
@@ -330,7 +332,7 @@ export default function CabinsPage() {
                 <DateInput
                   id="cbns-checkout"
                   value={checkout}
-                  onChange={setCheckout}
+                  onChange={setSelectedCheckout}
                   min={checkin}
                   className="w-full bg-transparent border-0 border-b border-main/40 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0"
                 />

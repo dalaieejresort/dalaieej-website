@@ -62,7 +62,7 @@ import { withLocalePath } from "@/lib/localePath";
 import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
 import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
-import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
+import { useBrowserDefaultStayDates } from "@/hooks/useBrowserDefaultStayDates";
 
 function getRequiredCabinFact(slug: CabinSlug) {
   const fact = getCabinCloudbedsFact(slug);
@@ -264,9 +264,11 @@ export default function SuperiorCabinPage() {
   const localePrefix = withLocalePath(locale, "/");
   const reduce = useReducedMotion();
 
-  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
-  const [checkin, setCheckin] = useState(defaults.checkin);
-  const [checkout, setCheckout] = useState(defaults.checkout);
+  const defaultStayDates = useBrowserDefaultStayDates();
+  const [selectedCheckin, setSelectedCheckin] = useState<string | null>(null);
+  const [selectedCheckout, setSelectedCheckout] = useState<string | null>(null);
+  const checkin = selectedCheckin ?? defaultStayDates.checkin;
+  const checkout = selectedCheckout ?? defaultStayDates.checkout;
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -540,7 +542,7 @@ export default function SuperiorCabinPage() {
               <DateInput
                 id="sc-checkin"
                 value={checkin}
-                onChange={setCheckin}
+                onChange={setSelectedCheckin}
                 className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0"
               />
             </div>
@@ -552,7 +554,7 @@ export default function SuperiorCabinPage() {
               <DateInput
                 id="sc-checkout"
                 value={checkout}
-                onChange={setCheckout}
+                onChange={setSelectedCheckout}
                 min={checkin}
                 className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0"
               />

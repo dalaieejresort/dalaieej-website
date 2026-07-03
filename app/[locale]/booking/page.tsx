@@ -12,7 +12,8 @@ import { parseBoundedInteger, validateStayDates } from "@/lib/booking-guards";
 import { formatIsoDateAsDots } from "@/lib/dateFormat";
 import DateInput from "@/app/components/ui/DateInput";
 import { withLocalePath } from "@/lib/localePath";
-import { getDefaultAvailabilityStayDates, getLocalDateInputValue } from "@/lib/defaultStayDates";
+import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
+import { useBrowserLocalDateInputValue } from "@/hooks/useBrowserDefaultStayDates";
 import { openNaadamSchedule } from "@/lib/naadamSchedule";
 import {
   MAX_BOOKING_ADULTS,
@@ -1036,7 +1037,7 @@ function BookingContent() {
     }
   };
 
-  const [minDate] = useState(() => getLocalDateInputValue());
+  const minDate = useBrowserLocalDateInputValue();
 
   const placeholderImages = [
     "/images/cabins/room-superior.webp",

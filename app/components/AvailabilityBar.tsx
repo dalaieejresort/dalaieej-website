@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import { CTAButton } from "./ui/Typography";
 import { useScrolledPast } from "@/hooks/useScrolledPast";
+import { useBrowserDefaultStayDates, useBrowserLocalDateInputValue } from "@/hooks/useBrowserDefaultStayDates";
 import { withLocalePath } from "@/lib/localePath";
 import { formatIsoDateAsDots } from "@/lib/dateFormat";
-import { getDefaultAvailabilityStayDates, getLocalDateInputValue } from "@/lib/defaultStayDates";
 
 function useNavOpen() {
   const [navOpen, setNavOpen] = useState(false);
@@ -70,12 +70,13 @@ export default function AvailabilityBar() {
   const currentLocale = pathname.startsWith('/mn') ? 'mn' : 'en';
   const bookingPath = withLocalePath(currentLocale, "/booking");
   
-  // Initialize booking dates without setting state in `useEffect` (ESLint rule).
-  // Dates use local calendar-day math rather than adding hours.
-  const [defaultStayDates] = useState(() => getDefaultAvailabilityStayDates());
-  const [checkIn, setCheckIn] = useState(defaultStayDates.checkin);
-  const [checkOut, setCheckOut] = useState(defaultStayDates.checkout);
-  const [minDate] = useState(() => getLocalDateInputValue());
+  // Dates use browser calendar-day math so statically rendered pages don't freeze build-time dates.
+  const defaultStayDates = useBrowserDefaultStayDates();
+  const minDate = useBrowserLocalDateInputValue();
+  const [selectedCheckIn, setSelectedCheckIn] = useState<string | null>(null);
+  const [selectedCheckOut, setSelectedCheckOut] = useState<string | null>(null);
+  const checkIn = selectedCheckIn ?? defaultStayDates.checkin;
+  const checkOut = selectedCheckOut ?? defaultStayDates.checkout;
 
   if (navOpen) return null;
 
@@ -105,14 +106,14 @@ export default function AvailabilityBar() {
           <HomeDateField
             label={t('checkIn')}
             value={checkIn}
-            onChange={setCheckIn}
+            onChange={setSelectedCheckIn}
             min={minDate}
           />
 
           <HomeDateField
             label={t('checkOut')}
             value={checkOut}
-            onChange={setCheckOut}
+            onChange={setSelectedCheckOut}
             min={checkIn || minDate}
           />
         </div>

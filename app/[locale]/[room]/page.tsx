@@ -38,7 +38,7 @@ import {
 } from "@/lib/cabinCatalog";
 import { withLocalePath } from "@/lib/localePath";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
-import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
+import { useBrowserDefaultStayDates } from "@/hooks/useBrowserDefaultStayDates";
 
 const MirageImage = dynamic(
   () => import("@/app/components/cabins/MirageImage"),
@@ -211,9 +211,11 @@ export default function RoomDetailPage() {
   );
   const headlineFont = isMn ? "font-editorial-mn" : "font-editorial-en";
 
-  const defaults = useMemo(() => getDefaultAvailabilityStayDates(), []);
-  const [checkin, setCheckin] = useState(defaults.checkin);
-  const [checkout, setCheckout] = useState(defaults.checkout);
+  const defaultStayDates = useBrowserDefaultStayDates();
+  const [selectedCheckin, setSelectedCheckin] = useState<string | null>(null);
+  const [selectedCheckout, setSelectedCheckout] = useState<string | null>(null);
+  const checkin = selectedCheckin ?? defaultStayDates.checkin;
+  const checkout = selectedCheckout ?? defaultStayDates.checkout;
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -417,13 +419,13 @@ export default function RoomDetailPage() {
               <label htmlFor="room-checkin" className="block font-body text-main text-sm mb-1">
                 {t.checkIn} <span className="text-main/50">{t.required}</span>
               </label>
-              <DateInput id="room-checkin" value={checkin} onChange={setCheckin} className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0" />
+              <DateInput id="room-checkin" value={checkin} onChange={setSelectedCheckin} className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0" />
             </div>
             <div>
               <label htmlFor="room-checkout" className="block font-body text-main text-sm mb-1">
                 {t.checkOut} <span className="text-main/50">{t.required}</span>
               </label>
-              <DateInput id="room-checkout" value={checkout} onChange={setCheckout} min={checkin} className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0" />
+              <DateInput id="room-checkout" value={checkout} onChange={setSelectedCheckout} min={checkin} className="w-full bg-transparent border-0 border-b border-main/30 focus:border-main text-main font-body py-2 focus:outline-none transition-colors appearance-none !rounded-none !px-0" />
             </div>
             <div>
               <span id="room-adults" className="block font-body text-main text-sm mb-1">{t.adults}</span>
