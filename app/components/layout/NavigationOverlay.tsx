@@ -296,33 +296,33 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
 
             {/* ───────── Main body ───────── */}
             <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
-              <div className="mx-auto grid min-h-full w-full max-w-7xl grid-cols-1 gap-5 px-5 py-6 md:px-12 md:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,22rem)] lg:items-end lg:gap-16 xl:py-12">
+              <div className="mx-auto grid min-h-full w-full max-w-7xl grid-cols-1 gap-5 px-5 py-6 md:px-12 md:py-8 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,19rem)] lg:items-end lg:gap-12 lg:py-7 xl:py-8">
                 <div className="flex min-w-0 flex-col md:self-center">
                   <motion.div
                     initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: reduceMotion ? 0 : 0.45, delay: 0.08 }}
-                    className="mb-5 flex flex-col items-center justify-center text-center md:mb-7"
+                    className="mb-4 flex flex-col items-center justify-center text-center md:mb-5"
                   >
-                    <WeatherWidget className="mx-auto text-center [&>p:last-child]:text-[1.75rem] md:[&>p:last-child]:text-[2rem] lg:[&>p:last-child]:text-[2.35rem]" />
+                    <WeatherWidget className="mx-auto text-center [&>p:last-child]:text-[1.75rem] md:[&>p:last-child]:text-[2rem] lg:[&>p:last-child]:text-[2.15rem]" />
                     <span
                       aria-hidden="true"
-                      className="mt-4 h-px w-12 bg-gradient-to-r from-transparent via-main/35 to-transparent md:mt-5 md:w-16"
+                      className="mt-3 h-px w-12 bg-gradient-to-r from-transparent via-main/35 to-transparent md:mt-4 md:w-16"
                     />
                   </motion.div>
 
                   <nav
                     aria-label="Primary"
-                    className="flex flex-col gap-2 md:gap-3.5"
+                    className="flex flex-col gap-1.5 md:gap-2"
                   >
                     {mainNavItems.map((item, i) => {
                       const label = isMn ? item.label.mn : item.label.en;
                       const linkClass = [
-                        "group inline-flex items-center gap-3",
-                        "leading-[1.05]",
+                        "group inline-flex max-w-full min-w-0 items-center gap-3",
+                        "leading-none",
                         isMn
-                          ? "font-editorial-mn italic text-[2.35rem] md:text-[clamp(3.1rem,5vw,4.8rem)]"
-                          : "font-editorial-en italic text-[2.35rem] md:text-[clamp(3.1rem,5vw,4.8rem)]",
+                          ? "font-editorial-mn italic text-[2.35rem] md:text-[clamp(2.85rem,4.4vw,4.1rem)]"
+                          : "font-editorial-en italic text-[2.35rem] md:text-[clamp(2.85rem,4.4vw,4.1rem)]",
                         item.available
                           ? "text-main/90 hover:text-main transition-colors"
                           : "cursor-default text-main/50",
@@ -349,11 +349,11 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                               }}
                               className={linkClass}
                             >
-                              <span>{label}</span>
+                              <span className="min-w-0 max-w-full break-words text-balance">{label}</span>
                             </Link>
                           ) : (
                             <span role="link" aria-disabled="true" className={linkClass}>
-                              <span>{label}</span>
+                              <span className="min-w-0 max-w-full break-words text-balance">{label}</span>
                               <span className="mt-1 font-cta text-[9px] font-medium uppercase tracking-[0.2em] text-main/40 not-italic md:mt-0 md:text-[10px] md:tracking-[0.22em]">
                                 {isMn ? "Тун удахгүй" : "Soon"}
                               </span>
@@ -369,7 +369,7 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                       initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: reduceMotion ? 0 : 0.4, delay: 0.5 }}
-                      className="mt-5 md:mt-6"
+                      className="mt-4 md:mt-5"
                     >
                       <a
                         href="#naadam-schedule"
@@ -377,7 +377,7 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                           handleNaadamScheduleInteraction(event, locale);
                           onClose();
                         }}
-                        className="inline-flex max-w-full items-center justify-center border border-main/20 px-4 py-2.5 text-left font-cta text-[10px] font-medium uppercase leading-relaxed tracking-[0.18em] text-main/70 transition-colors hover:border-main/45 hover:text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-surface/50 sm:text-[11px]"
+                        className="inline-flex max-w-full items-center justify-center border border-main/20 px-3.5 py-2 text-left font-cta text-[9px] font-medium uppercase leading-snug tracking-[0.16em] text-main/70 transition-colors hover:border-main/45 hover:text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-surface/50 sm:text-[10px]"
                       >
                         {isMn ? "Наадмын хөтөлбөр" : "Naadam Schedule"}
                       </a>
@@ -388,7 +388,7 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: reduceMotion ? 0 : 0.4, delay: 0.5 }}
-                    className="mt-5 md:mt-7"
+                    className="mt-4 md:mt-5"
                   >
                     {languageToggle}
                   </motion.div>
@@ -399,7 +399,7 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.28 }}
-                    className="relative mb-4 block h-[clamp(4.25rem,11vh,6rem)] w-full overflow-hidden bg-main/5 md:mb-6 md:h-[clamp(7rem,20vh,10rem)] lg:mb-7 lg:h-[clamp(15rem,40vh,25rem)]"
+                    className="relative mb-4 block h-[clamp(4.25rem,11vh,6rem)] w-full overflow-hidden bg-main/5 md:mb-5 md:h-[clamp(7rem,20vh,10rem)] lg:mb-6 lg:h-[clamp(12rem,34vh,20rem)]"
                   >
                     <SiteImage
                       src={DESKTOP_FEATURE_IMAGE}
