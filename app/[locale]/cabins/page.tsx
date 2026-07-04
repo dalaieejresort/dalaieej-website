@@ -87,7 +87,6 @@ function makeCloudbedsRoom(slug: CabinSlug, image: string): Room {
 
 const ROOMS: Room[] = [
   makeCloudbedsRoom("superior-cabin", assetUrl("/images/cabins/room-superior.webp")),
-  makeCloudbedsRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
   makeCloudbedsRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
   makeCloudbedsRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
   makeCloudbedsRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),
@@ -95,6 +94,7 @@ const ROOMS: Room[] = [
   makeCloudbedsRoom("quad-electric-cabin", assetUrl("/images/cabins/room-quad-electric.webp")),
   makeCloudbedsRoom("grand-peninsula-suite", assetUrl("/images/cabins/room-grand-peninsula.webp")),
   makeCloudbedsRoom("camping", assetUrl("/images/rooms/camping.webp")),
+  makeCloudbedsRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
 ];
 
 const HERO_IMAGE = assetUrl("/images/cabins/hero-our-rooms.webp");

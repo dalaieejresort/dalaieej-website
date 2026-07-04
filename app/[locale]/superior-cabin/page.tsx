@@ -220,7 +220,6 @@ function makeOtherRoom(slug: CabinSlug, image: string) {
 }
 
 const OTHER_ROOMS = [
-  makeOtherRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
   makeOtherRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
   makeOtherRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
   makeOtherRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),
@@ -228,6 +227,7 @@ const OTHER_ROOMS = [
   makeOtherRoom("quad-electric-cabin", assetUrl("/images/cabins/room-quad-electric.webp")),
   makeOtherRoom("grand-peninsula-suite", assetUrl("/images/cabins/room-grand-peninsula.webp")),
   makeOtherRoom("camping", assetUrl("/images/rooms/camping.webp")),
+  makeOtherRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
 ];
 
 /* -------------------------------------------------------------------------- */

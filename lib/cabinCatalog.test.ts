@@ -72,9 +72,9 @@ describe("cabin catalog Cloudbeds mapping", () => {
     );
   });
 
-  it("places the original camp cabin second in public ordering", () => {
-    expect(CABIN_CATALOG[1]?.slug).toBe("original-camp-cabin");
-    expect(getCabinCatalogSortIndex("original-camp-cabin")).toBe(1);
+  it("places the original camp cabin last in public ordering", () => {
+    expect(CABIN_CATALOG.at(-1)?.slug).toBe("original-camp-cabin");
+    expect(getCabinCatalogSortIndex("original-camp-cabin")).toBe(CABIN_CATALOG.length - 1);
   });
 
   it("only references public image assets that exist", () => {
