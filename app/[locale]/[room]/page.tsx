@@ -3,7 +3,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import {
@@ -75,10 +75,11 @@ function getRequiredCabinFact(slug: CabinSlug) {
   return fact;
 }
 
-function makeRoomConfig(slug: CabinSlug, image: string): RoomConfig {
+function makeRoomConfig(slug: CabinSlug): RoomConfig {
   const fact = getRequiredCabinFact(slug);
   const entry = getCabinCatalogEntry(slug);
   if (!entry) throw new Error(`Missing cabin catalog entry for slug: ${slug}`);
+  const gallery = entry.gallery.map(assetUrl);
   return {
     slug,
     href: entry.href,
@@ -88,8 +89,8 @@ function makeRoomConfig(slug: CabinSlug, image: string): RoomConfig {
     roomSize: fact.roomSizeLabel,
     guests: fact.guestLabel,
     intro: fact.description,
-    image,
-    gallery: entry.gallery.map(assetUrl),
+    image: gallery[0] ?? assetUrl(entry.cardImage),
+    gallery,
     bathroom: fact.bathroomLabel,
     shower: fact.showerLabel,
     bed: fact.bedLabel,
@@ -98,11 +99,7 @@ function makeRoomConfig(slug: CabinSlug, image: string): RoomConfig {
   };
 }
 
-const ROOM_CONFIGS: RoomConfig[] = CABIN_CATALOG.map((entry) =>
-  makeRoomConfig(entry.slug, assetUrl(entry.cardImage)),
-);
-
-const ROOM_IMAGE_POOL = ROOM_CONFIGS.map((config) => config.image);
+const ROOM_CONFIGS: RoomConfig[] = CABIN_CATALOG.map((entry) => makeRoomConfig(entry.slug));
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -184,23 +181,14 @@ export default function RoomDetailPage() {
 
   const routeEntry = getCabinCatalogEntryByRouteSlug(params.room);
   const room = routeEntry ? ROOM_CONFIGS.find((r) => r.slug === routeEntry.slug) : undefined;
-  const roomSlug = room?.slug ?? "";
-  const roomImage = room?.image ?? ROOM_IMAGE_POOL[0];
-  const roomIndex = ROOM_CONFIGS.findIndex((r) => r.slug === roomSlug);
-  const safeRoomIndex = Math.max(roomIndex, 0);
+  if (!room) notFound();
 
-  const galleryFallbackImages = (() => {
-    const alternates = ROOM_IMAGE_POOL.filter((image) => image !== roomImage);
-    if (alternates.length === 0) return [roomImage, roomImage, roomImage, roomImage];
-    const rotation = safeRoomIndex % alternates.length;
-    const rotatedAlternates = [...alternates.slice(rotation), ...alternates.slice(0, rotation)];
-    return [roomImage, rotatedAlternates[0], rotatedAlternates[1], rotatedAlternates[2]].map(
-      (image) => image ?? roomImage,
-    );
-  })();
-  const heroImage = room?.gallery[0] ?? roomImage;
+  const roomSlug = room?.slug ?? "";
+  const roomImage = room.image;
+  const galleryFallbackImages = [roomImage, roomImage, roomImage, roomImage];
+  const heroImage = room.gallery[0] ?? roomImage;
   const localGalleryImages = (() => {
-    const gallery = room?.gallery.length ? room.gallery : [roomImage];
+    const gallery = room.gallery.length ? room.gallery : [roomImage];
     return [1, 2, 3, 4].map((index) => gallery[index] ?? gallery[0] ?? roomImage);
   })();
 
