@@ -12,7 +12,7 @@ import { parseBoundedInteger, validateStayDates } from "@/lib/booking-guards";
 import { formatIsoDateAsDots } from "@/lib/dateFormat";
 import DateInput from "@/app/components/ui/DateInput";
 import { withLocalePath } from "@/lib/localePath";
-import { getDefaultAvailabilityStayDates } from "@/lib/defaultStayDates";
+import { getDefaultAvailabilityStayDates, getLocalDateInputValue } from "@/lib/defaultStayDates";
 import { useBrowserLocalDateInputValue } from "@/hooks/useBrowserDefaultStayDates";
 import { openNaadamSchedule } from "@/lib/naadamSchedule";
 import {
@@ -592,11 +592,13 @@ function BookingContent() {
     const urlChildren = searchParams.get("children");
 
     const defaults = getDefaultAvailabilityStayDates();
+    const today = getLocalDateInputValue();
     const candidateCheckin = urlCheckin || defaults.checkin;
     const candidateCheckout = urlCheckout || defaults.checkout;
     const initialStayDates = validateStayDates(candidateCheckin, candidateCheckout);
-    const effectiveCheckin = initialStayDates.ok ? candidateCheckin : defaults.checkin;
-    const effectiveCheckout = initialStayDates.ok ? candidateCheckout : defaults.checkout;
+    const queryDatesCanBeSearched = initialStayDates.ok && candidateCheckin > today;
+    const effectiveCheckin = queryDatesCanBeSearched ? candidateCheckin : defaults.checkin;
+    const effectiveCheckout = queryDatesCanBeSearched ? candidateCheckout : defaults.checkout;
 
     setCheckin(effectiveCheckin);
     setCheckout(effectiveCheckout);
