@@ -193,7 +193,7 @@ export default function GettingHerePage() {
       <FrostedMapSection
         aria-label={t("hero.title")}
         className="pb-16 md:pb-24 pt-[calc(var(--navbar-h)+2.5rem)] md:pt-[calc(var(--navbar-h)+3.5rem)] min-h-[min(58vh,32rem)]"
-        imageSrc="/images/almanac/getting-here/bulgan-province-overland-road.jpeg"
+        imageSrc="/images/almanac/getting-here/travel-route-map.jpeg"
         imagePriority
         frostOpacity={13.87}
         frostBlurPx={6.2}
@@ -319,7 +319,7 @@ export default function GettingHerePage() {
                   <MediaPlaceholder
                     variant="photo"
                     label={t("media.overlandRoute.label")}
-                    imageSrc="/images/almanac/getting-here/bulgan-province-overland-road.jpeg"
+                    imageSrc="/images/almanac/getting-here/travel-route-map.jpeg"
                     imageAlt={t("media.overlandRoute.alt")}
                     aspectClass="aspect-[4/3]"
                   />

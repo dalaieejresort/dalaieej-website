@@ -467,6 +467,7 @@
     "securePaymentTitle": "Secure payment",
     "securePaymentAssurance": "Encrypted checkout processed by Stripe.",
     "multiRoomHint": "Enter the total guests for your party, then assign adults and children to each cabin in your reservation summary. For more than 20 guests or more than 10 rooms, please contact us directly.",
+    "naadamStayNote": "Naadam dates require a 3-night minimum stay. No check-in or check-out is available on July 12.",
     "onlineGuestLimit": "Online booking is available for up to {count} guests. For larger groups, please contact us directly and we will arrange the stay with you.",
     "onlineRoomLimit": "Online booking is available for up to {count} rooms. For larger groups, please contact us directly and we will arrange the stay with you.",
     "guestsAssigned": "{assigned} of {total} guests assigned",
@@ -726,7 +727,7 @@
       },
       "chinggis": {
         "name": "Chinggis Airlines (Nomin Holdings)",
-        "desc": "For availability on this newer premium option, please contact their operator, Tumee, directly via Viber at +976 77 809010."
+        "desc": "For availability on this newer premium option, please contact their operator, Tumee, directly via Viber at +97699838351 or email Tumennast.e@nomin.net."
       }
     },
     "section2": {

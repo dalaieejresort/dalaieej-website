@@ -1296,6 +1296,13 @@ function BookingContent() {
                   />
                 </div>
 
+                <div className="flex items-start gap-2 border border-main/15 bg-white/[0.03] px-3 py-2.5">
+                  <Info className="w-4 h-4 mt-0.5 shrink-0 text-main/45" aria-hidden />
+                  <p className="font-body text-main/65 text-xs leading-relaxed">
+                    {t("naadamStayNote")}
+                  </p>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <span id="adults-label" className="block font-body text-main text-sm mb-1">
