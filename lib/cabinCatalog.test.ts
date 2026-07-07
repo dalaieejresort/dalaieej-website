@@ -63,6 +63,12 @@ describe("cabin catalog Cloudbeds mapping", () => {
     expect(getCabinGallery("quad-electric-cabin")[0]).toBe(
       "/images/rooms/family-house-electric/00.webp"
     );
+    expect(getCabinCatalogEntry("grand-peninsula-suite")?.cardImage).toBe(
+      "/images/rooms/family-house-wood-fired/00.webp"
+    );
+    expect(getCabinGallery("grand-peninsula-suite")[0]).toBe(
+      "/images/rooms/family-house-wood-fired/00.webp"
+    );
     expect(getCabinGallery("signature-cabin").slice(2, 4)).toEqual([
       "/images/rooms/simple-stay/DBR_8363.webp",
       "/images/rooms/simple-stay/02.webp",

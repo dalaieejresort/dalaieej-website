@@ -33,7 +33,7 @@ import {
 import SiteImage from "@/app/components/SiteImage";
 import { assetUrl } from "@/lib/assetUrl";
 import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
-import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
+import { getCabinCatalogEntry, getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
 import DateInput from "@/app/components/ui/DateInput";
 import { useBrowserDefaultStayDates } from "@/hooks/useBrowserDefaultStayDates";
@@ -66,7 +66,17 @@ function getRequiredCabinFact(slug: CabinSlug) {
   return fact;
 }
 
-function makeCloudbedsRoom(slug: CabinSlug, image: string): Room {
+function getRequiredCabinCatalogEntry(slug: CabinSlug) {
+  const entry = getCabinCatalogEntry(slug);
+  if (!entry) throw new Error(`Missing cabin catalog entry for slug: ${slug}`);
+  return entry;
+}
+
+function getCabinCardAsset(slug: CabinSlug) {
+  return assetUrl(getRequiredCabinCatalogEntry(slug).cardImage);
+}
+
+function makeCloudbedsRoom(slug: CabinSlug): Room {
   const fact = getRequiredCabinFact(slug);
   return {
     slug,
@@ -81,20 +91,20 @@ function makeCloudbedsRoom(slug: CabinSlug, image: string): Room {
     },
     equipment: fact.equipmentLabels,
     intro: fact.shortDescription,
-    image,
+    image: getCabinCardAsset(slug),
   };
 }
 
 const ROOMS: Room[] = [
-  makeCloudbedsRoom("superior-cabin", assetUrl("/images/cabins/room-superior.webp")),
-  makeCloudbedsRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
-  makeCloudbedsRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
-  makeCloudbedsRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),
-  makeCloudbedsRoom("signature-cabin", assetUrl("/images/cabins/room-signature.webp")),
-  makeCloudbedsRoom("quad-electric-cabin", assetUrl("/images/cabins/room-quad-electric.webp")),
-  makeCloudbedsRoom("grand-peninsula-suite", assetUrl("/images/cabins/room-grand-peninsula.webp")),
-  makeCloudbedsRoom("camping", assetUrl("/images/rooms/camping.webp")),
-  makeCloudbedsRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
+  makeCloudbedsRoom("superior-cabin"),
+  makeCloudbedsRoom("triple-traditional-cabin"),
+  makeCloudbedsRoom("lakeside-cabin"),
+  makeCloudbedsRoom("triple-electric-cabin"),
+  makeCloudbedsRoom("signature-cabin"),
+  makeCloudbedsRoom("quad-electric-cabin"),
+  makeCloudbedsRoom("grand-peninsula-suite"),
+  makeCloudbedsRoom("camping"),
+  makeCloudbedsRoom("original-camp-cabin"),
 ];
 
 const HERO_IMAGE = assetUrl("/images/cabins/hero-our-rooms.webp");
@@ -107,7 +117,7 @@ const SPA_IMAGE_BEFORE = assetUrl("/images/cabins/spa-mirage-before.webp");
 const SPA_IMAGE_AFTER = assetUrl("/images/cabins/spa-mirage-after.webp");
 const WELLNESS_IMAGE_BEFORE = assetUrl("/images/cabins/wellness-mirage-before.webp");
 const WELLNESS_IMAGE_AFTER = assetUrl("/images/cabins/wellness-mirage-after.webp");
-const TAGLINE_BG_MAIN = assetUrl("/images/cabins/room-grand-peninsula.webp");
+const TAGLINE_BG_MAIN = getCabinCardAsset("grand-peninsula-suite");
 
 type CopyKey =
   | "eyebrow"

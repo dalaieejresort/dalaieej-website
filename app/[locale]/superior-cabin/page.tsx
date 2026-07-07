@@ -60,7 +60,7 @@ import { assetUrl } from "@/lib/assetUrl";
 import DateInput from "@/app/components/ui/DateInput";
 import { withLocalePath } from "@/lib/localePath";
 import { getCabinCloudbedsFact } from "@/lib/cabinCloudbedsSnapshot";
-import { getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
+import { getCabinCatalogEntry, getCabinDetailHref, type CabinSlug } from "@/lib/cabinCatalog";
 import { navigateExperienceCardHref } from "@/lib/wellnessPromo";
 import { useBrowserDefaultStayDates } from "@/hooks/useBrowserDefaultStayDates";
 
@@ -68,6 +68,16 @@ function getRequiredCabinFact(slug: CabinSlug) {
   const fact = getCabinCloudbedsFact(slug);
   if (!fact) throw new Error(`Missing Cloudbeds cabin fact for slug: ${slug}`);
   return fact;
+}
+
+function getRequiredCabinCatalogEntry(slug: CabinSlug) {
+  const entry = getCabinCatalogEntry(slug);
+  if (!entry) throw new Error(`Missing cabin catalog entry for slug: ${slug}`);
+  return entry;
+}
+
+function getCabinCardAsset(slug: CabinSlug) {
+  return assetUrl(getRequiredCabinCatalogEntry(slug).cardImage);
 }
 
 const SUPERIOR_FACT = getRequiredCabinFact("superior-cabin");
@@ -209,25 +219,25 @@ const WELLNESS_IMAGE_BEFORE = assetUrl("/images/cabins/wellness-mirage-before.we
 const WELLNESS_IMAGE_AFTER = assetUrl("/images/cabins/wellness-mirage-after.webp");
 const TAGLINE_BG_MAIN = SUPERIOR_IMAGE;
 
-function makeOtherRoom(slug: CabinSlug, image: string) {
+function makeOtherRoom(slug: CabinSlug) {
   const fact = getRequiredCabinFact(slug);
   return {
     name: { en: fact.name, mn: fact.name },
     summary: fact.guestLabel,
-    image,
+    image: getCabinCardAsset(slug),
     href: getCabinDetailHref(slug),
   };
 }
 
 const OTHER_ROOMS = [
-  makeOtherRoom("triple-traditional-cabin", assetUrl("/images/cabins/room-triple-traditional.webp")),
-  makeOtherRoom("lakeside-cabin", assetUrl("/images/cabins/room-lakeside.webp")),
-  makeOtherRoom("triple-electric-cabin", assetUrl("/images/cabins/room-triple-electric.webp")),
-  makeOtherRoom("signature-cabin", assetUrl("/images/cabins/room-signature.webp")),
-  makeOtherRoom("quad-electric-cabin", assetUrl("/images/cabins/room-quad-electric.webp")),
-  makeOtherRoom("grand-peninsula-suite", assetUrl("/images/cabins/room-grand-peninsula.webp")),
-  makeOtherRoom("camping", assetUrl("/images/rooms/camping.webp")),
-  makeOtherRoom("original-camp-cabin", assetUrl("/images/rooms/original-camp-cabin/DBR_2163.webp")),
+  makeOtherRoom("triple-traditional-cabin"),
+  makeOtherRoom("lakeside-cabin"),
+  makeOtherRoom("triple-electric-cabin"),
+  makeOtherRoom("signature-cabin"),
+  makeOtherRoom("quad-electric-cabin"),
+  makeOtherRoom("grand-peninsula-suite"),
+  makeOtherRoom("camping"),
+  makeOtherRoom("original-camp-cabin"),
 ];
 
 /* -------------------------------------------------------------------------- */
