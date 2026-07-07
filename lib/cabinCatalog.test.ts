@@ -65,7 +65,7 @@ describe("cabin catalog Cloudbeds mapping", () => {
     );
     expect(getCabinGallery("signature-cabin").slice(2, 4)).toEqual([
       "/images/rooms/simple-stay/DBR_8363.webp",
-      "/images/rooms/simple-stay/DBR_8355-Pano.webp",
+      "/images/rooms/simple-stay/02.webp",
     ]);
     expect(getCabinGallery("original-camp-cabin")[0]).toBe(
       "/images/rooms/original-camp-cabin/DBR_2163.webp"

@@ -143,6 +143,19 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
   const reduceMotion = useReducedMotion();
 
   const naadamActive = isNaadam2026Active();
+  const visibleNavItems: MainNavItem[] = naadamActive
+    ? [
+        ...mainNavItems,
+        {
+          id: "naadam",
+          href: "#naadam-schedule",
+          image: "/images/events/naadam/khatgal-naadam-2026-mn.jpg",
+          label: { en: "Naadam Schedule", mn: "Наадмын хөтөлбөр" },
+          meta: { en: "Festival programme", mn: "Баярын хөтөлбөр" },
+          available: true,
+        },
+      ]
+    : mainNavItems;
 
   useEffect(() => {
     if (isOpen) {
@@ -315,7 +328,7 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                     aria-label="Primary"
                     className="flex flex-col gap-1.5 md:gap-2"
                   >
-                    {mainNavItems.map((item, i) => {
+                    {visibleNavItems.map((item, i) => {
                       const label = isMn ? item.label.mn : item.label.en;
                       const linkClass = [
                         "group inline-flex max-w-full min-w-0 items-center gap-3",
@@ -342,6 +355,11 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                             <Link
                               href={getNavItemHref(locale, item.href)}
                               onClick={(event) => {
+                                if (item.id === "naadam") {
+                                  handleNaadamScheduleInteraction(event, locale);
+                                  onClose();
+                                  return;
+                                }
                                 if (isDiningGalleryHref(item.href)) {
                                   openRestaurantMenuPdf();
                                 }
@@ -363,26 +381,6 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
                       );
                     })}
                   </nav>
-
-                  {naadamActive ? (
-                    <motion.div
-                      initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: reduceMotion ? 0 : 0.4, delay: 0.5 }}
-                      className="mt-4 md:mt-5"
-                    >
-                      <a
-                        href="#naadam-schedule"
-                        onClick={(event) => {
-                          handleNaadamScheduleInteraction(event, locale);
-                          onClose();
-                        }}
-                        className="inline-flex max-w-full items-center justify-center border border-main/20 px-3.5 py-2 text-left font-cta text-[9px] font-medium uppercase leading-snug tracking-[0.16em] text-main/70 transition-colors hover:border-main/45 hover:text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-surface/50 sm:text-[10px]"
-                      >
-                        {isMn ? "Наадмын хөтөлбөр" : "Naadam Schedule"}
-                      </a>
-                    </motion.div>
-                  ) : null}
 
                   <motion.div
                     initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
