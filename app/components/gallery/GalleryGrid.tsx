@@ -115,15 +115,11 @@ function GalleryContent() {
 
   const searchParams = useSearchParams();
   const filterParam = searchParams.get("filter") as FilterId | null;
+  const urlFilter =
+    filterParam && FILTER_ORDER.includes(filterParam) ? filterParam : "all";
 
-  const [activeFilter, setActiveFilter] = useState<FilterId>("all");
-  
-  // Set initial filter from URL parameter
-  useEffect(() => {
-    if (filterParam && FILTER_ORDER.includes(filterParam)) {
-      setActiveFilter(filterParam);
-    }
-  }, [filterParam]);
+  const [selectedFilter, setSelectedFilter] = useState<FilterId | null>(null);
+  const activeFilter = selectedFilter ?? urlFilter;
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -227,7 +223,7 @@ function GalleryContent() {
                   <li key={id}>
                     <button
                       type="button"
-                      onClick={() => setActiveFilter(id)}
+                      onClick={() => setSelectedFilter(id)}
                       aria-pressed={isActive}
                       className={`font-cta uppercase text-[11px] md:text-xs tracking-[0.22em] transition-colors duration-300 pb-1 border-b ${
                         isActive
