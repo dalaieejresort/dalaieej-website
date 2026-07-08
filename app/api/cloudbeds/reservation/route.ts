@@ -9,6 +9,7 @@ import {
 import { parseBoundedInteger, validateStayDates } from "@/lib/booking-guards";
 import { parseCloudbedsMoney } from "@/lib/cloudbeds-money";
 import { stayTotalForRoom } from "@/lib/cloudbeds-pricing";
+import { groupReservationLinesForCloudbeds } from "@/lib/cloudbeds-reservation-payload";
 import {
   depositPortionForAddonTotal,
   sumDepositDueForRoomLines,
@@ -452,6 +453,7 @@ export async function POST(request: NextRequest) {
     }
 
     const createReservationPayload = async (): Promise<ReservationSuccessPayload> => {
+      const cloudbedsReservationRooms = groupReservationLinesForCloudbeds(roomList);
       const payloadObj: Record<string, unknown> = {
         propertyID: propertyId,
         startDate: checkin,
@@ -462,19 +464,9 @@ export async function POST(request: NextRequest) {
         source: "Website",
         status: "not_confirmed",
         paymentMethod: "bank_transfer",
-        rooms: roomList.map((room) => ({
-          roomTypeID: room.roomTypeID,
-          roomRateID: room.roomRateID,
-          quantity: 1,
-        })),
-        adults: roomList.map((room) => ({
-          roomTypeID: room.roomTypeID,
-          quantity: room.adults,
-        })),
-        children: roomList.map((room) => ({
-          roomTypeID: room.roomTypeID,
-          quantity: room.children,
-        })),
+        rooms: cloudbedsReservationRooms.rooms,
+        adults: cloudbedsReservationRooms.adults,
+        children: cloudbedsReservationRooms.children,
       };
 
       if (phone) payloadObj.guestPhone = phone;
@@ -488,6 +480,7 @@ export async function POST(request: NextRequest) {
 
       console.log("Creating Cloudbeds reservation:", {
         roomCount: roomList.length,
+        cloudbedsRoomLineCount: cloudbedsReservationRooms.rooms.length,
         checkin,
         checkout,
         hasAddons: addonQuote.charges.length > 0,
