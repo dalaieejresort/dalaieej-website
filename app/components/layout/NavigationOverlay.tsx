@@ -79,6 +79,14 @@ const mainNavItems: MainNavItem[] = [
     available: true,
   },
   {
+    id: "naadam",
+    href: "#naadam-schedule",
+    image: "/images/events/naadam/khatgal-naadam-2026-mn.jpg",
+    label: { en: "Naadam Schedule", mn: "Наадмын хөтөлбөр" },
+    meta: { en: "Festival programme", mn: "Баярын хөтөлбөр" },
+    available: true,
+  },
+  {
     id: "about",
     href: "/about-us",
     image: "/images/nav-overlay/our-story.jpg",
@@ -142,20 +150,9 @@ export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlay
   const pathWithoutLocale = getPathWithoutLocale(pathname);
   const reduceMotion = useReducedMotion();
 
-  const naadamActive = isNaadam2026Active();
-  const visibleNavItems: MainNavItem[] = naadamActive
-    ? [
-        ...mainNavItems,
-        {
-          id: "naadam",
-          href: "#naadam-schedule",
-          image: "/images/events/naadam/khatgal-naadam-2026-mn.jpg",
-          label: { en: "Naadam Schedule", mn: "Наадмын хөтөлбөр" },
-          meta: { en: "Festival programme", mn: "Баярын хөтөлбөр" },
-          available: true,
-        },
-      ]
-    : mainNavItems;
+  const visibleNavItems = mainNavItems.filter(
+    (item) => item.id !== "naadam" || isNaadam2026Active(),
+  );
 
   useEffect(() => {
     if (isOpen) {
