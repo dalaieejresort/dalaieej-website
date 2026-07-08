@@ -240,6 +240,13 @@ export async function GET(request: NextRequest) {
 
     const propertyData = availabilityData?.data?.[0];
     if (!propertyData || !propertyData.propertyRooms) {
+      if (promo) {
+        return NextResponse.json(
+          { error: "Promo code is not available for these dates" },
+          { status: 400 }
+        );
+      }
+
       console.log("No property rooms found in response, returning empty");
       return NextResponse.json({
         success: true,

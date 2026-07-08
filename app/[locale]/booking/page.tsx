@@ -354,6 +354,10 @@ function BookingContent() {
   const currentLocale = locale === 'mn' ? 'mn' : 'en';
   const localePrefix = withLocalePath(currentLocale, "/");
   const editorialFont = currentLocale === 'mn' ? 'font-editorial-mn' : 'font-editorial-en';
+  const promoUnavailableMessage =
+    currentLocale === "mn"
+      ? "Урамшууллын код энэ огноонд үйлчлэхгүй байна. Энгийн үнийг харуулж байна."
+      : "That promo code is not available for these dates. Showing regular availability.";
 
   const getRoomDetailPath = (slug: CabinSlug | null) =>
     withLocalePath(currentLocale, getCabinDetailHref(slug));
@@ -618,9 +622,19 @@ function BookingContent() {
     void fetchAvailability(effectiveCheckin, effectiveCheckout, urlPromo, {
       quoteAdults: parsedAdults,
       quoteChildren: parsedChildren,
-    }).then((applied) => {
+    }).then(async (applied) => {
       if (urlPromo) {
-        setAppliedPromo(applied ? urlPromo : "");
+        if (applied) {
+          setAppliedPromo(urlPromo);
+        } else {
+          setAppliedPromo("");
+          await fetchAvailability(effectiveCheckin, effectiveCheckout, "", {
+            force: true,
+            quoteAdults: parsedAdults,
+            quoteChildren: parsedChildren,
+          });
+          setError(promoUnavailableMessage);
+        }
       }
     });
   }, [searchParams]);
@@ -773,6 +787,12 @@ function BookingContent() {
         setAppliedPromo(normalizedPromo);
       } else {
         setAppliedPromo("");
+        await fetchAvailability(checkin, checkout, "", {
+          force: true,
+          quoteAdults: totalAdults,
+          quoteChildren: totalChildren,
+        });
+        setError(promoUnavailableMessage);
       }
     } finally {
       setPromoLoading(false);
