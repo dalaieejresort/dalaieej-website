@@ -19,9 +19,6 @@ import {
   playfairDisplayItalic,
 } from "@/app/fonts";
 
-const STORAGE_KEY = "dalaieej-wellness-promo-dismissed-at";
-const DISMISS_MS = 7 * 24 * 60 * 60 * 1000;
-const SHOW_DELAY_MS = 1300;
 const ROOM_JOURNEY_PATHS = CABIN_CATALOG.flatMap((entry) => [
   entry.href,
   `/${entry.slug}`,
@@ -35,27 +32,6 @@ const JOURNEY_PATHS = [
   "/payment",
   "/gallery",
 ];
-
-function isDismissedRecently(): boolean {
-  if (typeof window === "undefined") return true;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return false;
-    const dismissedAt = Date.parse(raw);
-    if (Number.isNaN(dismissedAt)) return false;
-    return Date.now() - dismissedAt < DISMISS_MS;
-  } catch {
-    return false;
-  }
-}
-
-function persistDismiss() {
-  try {
-    localStorage.setItem(STORAGE_KEY, new Date().toISOString());
-  } catch {
-    /* ignore quota / private mode */
-  }
-}
 
 function pathWithoutLocale(pathname: string): string {
   const segments = pathname.split("/").filter(Boolean);
@@ -99,7 +75,6 @@ export default function WellnessPromoModal() {
   const canShowPromo = portalMounted && !suppressPromo && (!isHome || heroPast);
 
   const dismiss = useCallback(() => {
-    persistDismiss();
     setOpen(false);
   }, []);
 
@@ -108,13 +83,6 @@ export default function WellnessPromoModal() {
     window.addEventListener(WELLNESS_PROMO_OPEN_EVENT, onOpen);
     return () => window.removeEventListener(WELLNESS_PROMO_OPEN_EVENT, onOpen);
   }, []);
-
-  useEffect(() => {
-    if (!canShowPromo || isDismissedRecently()) return;
-
-    const timer = window.setTimeout(() => setOpen(true), SHOW_DELAY_MS);
-    return () => window.clearTimeout(timer);
-  }, [canShowPromo]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setPortalMounted(true), 0);
