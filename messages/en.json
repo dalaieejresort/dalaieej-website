@@ -33,7 +33,7 @@
     "description": "Choose from our peaceful lakefront cabins and shoreline camping options at Dalai Eej Resort on Lake Khövsgöl."
     },
     "superiorCabin": {
-      "title": "Ерөнхийлөгчийн Хаус | Dalai Eej Resort",
+      "title": "Presidential Cabin | Dalai Eej Resort",
       "description": "A large wood-fired family stay at Dalai Eej, designed for slow mornings and quiet lake views."
     },
     "cabins": {
@@ -223,13 +223,13 @@
     "featured_rooms": {
     "title": "Shoreline Accommodations",
     "subtitle": "Stays designed for quiet refuge and natural beauty",
-      "room1_name": "Эрэг дээрх Хаус",
+      "room1_name": "Lakeside Cabin",
       "room1_desc": "Wood-fired lakeside stay for up to 2 guests with shared facilities",
       "room1_price": "Live rates",
-      "room2_name": "Тухтай Хаус (Галлагаатай)",
+      "room2_name": "Comfort Cabin (Wood-fired)",
       "room2_desc": "Wood-fired comfort house for up to 3 guests with toilet and washbasin inside",
       "room2_price": "Live rates",
-      "room3_name": "Гэр Бүлийн Хаус (Галлагаатай)",
+      "room3_name": "Family Cabin (Wood-fired)",
       "room3_desc": "Family house for up to 5 guests with two double beds and toilet/washbasin inside",
       "room3_price": "Live rates"
     }
@@ -304,19 +304,19 @@
       "desc": "The main lodge featuring our lakefront dining hall and lounge bar."
     },
     "annex": {
-      "title": "Энгийн Байр",
+      "title": "Standard Cabin",
       "desc": "Simple warm stays close to the lake, using the shared modern bathroom and shower facilities."
     },
     "ensuite": {
-      "title": "Тухтай Хаус / Гэр Бүлийн Хаус",
+      "title": "Comfort Cabin / Family Cabin",
       "desc": "Comfort and family houses with toilet and washbasin inside; showers are in the shared modern facilities."
     },
     "heritage": {
-      "title": "Эрэг дээрх Хаус",
+      "title": "Lakeside Cabin",
       "desc": "Wood-fired lakefront houses closest to the water, using shared bathroom and shower facilities."
     },
     "grand": {
-      "title": "Ерөнхийлөгчийн Хаус",
+      "title": "Presidential Cabin",
       "desc": "Our largest wood-fired house for up to 5 guests, with toilet and washbasin inside."
     },
     "bathhouse": {
@@ -486,7 +486,7 @@
     "title": "Shoreline Accommodations",
     "subtitle": "A sanctuary on the shore, designed for deep rest",
     "grandSuite": {
-      "title": "Ерөнхийлөгчийн Хаус",
+      "title": "Presidential Cabin",
       "subtitle": "Large wood-fired family stay",
       "capacity": "Sleeps up to 5",
       "bedding": "Family layout",
@@ -499,7 +499,7 @@
       ]
     },
     "familyCabin": {
-      "title": "Гэр Бүлийн Хаус",
+      "title": "Family Cabin",
       "subtitle": "Family house options",
       "capacity": "Sleeps up to 5",
       "bedding": "2 Double Beds",
@@ -512,7 +512,7 @@
       ]
     },
     "comfortCabin": {
-      "title": "Тухтай Хаус",
+      "title": "Comfort Cabin",
       "subtitle": "Comfort house options",
       "capacity": "Sleeps up to 3",
       "bedding": "1 Double Bed + 1 Single Bed",
@@ -525,7 +525,7 @@
       ]
     },
     "standardCabin": {
-      "title": "Эрэг дээрх Хаус",
+      "title": "Lakeside Cabin",
       "subtitle": "Closest to the lake",
       "capacity": "Max 2 Adults",
       "bedding": "Couple layout",
@@ -537,7 +537,7 @@
       ]
     },
     "lodgeRoom": {
-      "title": "Энгийн Байр",
+      "title": "Standard Cabin",
       "subtitle": "Simple warm stay",
       "capacity": "Max 2 Adults",
       "bedding": "Couple / solo layout",
@@ -549,7 +549,7 @@
       ]
     },
     "camping": {
-      "title": "Аялагчийн Отог",
+      "title": "Traveller’s Camp",
       "subtitle": "Secure private grounds",
       "capacity": "Sleeps up to 12",
       "bedding": "Tent or vehicle camping",

@@ -302,44 +302,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* BOTTOM BAR: Copyright & Agency Credits */}
+        {/* BOTTOM BAR: Copyright */}
         <div className="mt-6 pt-4 md:mt-12 md:pt-8 border-t border-surface/10 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-main/40">
           <p>
             &copy; 2026 Dalai Eej Resort. {t("rights")}
           </p>
 
-          <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 mt-3 md:mt-0 text-center md:text-right">
 
-            {/* The London Flex */}
-            <div className="group">
-              <span className="opacity-50 mr-2">{t("digital")}:</span>
-              <a 
-                href="https://matterofform.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors font-normal"
-              >
-                MOF London
-              </a>
-            </div>
-
-            {/* Divider */}
-            <span className="hidden md:inline opacity-30">|</span>
-
-            {/* The Mongolian Flex */}
-            <div className="group">
-              <span className="opacity-50 mr-2">{t("brand")}:</span>
-              <a 
-                href="https://brainstorm.agency" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors font-normal"
-              >
-                Brainstorm
-              </a>
-            </div>
-
-          </div>
         </div>
       </div>
     </footer>

@@ -82,7 +82,7 @@ export const CABIN_CLOUDBEDS_FACTS: Record<CabinSlug, CabinCloudbedsFact> = {
       mn: "Хоёр өргөн ор, нэг нарийн ортой, нуурын нам гүм харагдацтай манай хамгийн том байр.",
     },
     description: {
-      en: `Our largest family stay, made for guests who want more room around them. Ерөнхийлөгчийн Хаус sleeps up to 5 guests, with two double beds, one single bed, a wood-burning stove, lake views, and a toilet and washbasin inside. Shared showers are nearby. ${INCLUDED_SERVICES_EN}`,
+      en: `Our largest family stay, made for guests who want more room around them. Presidential Cabin sleeps up to 5 guests, with two double beds, one single bed, a wood-burning stove, lake views, and a toilet and washbasin inside. Shared showers are nearby. ${INCLUDED_SERVICES_EN}`,
       mn: `Илүү уужим зай хүссэн гэр бүл, олуулаа аялагчдад зориулсан манай хамгийн том байр. Ерөнхийлөгчийн Хаус нь хоёр өргөн ор, нэг нарийн ортой, 5 хүн хүртэл байрлах боломжтой, галлагаатай зуухтай, нуурын харагдацтай, дотроо 00 болон угаалтууртай. Шүршүүрийг нийтийн байгууламжаас ашиглана. ${INCLUDED_SERVICES}`,
     },
     features: [

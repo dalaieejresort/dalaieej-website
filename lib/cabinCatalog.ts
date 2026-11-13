@@ -49,7 +49,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "superior-cabin",
     routeSlug: "superior-cabin",
     legacyRouteSlugs: ["ikh-urguu"],
-    name: { en: "Ерөнхийлөгчийн Хаус", mn: "Ерөнхийлөгчийн Хаус" },
+    name: { en: "Presidential Cabin", mn: "Ерөнхийлөгчийн Хаус" },
     href: "/superior-cabin",
     cardImage: "/images/cabins/room-superior.webp",
     gallery: ["/images/cabins/room-superior.webp"],
@@ -66,7 +66,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "triple-traditional-cabin",
     routeSlug: "tuhtai-house-wood-fired",
     legacyRouteSlugs: ["triple-traditional-cabin"],
-    name: { en: "Тухтай Хаус (Галлагаатай)", mn: "Тухтай Хаус (Галлагаатай)" },
+    name: { en: "Comfort Cabin (Wood-fired)", mn: "Тухтай Хаус (Галлагаатай)" },
     href: "/tuhtai-house-wood-fired",
     cardImage: "/images/cabins/room-triple-traditional.webp",
     gallery: [
@@ -85,7 +85,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "lakeside-cabin",
     routeSlug: "lakeside-house",
     legacyRouteSlugs: ["lakeside-cabin"],
-    name: { en: "Эрэг дээрх Хаус", mn: "Эрэг дээрх Хаус" },
+    name: { en: "Lakeside Cabin", mn: "Эрэг дээрх Хаус" },
     href: "/lakeside-house",
     cardImage: "/images/cabins/room-lakeside.webp",
     gallery: [
@@ -106,7 +106,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "triple-electric-cabin",
     routeSlug: "tuhtai-house-electric",
     legacyRouteSlugs: ["triple-electric-cabin"],
-    name: { en: "Тухтай Хаус (Цахилгаан халаалт)", mn: "Тухтай Хаус (Цахилгаан халаалт)" },
+    name: { en: "Comfort Cabin (Electric Heating)", mn: "Тухтай Хаус (Цахилгаан халаалт)" },
     href: "/tuhtai-house-electric",
     cardImage: "/images/cabins/room-triple-electric.webp",
     gallery: [
@@ -126,7 +126,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "signature-cabin",
     routeSlug: "simple-stay",
     legacyRouteSlugs: ["signature-cabin"],
-    name: { en: "Энгийн Байр", mn: "Энгийн Байр" },
+    name: { en: "Standard Cabin", mn: "Энгийн Байр" },
     href: "/simple-stay",
     cardImage: "/images/cabins/room-signature.webp",
     gallery: [
@@ -147,7 +147,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "quad-electric-cabin",
     routeSlug: "family-house-electric",
     legacyRouteSlugs: ["quad-electric-cabin"],
-    name: { en: "Гэр Бүлийн Хаус (Цахилгаан халаалт)", mn: "Гэр Бүлийн Хаус (Цахилгаан халаалт)" },
+    name: { en: "Family Cabin (Electric Heating)", mn: "Гэр Бүлийн Хаус (Цахилгаан халаалт)" },
     href: "/family-house-electric",
     cardImage: "/images/cabins/room-quad-electric.webp",
     gallery: [
@@ -169,7 +169,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "grand-peninsula-suite",
     routeSlug: "family-house-wood-fired",
     legacyRouteSlugs: ["grand-peninsula-suite"],
-    name: { en: "Гэр Бүлийн Хаус (Галлагаатай)", mn: "Гэр Бүлийн Хаус (Галлагаатай)" },
+    name: { en: "Family Cabin (Wood-fired)", mn: "Гэр Бүлийн Хаус (Галлагаатай)" },
     href: "/family-house-wood-fired",
     cardImage: "/images/rooms/family-house-wood-fired/00.webp",
     gallery: [
@@ -190,7 +190,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "camping",
     routeSlug: "traveler-camp",
     legacyRouteSlugs: ["camping"],
-    name: { en: "Аялагчийн Отог", mn: "Аялагчийн Отог" },
+    name: { en: "Traveller’s Camp", mn: "Аялагчийн Отог" },
     href: "/traveler-camp",
     cardImage: "/images/rooms/camping.webp",
     gallery: ["/images/rooms/camping.webp"],
@@ -205,7 +205,7 @@ export const CABIN_CATALOG: CabinCatalogEntry[] = [
     slug: "original-camp-cabin",
     routeSlug: "original-camp-cabin",
     legacyRouteSlugs: ["first-camp-cabin", "ankhny-zuslangiin-bair", "first-children-camp-cabin"],
-    name: { en: "Анхны Зуслангийн Байр (Галлагаатай)", mn: "Анхны Зуслангийн Байр (Галлагаатай)" },
+    name: { en: "Original Camp Cabin (Wood-fired)", mn: "Анхны Зуслангийн Байр (Галлагаатай)" },
     href: "/original-camp-cabin",
     cardImage: "/images/rooms/original-camp-cabin/DBR_2163.webp",
     gallery: [
